@@ -1,5 +1,7 @@
 import Joi from "joi";
 
+const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
 const handleError = (error) => {
   error.forEach((err) => {
     console.log(err);
@@ -33,15 +35,28 @@ export const schemaSignup = Joi.object({
   password: Joi.string()
     .min(8)
     .required()
-    .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/)
+    .regex(regexPassword)
     .error(handleError),
 });
 
 export const schemaSignin = Joi.object({
   email: Joi.string().email().required().error(handleError),
   password: Joi.string()
-    .min(8)
     .required()
-    .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/)
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
+});
+
+export const schemaUpdatePassword = Joi.object({
+  password: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
+  newPassword: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
     .error(handleError),
 });
