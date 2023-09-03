@@ -26,7 +26,7 @@ const handleError = (error) => {
   return error;
 };
 
-const schemaSignup = Joi.object({
+export const schemaSignup = Joi.object({
   firstName: Joi.string().min(3).required().error(handleError),
   lastName: Joi.string().min(3).required().error(handleError),
   email: Joi.string().email().required().error(handleError),
@@ -37,4 +37,11 @@ const schemaSignup = Joi.object({
     .error(handleError),
 });
 
-export default schemaSignup;
+export const schemaSignin = Joi.object({
+  email: Joi.string().email().required().error(handleError),
+  password: Joi.string()
+    .min(8)
+    .required()
+    .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/)
+    .error(handleError),
+});
