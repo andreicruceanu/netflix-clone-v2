@@ -117,4 +117,17 @@ const updatePassword = async (req, res) => {
   }
 };
 
-export default { signup, signin, updatePassword };
+const getInfoUser = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.id);
+
+    if (!user) {
+      return responseHandler.notfound(res);
+    }
+    responseHandler.ok(res, user);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
+export default { signup, signin, updatePassword, getInfoUser };
