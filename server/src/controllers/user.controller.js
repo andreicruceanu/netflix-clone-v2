@@ -81,4 +81,40 @@ const signin = async (req, res) => {
   }
 };
 
-export default { signup, signin };
+const updatePassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+
+    const validationResult = validateDataFromUser.updatePassowrd({
+      ...req.body,
+    });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+    const user = await userModel
+      .findById(req.user.id)
+      .select("password salt id");
+
+    if (!user) {
+      return responseHandler.unauthorize(res);
+    }
+
+    if (!user.validPassword(password)) {
+      return responseHandler.badrequest(res, "You entered the wrong password.");
+    }
+
+    user.setPassword(newPassword);
+
+    await user.save();
+
+    responseHandler.ok(res);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
+export default { signup, signin, updatePassword };
