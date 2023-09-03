@@ -46,4 +46,39 @@ const signup = async (req, res) => {
   }
 };
 
-export default { signup };
+const signin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const validationResult = validateDataFromUser.signin({ ...req.body });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+
+    const user = await userModel
+      .findOne({ email })
+      .select("firstName lastName salt id email password");
+
+    if (!user) {
+      return responseHandler.badrequest(res, "User not exist!");
+    }
+    if (!user.validPassword(password)) {
+      return responseHandler.badrequest(res, "Wrong password");
+    }
+
+    const token = generateToken(user.id);
+
+    user.password = undefined;
+    user.salt = undefined;
+
+    responseHandler.created(res, { ...user._doc, id: user.id, token });
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+export default { signup, signin };
