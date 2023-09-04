@@ -11,5 +11,6 @@ router.put(
   tokenMiddleware.auth,
   userController.updatePassword
 );
+router.get("/info", tokenMiddleware.auth, userController.getInfoUser);
 
 export default router;
