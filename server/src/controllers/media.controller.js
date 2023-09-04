@@ -18,4 +18,15 @@ const getList = async (req, res) => {
   }
 };
 
-export default { getList };
+const getGenres = async (req, res) => {
+  try {
+    const { mediaType } = req.params;
+    const response = await tmdbApi.mediaGenres({ mediaType });
+
+    return responseHandler.ok(res, response);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
+export default { getList, getGenres };
