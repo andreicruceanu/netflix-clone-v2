@@ -7,7 +7,7 @@ export const themeModes = {
 const themeConfigs = {
   custom: ({ mode }) => {
     const customPalette =
-      mode === themeConfigs.dark
+      mode === themeModes.dark
         ? {
             primary: {
               main: "#ff0000",
@@ -20,6 +20,14 @@ const themeConfigs = {
             background: {
               default: "#000000",
               paper: "#131313",
+              modal: "rgba(0,0,0,0.75)",
+            },
+            input: {
+              main: "#333",
+              focus: "#454545",
+              text: "#fff",
+              label: "#8c8c8c",
+              visible: "#d1d1d1",
             },
           }
         : {
