@@ -18,7 +18,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const SigninForm = ({ switchAuthState }) => {
   const theme = useTheme();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [error, setErrorMessage] = useState();
 
   const inputStyles = {
@@ -103,10 +103,10 @@ const SigninForm = ({ switchAuthState }) => {
         <FormControlLabel
           sx={{ color: theme.palette.input.label }}
           control={<Checkbox sx={{ color: theme.palette.input.label }} />}
-          label="Remember-me"
+          label="Remember me"
         />
         <MUILink component={Link} to={"/forgot-password"} underline="hover">
-          {"Ti-ai uitat parola"}
+          {"Forgot password?"}
         </MUILink>
       </Box>
       <Box sx={{ marginTop: 2 }}>
@@ -122,7 +122,9 @@ const SigninForm = ({ switchAuthState }) => {
         <Typography
           sx={{
             display: "inline-block",
-            color: "red",
+            fontWeight: 600,
+            fontSize: "17px",
+            color: theme.palette.primary.main,
             cursor: "pointer",
             "&:hover": {
               textDecoration: "underline",
