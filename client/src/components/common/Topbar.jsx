@@ -9,11 +9,12 @@ import {
   Toolbar,
   useScrollTrigger,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { themeModes } from "../../configs/theme.configs";
 import Logo from "./Logo";
 import menuConfigs from "../../configs/menu.config";
 import { Link } from "react-router-dom";
+import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -40,6 +41,8 @@ const ScrollAppBar = ({ children, window }) => {
 
 const Topbar = () => {
   const { themeMode } = useSelector((state) => state.themeMode);
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -72,15 +75,26 @@ const Topbar = () => {
               {menuConfigs.main.map((item, index) => (
                 <Button
                   key={index}
-                  sx={{ color: "#fff" }}
+                  sx={{ color: "#fff", marginRight: 2 }}
                   component={Link}
                   to={item.path}
+                  variant="contained"
                 >
                   {item.display}
                 </Button>
               ))}
             </Box>
             {/* main menu */}
+            <Stack spacing={3} direction="row" alignItems="center">
+              {!user && (
+                <Button
+                  variant="contained"
+                  onClick={() => dispatch(setAuthModalOpen(true))}
+                >
+                  sign in
+                </Button>
+              )}
+            </Stack>
           </Toolbar>
         </AppBar>
       </ScrollAppBar>
