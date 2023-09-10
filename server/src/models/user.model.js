@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import modelOptions from "./model.options";
+import modelOptions from "./model.options.js";
 import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       require: true,
+      unique: true,
     },
     password: {
       type: String,
