@@ -25,7 +25,11 @@ const AuthModal = () => {
   }, [authModalOpen]);
 
   return (
-    <Modal open={authModalOpen} onClose={handleModalClose}>
+    <Modal
+      open={authModalOpen}
+      onClose={handleModalClose}
+      sx={{ background: { xs: "" } }}
+    >
       <Box
         sx={{
           position: "absolute",
@@ -33,11 +37,11 @@ const AuthModal = () => {
           left: "50%",
           transform: "translate(-50% , -50%)",
           width: "100%",
-          maxWidth: "450px",
+          maxWidth: { xs: "300px", md: "450px" },
           outline: "none",
           backgroundColor: "background.modal",
-          padding: "60px 68px 40px",
-          minHeight: "520px",
+          padding: { xs: 3, md: "60px 68px 40px" },
+          minHeight: { xs: "420px", md: "520px" },
         }}
       >
         {action === actionState.signup && (
