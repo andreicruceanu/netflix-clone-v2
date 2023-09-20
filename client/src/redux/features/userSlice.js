@@ -33,6 +33,6 @@ export const userSlice = createSlice({
 });
 
 export const { setUser, setListFavorite, removeFavorite, addFavorite } =
-  userSlice;
+  userSlice.actions;
 
 export default userSlice.reducer;

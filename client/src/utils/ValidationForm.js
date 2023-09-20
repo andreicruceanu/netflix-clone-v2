@@ -15,6 +15,15 @@ const validationForm = {
       )
       .required("Password is required"),
   }),
+  signin: Yup.object({
+    email: Yup.string().email("Email invalid").required("Email is required"),
+    password: Yup.string()
+      .matches(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/,
+        "The password must have at least 8 characters, uppercase, lowercase, a number and a special character"
+      )
+      .required("Password is required"),
+  }),
 };
 
 export { validationForm };

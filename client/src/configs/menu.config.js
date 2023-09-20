@@ -7,7 +7,7 @@ const main = [
     display: "Home",
     path: "/",
     icon: <HomeOutlinedIcon />,
-    state: "Home",
+    state: "home",
   },
   {
     display: "TV Shows",
@@ -25,7 +25,7 @@ const main = [
     display: "New & Popular",
     path: "/movie",
     icon: <SlideshowOutlinedIcon />,
-    state: "movie",
+    state: "new&polular",
   },
 ];
 const menuConfigs = { main };

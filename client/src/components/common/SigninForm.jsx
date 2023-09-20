@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Checkbox,
   FormControlLabel,
@@ -15,28 +16,37 @@ import { LoadingButton } from "@mui/lab";
 import React, { useState } from "react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useFormik } from "formik";
+import { validationForm } from "../../utils/ValidationForm";
+import { inputStyledBlack } from "../../utils/InputStyle";
+import userApi from "../../api/modules/user.api";
 
 const SigninForm = ({ switchAuthState }) => {
   const theme = useTheme();
   const [visible, setVisible] = useState(true);
-  const [error, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState();
 
-  const inputStyles = {
-    backgroundColor: theme.palette.input.main,
+  const [isLoginRequest, setIsLoginRequest] = useState(false);
+  const signinForm = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationForm.signin,
+    onSubmit: async (values) => {
+      setErrorMessage(undefined);
+      setIsLoginRequest(true);
+      const { response, err } = await userApi.signin(values);
+      setIsLoginRequest(false);
 
-    "& MuiInputBase-root": {
-      backgroundColor: theme.palette.input.main,
+      if (response) {
+        console.log("Succes");
+      }
+      if (err) {
+        setErrorMessage(err.message);
+      }
     },
-    "& label": {
-      color: theme.palette.input.label,
-    },
-    "& .MuiFilledInput-underline:after": {
-      borderBottom: error ? "2px solid red" : "none",
-    },
-    "& label.Mui-focused": {
-      color: theme.palette.input.label,
-    },
-  };
+  });
 
   const EndAdorment = ({ visible, setVisible }) => {
     return (
@@ -60,21 +70,40 @@ const SigninForm = ({ switchAuthState }) => {
   };
 
   return (
-    <Box component="form">
+    <Box component="form" onSubmit={signinForm.handleSubmit}>
       <Stack spacing={3}>
         <TextField
-          sx={inputStyles}
-          id="Email"
+          sx={inputStyledBlack}
+          id="email"
           label="Email"
-          variant="filled"
+          variant="outlined"
+          name="email"
+          onBlur={signinForm.handleBlur}
+          onChange={signinForm.handleChange}
+          value={signinForm.values.email}
+          helperText={signinForm.touched.email ? signinForm.errors.email : ""}
+          error={
+            signinForm.touched.email && signinForm.errors.email !== undefined
+          }
           fullWidth
         />
         <TextField
-          sx={inputStyles}
-          id="Password"
+          sx={inputStyledBlack}
+          id="password"
+          name="password"
           label="Password"
+          onBlur={signinForm.handleBlur}
+          onChange={signinForm.handleChange}
+          value={signinForm.values.password}
           type={visible ? "password" : "text"}
-          variant="filled"
+          variant="outlined"
+          error={
+            signinForm.touched.password &&
+            signinForm.errors.password !== undefined
+          }
+          helperText={
+            signinForm.touched.password ? signinForm.errors.password : ""
+          }
           InputProps={{
             endAdornment: (
               <EndAdorment visible={visible} setVisible={setVisible} />
@@ -88,10 +117,19 @@ const SigninForm = ({ switchAuthState }) => {
         fullWidth
         size="large"
         variant="contained"
+        loading={isLoginRequest}
         sx={{ marginTop: 4 }}
       >
         Sign In
       </LoadingButton>
+
+      {errorMessage && (
+        <Box sx={{ marginTop: 2 }}>
+          <Alert severity="error" variant="outlined">
+            {errorMessage}
+          </Alert>
+        </Box>
+      )}
       <Box
         sx={{
           marginTop: 2,
@@ -105,7 +143,19 @@ const SigninForm = ({ switchAuthState }) => {
           control={<Checkbox sx={{ color: theme.palette.input.label }} />}
           label="Remember me"
         />
-        <MUILink component={Link} to={"/forgot-password"} underline="hover">
+        <MUILink
+          sx={{
+            color: theme.palette.input.label,
+
+            "&:hover": {
+              color: theme.palette.primary.main,
+              transition: ".2s",
+            },
+          }}
+          component={Link}
+          to={"/forgot-password"}
+          underline="hover"
+        >
           {"Forgot password?"}
         </MUILink>
       </Box>
