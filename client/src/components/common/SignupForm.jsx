@@ -15,9 +15,13 @@ import { inputStyledBlack } from "../../utils/InputStyle";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import userApi from "../../api/modules/user.api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/features/userSlice";
+import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 
 const SignupForm = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(true);
   const [isLoginRequest, setIsLoginRequest] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
@@ -31,11 +35,14 @@ const SignupForm = () => {
     },
     validationSchema: validationForm.signup,
     onSubmit: async (values) => {
+      setErrorMessage(undefined);
       setIsLoginRequest(true);
       const { response, err } = await userApi.signup(values);
       setIsLoginRequest(false);
       if (response) {
-        console.log("Succes Sign in");
+        signupForm.resetForm();
+        dispatch(setUser(response));
+        dispatch(setAuthModalOpen(false));
       }
       if (err) setErrorMessage(err.message);
     },
@@ -76,6 +83,10 @@ const SignupForm = () => {
           helperText={
             signupForm.touched.firstName ? signupForm.errors.firstName : ""
           }
+          error={
+            signupForm.touched.firstName &&
+            signupForm.errors.firstName !== undefined
+          }
         />
         <TextField
           sx={inputStyledBlack}
@@ -89,6 +100,10 @@ const SignupForm = () => {
           helperText={
             signupForm.touched.lastName ? signupForm.errors.lastName : ""
           }
+          error={
+            signupForm.touched.lastName &&
+            signupForm.errors.lastName !== undefined
+          }
         />
         <TextField
           sx={inputStyledBlack}
@@ -101,6 +116,9 @@ const SignupForm = () => {
           onChange={signupForm.handleChange}
           value={signupForm.values.email}
           helperText={signupForm.touched.email ? signupForm.errors.email : ""}
+          error={
+            signupForm.touched.email && signupForm.errors.email !== undefined
+          }
         />
         <TextField
           sx={inputStyledBlack}
@@ -114,6 +132,10 @@ const SignupForm = () => {
           value={signupForm.values.password}
           helperText={
             signupForm.touched.password ? signupForm.errors.password : ""
+          }
+          error={
+            signupForm.touched.password &&
+            signupForm.errors.password !== undefined
           }
           InputProps={{
             endAdornment: <EndAdorment />,
