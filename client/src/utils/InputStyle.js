@@ -6,7 +6,7 @@ export const inputStyledBlack = {
     color: "white",
   },
   "& .MuiFormHelperText-root ": {
-    color: "#e87c03",
+    color: "#f44336",
     padding: "6px 3px",
     margin: "0px",
     fontSize: "13px",
