@@ -3,6 +3,8 @@ import tmdbConfig from "./tmdb.config.js";
 const tmbdEndpoints = {
   mediaList: ({ mediaType, mediaCategory, page }) =>
     tmdbConfig.getUrl(`${mediaType}/${mediaCategory}`, page),
+  mediaTrending: ({ mediaType, time, page }) =>
+    tmdbConfig.getUrl(`trending/${mediaType}/${time}`, page),
   mediaDetail: ({ mediaType, mediaId }) =>
     tmdbConfig.getUrl(`${mediaType}/${mediaId}`),
   mediaGenres: ({ mediaType }) => tmdbConfig.getUrl(`genre/${mediaType}/list`),

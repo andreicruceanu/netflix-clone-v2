@@ -18,6 +18,24 @@ const getList = async (req, res) => {
   }
 };
 
+const getTrendingList = async (req, res) => {
+  try {
+    const { page } = req.body;
+
+    const { mediaType, time } = req.params;
+
+    const response = await tmdbApi.mediaTrending({
+      mediaType,
+      time,
+      page,
+    });
+
+    responseHandler.ok(res, response);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
 const getGenres = async (req, res) => {
   try {
     const { mediaType } = req.params;
@@ -29,4 +47,4 @@ const getGenres = async (req, res) => {
   }
 };
 
-export default { getList, getGenres };
+export default { getList, getGenres, getTrendingList };
