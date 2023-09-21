@@ -12,6 +12,7 @@ import tmdbConfigs from "../../api/configs/tmdb.configs";
 import uiConfigs from "../../configs/ui.configs";
 import CircularRate from "./CircularRate";
 import { Link } from "react-router-dom";
+import { setGenresSlice } from "../../redux/features/genresStateSlice";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
   const theme = useTheme();
@@ -39,6 +40,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
 
       if (response) {
         setGenres(response.genres);
+        dispatch(setGenresSlice(response.genres));
         getMedias();
       }
       if (err) {
