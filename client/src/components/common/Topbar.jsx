@@ -1,5 +1,7 @@
 import React, { cloneElement } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import {
   AppBar,
   Box,
@@ -15,6 +17,7 @@ import Logo from "./Logo";
 import menuConfigs from "../../configs/menu.config";
 import { Link } from "react-router-dom";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
+import { setThemeMode } from "../../redux/features/themeModeSlice";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -42,7 +45,14 @@ const ScrollAppBar = ({ children, window }) => {
 const Topbar = () => {
   const { themeMode } = useSelector((state) => state.themeMode);
   const { user } = useSelector((state) => state.user);
+  const { appState } = useSelector((state) => state.appState);
   const dispatch = useDispatch();
+
+  const onSwithTheme = () => {
+    const theme =
+      themeMode === themeModes.dark ? themeModes.light : themeModes.dark;
+    dispatch(setThemeMode(theme));
+  };
 
   return (
     <>
@@ -78,11 +88,15 @@ const Topbar = () => {
                   sx={{ color: "#fff", marginRight: 2 }}
                   component={Link}
                   to={item.path}
-                  variant="contained"
+                  variant={appState.includes(item.state) ? "contained" : "text"}
                 >
                   {item.display}
                 </Button>
               ))}
+              <IconButton sx={{ color: "inherit" }} onClick={onSwithTheme}>
+                {themeMode === themeModes.dark && <DarkModeOutlinedIcon />}
+                {themeMode === themeModes.light && <WbSunnyOutlinedIcon />}
+              </IconButton>
             </Box>
             {/* main menu */}
             <Stack spacing={3} direction="row" alignItems="center">

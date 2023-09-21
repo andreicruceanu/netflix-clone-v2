@@ -1,11 +1,34 @@
-import { Box } from "@mui/material";
 import React from "react";
-import bg from "../assets/images/home.jpg";
+import HeroSlide from "../components/common/HeroSlide";
+import tmdbConfigs from "../api/configs/tmdb.configs";
+import { Box } from "@mui/material";
+import uiConfigs from "../configs/ui.configs";
+import Container from "../components/common/Container";
+import MediaSlideTop from "../components/common/MediaSlideTop";
+import MediaSlide from "../components/common/MediaSlide";
 const Home = () => {
   return (
-    <Box sx={{ width: "100vw", height: "100vh", background: "#fff" }}>
-      <img src={bg} alt="" width={"100%"} />
-    </Box>
+    <>
+      <HeroSlide
+        mediaType={tmdbConfigs.mediaType.movie}
+        mediaCategory={tmdbConfigs.mediaCategory.popular}
+      />
+      <Box sx={{ ...uiConfigs.style.mainContent }}>
+        <Container header={"Top 10 Movies in Romania Today"}>
+          <MediaSlideTop
+            mediaType={tmdbConfigs.mediaType.movie}
+            time={tmdbConfigs.time.day}
+          />
+        </Container>
+
+        <Container header="Popular Movies">
+          <MediaSlide
+            mediaType={tmdbConfigs.mediaType.movie}
+            mediaCategory={tmdbConfigs.mediaCategory.popular}
+          />
+        </Container>
+      </Box>
+    </>
   );
 };
 
