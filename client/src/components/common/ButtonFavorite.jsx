@@ -5,13 +5,9 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-const ButtonFavorite = ({
-  mediaId,
-  mediaTitle,
-  mediaType,
-  mediaPoster,
-  mediaRate,
-}) => {
+import favoriteApi from "../../api/modules/favorite.api";
+import { toast } from "react-toastify";
+const ButtonFavorite = ({ media, mediaType }) => {
   const { user, listFavorites } = useSelector((state) => state.user);
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -30,12 +26,22 @@ const ButtonFavorite = ({
     setOnRequest(true);
 
     const body = {
-      mediaId,
-      mediaTitle,
-      mediaType,
-      mediaPoster,
-      mediaRate,
+      mediaId: media.id,
+      mediaTitle: media.title || media.name,
+      mediaType: mediaType,
+      mediaPoster: media.poster_path,
+      mediaRate: media.vote_average,
+      mediaGenreIds: media.genre_ids,
+      mediaReleaseDate: media.release_date,
     };
+
+    const { response, err } = await favoriteApi.add(body);
+
+    setOnRequest(false);
+
+    if (err) {
+      toast.error(err.message);
+    }
   };
 
   return (
