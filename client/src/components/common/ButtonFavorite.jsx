@@ -48,7 +48,7 @@ const ButtonFavorite = ({
         padding: "0",
         color: "white",
         borderColor: "white",
-        "&.MuiButton-startIcon": {
+        span: {
           marginRight: "0px",
         },
         "&:hover ": {
@@ -56,7 +56,6 @@ const ButtonFavorite = ({
           borderColor: "white",
         },
       }}
-      loadingPosition="end"
       size="large"
       startIcon={isFavorite ? <FavoriteIcon /> : <AddIcon />}
       loading={onRequest}
