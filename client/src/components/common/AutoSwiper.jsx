@@ -26,7 +26,7 @@ const AutoSwiper = ({ children }) => {
           overflow: "visible",
           overflowX: "clip",
         }}
-        spaceBetween={10}
+        spaceBetween={12}
         modules={[Navigation]}
       >
         {children}
