@@ -6,6 +6,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import favoriteApi from "../../api/modules/favorite.api";
+
+import { addFavorite } from "../../redux/features/userSlice";
 import { toast } from "react-toastify";
 const ButtonFavorite = ({ media, mediaType }) => {
   const { user, listFavorites } = useSelector((state) => state.user);
@@ -36,11 +38,16 @@ const ButtonFavorite = ({ media, mediaType }) => {
     };
 
     const { response, err } = await favoriteApi.add(body);
-
     setOnRequest(false);
 
     if (err) {
       toast.error(err.message);
+    }
+
+    if (response) {
+      dispatch(addFavorite(response));
+      setIsFavorite(true);
+      toast.success("Add favorite success");
     }
   };
 
