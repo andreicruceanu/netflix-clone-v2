@@ -1,6 +1,7 @@
 import favoriteModel from "../models/favorite.model.js";
 import responseHandler from "../handlers/response.handler.js";
 const addFavorite = async (req, res) => {
+  console.log("a");
   try {
     const isFavorite = await favoriteModel.findOne({
       user: req.user.id,
@@ -25,7 +26,37 @@ const addFavorite = async (req, res) => {
 
 const removefavorite = async (req, res) => {
   try {
-  } catch (error) {}
+    const { favoriteId } = req.params;
+
+    const favorite = await favoriteModel.findOne({
+      user: req.user.id,
+      _id: favoriteId,
+    });
+
+    console.log(favorite);
+    if (!favorite) {
+      return responseHandler.notfound(res);
+    }
+
+    await favoriteModel.deleteOne(favorite);
+
+    responseHandler.ok(res);
+  } catch (error) {
+    responseHandler.error(res);
+  }
 };
 
-export default { addFavorite };
+const getFavoritesOfUser = async (req, res) => {
+  console.log("a");
+  try {
+    const favorite = await favoriteModel
+      .find({ user: req.user.id })
+      .sort("-createdAt");
+
+    responseHandler.ok(res, favorite);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+export default { addFavorite, getFavoritesOfUser, removefavorite };
