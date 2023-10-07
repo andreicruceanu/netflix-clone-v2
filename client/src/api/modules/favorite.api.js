@@ -2,6 +2,7 @@ import privateClient from "../client/private.client.js";
 
 const favoriteEndpoints = {
   add: "user/favorites",
+  remove: ({ favoriteId }) => `user/favorites/${favoriteId}`,
 };
 
 const favoriteApi = {
@@ -24,6 +25,16 @@ const favoriteApi = {
         mediaGenreIds,
         mediaReleaseDate,
       });
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  remove: async ({ favoriteId }) => {
+    try {
+      const response = await privateClient.delete(
+        favoriteEndpoints.remove({ favoriteId })
+      );
       return { response };
     } catch (err) {
       return { err };

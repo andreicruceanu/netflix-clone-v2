@@ -9,7 +9,7 @@ const time = {
 
 const mediaCategory = {
   popular: "popular",
-  top_ratedL: "top_rated",
+  top_rated: "top_rated",
 };
 
 const backdropPath = (imgEndpoint) =>
