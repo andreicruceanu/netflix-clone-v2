@@ -9,6 +9,7 @@ import { SwiperSlide } from "swiper/react";
 const MediaSlide = ({ mediaType, mediaCategory }) => {
   const [medias, setMedias] = useState([]);
 
+  console.log(medias);
   useEffect(() => {
     const getMedias = async () => {
       const { response, err } = await mediaApi.getList({

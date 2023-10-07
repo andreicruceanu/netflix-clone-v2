@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import favoriteApi from "../../api/modules/favorite.api";
 
-import { addFavorite } from "../../redux/features/userSlice";
+import { addFavorite, removeFavorite } from "../../redux/features/userSlice";
 import { toast } from "react-toastify";
 const ButtonFavorite = ({ media, mediaType }) => {
   const { user, listFavorites } = useSelector((state) => state.user);
@@ -22,6 +22,10 @@ const ButtonFavorite = ({ media, mediaType }) => {
       return dispatch(setAuthModalOpen(true));
     }
     if (onRequest) {
+      return;
+    }
+    if (isFavorite) {
+      onRemoveFavorite();
       return;
     }
 
@@ -47,26 +51,52 @@ const ButtonFavorite = ({ media, mediaType }) => {
     if (response) {
       dispatch(addFavorite(response));
       setIsFavorite(true);
-      toast.success("Add favorite success");
+      // toast.success("Add favorite success");
+    }
+  };
+
+  const onRemoveFavorite = async () => {
+    if (onRequest) {
+      return;
+    }
+
+    setOnRequest(true);
+
+    const favorite = listFavorites.find(
+      (e) => e.mediaId.toString() === media.id.toString()
+    );
+
+    const { response, err } = await favoriteApi.remove({
+      favoriteId: favorite.id,
+    });
+    setOnRequest(false);
+
+    if (err) {
+      //  toast.error(err.message);
+    }
+
+    if (response) {
+      dispatch(removeFavorite(favorite));
+      setIsFavorite(false);
+      //toast.success("Remove favorite succes")
     }
   };
 
   return (
     <LoadingButton
-      variant="outlined"
+      variant="text"
       sx={{
-        minWidth: "2.2rem",
-        height: "2.2rem",
-        borderRadius: "50%",
+        minWidth: "100%",
         padding: "0",
         color: "white",
-        borderColor: "white",
         span: {
           marginRight: "0px",
+          marginLeft: "0px",
         },
+
         "&:hover ": {
-          background: "none",
-          borderColor: "white",
+          border: "none",
+          backgroundColor: "none",
         },
       }}
       size="large"

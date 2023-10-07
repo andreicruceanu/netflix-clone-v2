@@ -27,6 +27,27 @@ const Home = () => {
             mediaCategory={tmdbConfigs.mediaCategory.popular}
           />
         </Container>
+
+        <Container header="Popular Series">
+          <MediaSlide
+            mediaType={tmdbConfigs.mediaType.tv}
+            mediaCategory={tmdbConfigs.mediaCategory.popular}
+          />
+        </Container>
+
+        <Container header="Top rated movies">
+          <MediaSlide
+            mediaType={tmdbConfigs.mediaType.movie}
+            mediaCategory={tmdbConfigs.mediaCategory.top_rated}
+          />
+        </Container>
+
+        <Container header="Top rated series">
+          <MediaSlide
+            mediaType={tmdbConfigs.mediaType.tv}
+            mediaCategory={tmdbConfigs.mediaCategory.top_rated}
+          />
+        </Container>
       </Box>
     </>
   );

@@ -132,7 +132,9 @@ const MediaItem = ({ media, mediaType }) => {
                 <ButtonCard background={"white"}>
                   <PlayArrowIcon sx={{ color: "black" }} />
                 </ButtonCard>
-                <ButtonFavorite media={media} mediaType={mediaType} />
+                <ButtonCard>
+                  <ButtonFavorite media={media} mediaType={mediaType} />
+                </ButtonCard>
               </Box>
               <ButtonCard>
                 <ExpandMoreIcon sx={{ color: "white" }} />
