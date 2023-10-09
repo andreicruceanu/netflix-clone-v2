@@ -5,5 +5,6 @@ const router = express.Router({ mergeParams: true });
 
 router.get("/genres", mediaController.getGenres);
 router.get("/:mediaCategory", mediaController.getList);
+router.get("/:mediaId/officialTrailer", mediaController.getTrailerMovie);
 
 export default router;
