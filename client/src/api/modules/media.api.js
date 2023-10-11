@@ -5,6 +5,8 @@ const mediaEndpoints = {
     `${mediaType}/${mediaCategory}?page=${page}`,
   trending: ({ mediaType, time, page }) =>
     `/trending/${mediaType}/${time}?page=${page}`,
+  trailer: ({ mediaType, mediaId }) =>
+    `${mediaType}/${mediaId}/officialTrailer`,
 };
 
 const mediaApi = {
@@ -22,6 +24,16 @@ const mediaApi = {
     try {
       const response = await publicClient.get(
         mediaEndpoints.trending({ mediaType, time, page })
+      );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  getTrailer: async ({ mediaType, mediaId }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.trailer({ mediaType, mediaId })
       );
       return { response };
     } catch (err) {

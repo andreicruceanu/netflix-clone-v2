@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import mediaApi from "../../api/modules/media.api";
-import { toast } from "react-toastify";
+
 import AutoSwiper from "./AutoSwiper";
 import MediaItem from "./MediaItem";
 
@@ -9,7 +9,6 @@ import { SwiperSlide } from "swiper/react";
 const MediaSlide = ({ mediaType, mediaCategory }) => {
   const [medias, setMedias] = useState([]);
 
-  console.log(medias);
   useEffect(() => {
     const getMedias = async () => {
       const { response, err } = await mediaApi.getList({
@@ -22,7 +21,7 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
         setMedias(response.results);
       }
       if (err) {
-        toast.err(err.message);
+        console.log(err);
       }
     };
     getMedias();
