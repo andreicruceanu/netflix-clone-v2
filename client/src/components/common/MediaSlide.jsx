@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import mediaApi from "../../api/modules/media.api";
-import { toast } from "react-toastify";
+
 import AutoSwiper from "./AutoSwiper";
 import MediaItem from "./MediaItem";
 
@@ -21,7 +21,7 @@ const MediaSlide = ({ mediaType, mediaCategory }) => {
         setMedias(response.results);
       }
       if (err) {
-        toast.err(err.message);
+        console.log(err);
       }
     };
     getMedias();

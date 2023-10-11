@@ -20,6 +20,9 @@ import { useFormik } from "formik";
 import { validationForm } from "../../utils/ValidationForm";
 import { inputStyledBlack } from "../../utils/InputStyle";
 import userApi from "../../api/modules/user.api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/features/userSlice";
+import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 
 const SigninForm = ({ switchAuthState }) => {
   const theme = useTheme();
@@ -27,6 +30,9 @@ const SigninForm = ({ switchAuthState }) => {
   const [errorMessage, setErrorMessage] = useState();
 
   const [isLoginRequest, setIsLoginRequest] = useState(false);
+
+  const dispatch = useDispatch();
+
   const signinForm = useFormik({
     initialValues: {
       email: "",
@@ -40,7 +46,9 @@ const SigninForm = ({ switchAuthState }) => {
       setIsLoginRequest(false);
 
       if (response) {
-        console.log("Succes");
+        signinForm.resetForm();
+        dispatch(setUser(response));
+        dispatch(setAuthModalOpen(false));
       }
       if (err) {
         setErrorMessage(err.message);

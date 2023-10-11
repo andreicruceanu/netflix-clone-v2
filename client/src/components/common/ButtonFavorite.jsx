@@ -5,13 +5,11 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-const ButtonFavorite = ({
-  mediaId,
-  mediaTitle,
-  mediaType,
-  mediaPoster,
-  mediaRate,
-}) => {
+import favoriteApi from "../../api/modules/favorite.api";
+
+import { addFavorite, removeFavorite } from "../../redux/features/userSlice";
+import { toast } from "react-toastify";
+const ButtonFavorite = ({ media, mediaType }) => {
   const { user, listFavorites } = useSelector((state) => state.user);
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -26,34 +24,79 @@ const ButtonFavorite = ({
     if (onRequest) {
       return;
     }
+    if (isFavorite) {
+      onRemoveFavorite();
+      return;
+    }
 
     setOnRequest(true);
 
     const body = {
-      mediaId,
-      mediaTitle,
-      mediaType,
-      mediaPoster,
-      mediaRate,
+      mediaId: media.id,
+      mediaTitle: media.title || media.name,
+      mediaType: mediaType,
+      mediaPoster: media.poster_path,
+      mediaRate: media.vote_average,
+      mediaGenreIds: media.genre_ids,
+      mediaReleaseDate: media.release_date,
     };
+
+    const { response, err } = await favoriteApi.add(body);
+    setOnRequest(false);
+
+    if (err) {
+      toast.error(err.message);
+    }
+
+    if (response) {
+      dispatch(addFavorite(response));
+      setIsFavorite(true);
+      // toast.success("Add favorite success");
+    }
+  };
+
+  const onRemoveFavorite = async () => {
+    if (onRequest) {
+      return;
+    }
+
+    setOnRequest(true);
+
+    const favorite = listFavorites.find(
+      (e) => e.mediaId.toString() === media.id.toString()
+    );
+
+    const { response, err } = await favoriteApi.remove({
+      favoriteId: favorite.id,
+    });
+    setOnRequest(false);
+
+    if (err) {
+      //  toast.error(err.message);
+    }
+
+    if (response) {
+      dispatch(removeFavorite(favorite));
+      setIsFavorite(false);
+      //toast.success("Remove favorite succes")
+    }
   };
 
   return (
     <LoadingButton
-      variant="outlined"
+      variant="text"
       sx={{
-        minWidth: "2.2rem",
-        height: "2.2rem",
-        borderRadius: "50%",
+        minWidth: "100%",
         padding: "0",
         color: "white",
-        borderColor: "white",
         span: {
           marginRight: "0px",
+          marginLeft: "0px",
         },
+
         "&:hover ": {
-          background: "none",
-          borderColor: "white",
+          border: "none",
+          backgroundColor: "none",
         },
       }}
       size="large"

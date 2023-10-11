@@ -3,15 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 export const genresSlice = createSlice({
   name: "genres",
   initialState: {
-    genres: [],
+    genresMovie: [],
+    genresSeries: [],
   },
   reducers: {
-    setGenresSlice: (state, action) => {
-      state.genres = action.payload;
+    setGenresMovieSlice: (state, action) => {
+      state.genresMovie = action.payload;
+    },
+    setGenresSeriesSlice: (state, action) => {
+      state.genresSeries = action.payload;
     },
   },
 });
 
-export const { setGenresSlice } = genresSlice.actions;
+export const { setGenresMovieSlice, setGenresSeriesSlice } =
+  genresSlice.actions;
 
 export default genresSlice.reducer;

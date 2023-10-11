@@ -12,14 +12,18 @@ import tmdbConfigs from "../../api/configs/tmdb.configs";
 import uiConfigs from "../../configs/ui.configs";
 import CircularRate from "./CircularRate";
 import { Link } from "react-router-dom";
-import { setGenresSlice } from "../../redux/features/genresStateSlice";
+import {
+  setGenresMovieSlice,
+  setGenresSeriesSlice,
+} from "../../redux/features/genresStateSlice";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
+  console.log({ mediaType });
   const theme = useTheme();
   const dispatch = useDispatch();
 
   const [movies, setMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [genresMovie, setGenresMovie] = useState([]);
 
   useEffect(() => {
     const getMedias = async () => {
@@ -35,19 +39,33 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
       }
     };
 
-    const getGenres = async () => {
+    const getGenresMovie = async () => {
       const { response, err } = await genreApi.getList({ mediaType });
 
       if (response) {
-        setGenres(response.genres);
-        dispatch(setGenresSlice(response.genres));
+        setGenresMovie(response.genres);
+        dispatch(setGenresMovieSlice(response.genres));
         getMedias();
       }
       if (err) {
-        toast.error(err.message);
+        console.log(err);
       }
     };
-    getGenres();
+    getGenresMovie();
+  }, [mediaType, mediaCategory, dispatch]);
+
+  useEffect(() => {
+    const getGenresSeries = async () => {
+      const { response, err } = await genreApi.getList({ mediaType: "tv" });
+
+      if (response) {
+        dispatch(setGenresSeriesSlice(response.genres));
+      }
+      if (err) {
+        console.log(err);
+      }
+    };
+    getGenresSeries();
   }, [mediaType, mediaCategory, dispatch]);
 
   return (
@@ -141,8 +159,8 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                         color="primary"
                         key={index}
                         label={
-                          genres.find((e) => e.id === genreId) &&
-                          genres.find((e) => e.id === genreId).name
+                          genresMovie.find((e) => e.id === genreId) &&
+                          genresMovie.find((e) => e.id === genreId).name
                         }
                       />
                     ))}
