@@ -16,19 +16,27 @@ export default mongoose.model(
         required: true,
       },
       mediaId: {
-        type: String,
+        type: Number,
         required: true,
       },
       mediaTitle: {
         type: String,
         required: true,
       },
-      mediaPoster: {
-        type: String,
+      mediaGenreIds: {
+        type: Array,
         required: true,
       },
       mediaRate: {
         type: Number,
+        required: true,
+      },
+      mediaPoster: {
+        type: String,
+        required: true,
+      },
+      mediaReleaseDate: {
+        type: String,
         required: true,
       },
     },

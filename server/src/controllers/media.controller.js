@@ -2,7 +2,7 @@ import responseHandler from "../handlers/response.handler.js";
 import tmdbApi from "../tmdb/tmdb.api.js";
 const getList = async (req, res) => {
   try {
-    const { page } = req.body;
+    const { page } = req.query;
 
     const { mediaType, mediaCategory } = req.params;
 
@@ -47,4 +47,43 @@ const getGenres = async (req, res) => {
   }
 };
 
-export default { getList, getGenres, getTrendingList };
+const getTrailerMovie = async (req, res) => {
+  try {
+    const { mediaType, mediaId } = req.params;
+
+    const response = await tmdbApi.mediaTrailer({ mediaType, mediaId });
+
+    const officialTrailer = response.results.find(
+      (video) => video.name === "Official Trailer"
+    );
+
+    responseHandler.ok(
+      res,
+      officialTrailer ? officialTrailer : response.results[0]
+    );
+  } catch (err) {
+    responseHandler.error(res);
+  }
+};
+
+const getMoreInfoMedia = async (req, res) => {
+  try {
+    const { mediaType, mediaId } = req.params;
+
+    const media = await tmdbApi.mediaDetail({ mediaType, mediaId });
+
+    media.credits = await tmdbApi.mediaCredits({ mediaType, mediaId });
+
+    responseHandler.ok(res, media);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+export default {
+  getList,
+  getGenres,
+  getTrendingList,
+  getTrailerMovie,
+  getMoreInfoMedia,
+};

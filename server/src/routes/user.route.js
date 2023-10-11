@@ -14,5 +14,14 @@ router.put(
 );
 router.get("/info", tokenMiddleware.auth, userController.getInfoUser);
 router.post("/favorites", tokenMiddleware.auth, favoriteController.addFavorite);
-
+router.get(
+  "/favorites",
+  tokenMiddleware.auth,
+  favoriteController.getFavoritesOfUser
+);
+router.delete(
+  "/favorites/:favoriteId",
+  tokenMiddleware.auth,
+  favoriteController.removefavorite
+);
 export default router;
