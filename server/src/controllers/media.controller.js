@@ -66,4 +66,24 @@ const getTrailerMovie = async (req, res) => {
   }
 };
 
-export default { getList, getGenres, getTrendingList, getTrailerMovie };
+const getMoreInfoMedia = async (req, res) => {
+  try {
+    const { mediaType, mediaId } = req.params;
+
+    const media = await tmdbApi.mediaDetail({ mediaType, mediaId });
+
+    media.credits = await tmdbApi.mediaCredits({ mediaType, mediaId });
+
+    responseHandler.ok(res, media);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+export default {
+  getList,
+  getGenres,
+  getTrendingList,
+  getTrailerMovie,
+  getMoreInfoMedia,
+};
