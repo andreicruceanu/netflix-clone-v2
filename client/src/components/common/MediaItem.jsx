@@ -11,6 +11,7 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import { useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
 import TrailerVideo from "./TrailerVideo";
+import MoreInfoModal from "./MoreInfoModal";
 
 const MediaItem = ({ media, mediaType }) => {
   const [title, setTitle] = useState("");
@@ -45,20 +46,28 @@ const MediaItem = ({ media, mediaType }) => {
     setRate(media.vote_average || media.mediaRate);
   }, [media, mediaType]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const [isModalOpen, setIsModalOpen] = useState({
+    trailerModal: false,
+    moreDetails: false,
+  });
+  const handleOpenModal = (modalName) => {
+    setIsModalOpen({ ...isModalOpen, [modalName]: true });
   };
-  const onClose = () => {
-    setIsModalOpen(false);
+  const onClose = (modalName) => {
+    setIsModalOpen({ ...isModalOpen, [modalName]: false });
   };
 
   return (
     <>
       <TrailerVideo
-        open={isModalOpen}
-        onClose={onClose}
+        open={isModalOpen.trailerModal}
+        onClose={() => onClose("trailerModal")}
+        mediaType={mediaType}
+        mediaId={media.id}
+      />
+      <MoreInfoModal
+        open={isModalOpen.moreDetails}
+        onClose={() => onClose("moreDetails")}
         mediaType={mediaType}
         mediaId={media.id}
       />
@@ -146,14 +155,19 @@ const MediaItem = ({ media, mediaType }) => {
                   }}
                 >
                   <ButtonCard background={"white"}>
-                    <PlayArrowIcon onClick={handleOpenModal} />
+                    <PlayArrowIcon
+                      onClick={() => handleOpenModal("trailerModal")}
+                    />
                   </ButtonCard>
                   <ButtonCard>
                     <ButtonFavorite media={media} mediaType={mediaType} />
                   </ButtonCard>
                 </Box>
                 <ButtonCard>
-                  <ExpandMoreIcon sx={{ color: "white" }} />
+                  <ExpandMoreIcon
+                    sx={{ color: "white" }}
+                    onClick={() => handleOpenModal("moreDetails")}
+                  />
                 </ButtonCard>
               </Box>
               <Typography

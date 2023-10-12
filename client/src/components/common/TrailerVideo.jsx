@@ -68,7 +68,7 @@ const TrailerVideo = ({ open, onClose, mediaType, mediaId }) => {
     }
   }, [open, mediaType, mediaId]);
   return (
-    <Modal sx={{ position: "fixed" }} open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose}>
       <Box
         sx={{
           position: "fixed",

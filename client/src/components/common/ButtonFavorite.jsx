@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AddIcon from "@mui/icons-material/Add";
@@ -81,6 +81,16 @@ const ButtonFavorite = ({ media, mediaType }) => {
       //toast.success("Remove favorite succes")
     }
   };
+
+  useEffect(() => {
+    const favorite = listFavorites.find(
+      (e) => e.mediaId.toString() === media.id.toString()
+    );
+    console.log(favorite);
+    if (favorite) {
+      setIsFavorite(true);
+    }
+  }, [listFavorites, media.id]);
 
   return (
     <LoadingButton

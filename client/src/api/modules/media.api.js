@@ -7,6 +7,8 @@ const mediaEndpoints = {
     `/trending/${mediaType}/${time}?page=${page}`,
   trailer: ({ mediaType, mediaId }) =>
     `${mediaType}/${mediaId}/officialTrailer`,
+  moreDetails: ({ mediaType, mediaId }) =>
+    `${mediaType}/${mediaId}/moreDetails`,
 };
 
 const mediaApi = {
@@ -34,6 +36,16 @@ const mediaApi = {
     try {
       const response = await publicClient.get(
         mediaEndpoints.trailer({ mediaType, mediaId })
+      );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  getMoreDetails: async ({ mediaType, mediaId }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.moreDetails({ mediaType, mediaId })
       );
       return { response };
     } catch (err) {
