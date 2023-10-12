@@ -7,4 +7,5 @@ router.get("/genres", mediaController.getGenres);
 router.get("/:mediaCategory", mediaController.getList);
 router.get("/:mediaId/officialTrailer", mediaController.getTrailerMovie);
 router.get("/:mediaId/moreDetails", mediaController.getMoreInfoMedia);
+
 export default router;
