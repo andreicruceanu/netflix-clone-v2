@@ -86,7 +86,6 @@ const ButtonFavorite = ({ media, mediaType }) => {
     const favorite = listFavorites.find(
       (e) => e.mediaId.toString() === media.id.toString()
     );
-    console.log(favorite);
     if (favorite) {
       setIsFavorite(true);
     }

@@ -23,8 +23,6 @@ const MediaItem = ({ media, mediaType }) => {
   const { genresMovie } = useSelector((state) => state.genres);
   const { genresSeries } = useSelector((state) => state.genres);
 
-  console.log(media);
-
   useEffect(() => {
     setTitle(media.title || media.name || media.mediaTitle);
     setGenreId(media.genre_ids);

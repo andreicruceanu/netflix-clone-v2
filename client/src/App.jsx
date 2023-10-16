@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./swiper.css";
 import { ToastContainer } from "react-toastify";
+import PageWrapper from "./components/common/PageWrapper";
 const App = () => {
   const { themeMode } = useSelector((state) => state.themeMode);
   return (
@@ -32,9 +33,33 @@ const App = () => {
           <Route path="/" element={<MainLayout />}>
             {routes.map((route, index) =>
               route.index ? (
-                <Route index key={index} element={route.element} />
+                <Route
+                  index
+                  key={index}
+                  element={
+                    route.state ? (
+                      <PageWrapper state={route.state}>
+                        {route.element}
+                      </PageWrapper>
+                    ) : (
+                      route.element
+                    )
+                  }
+                />
               ) : (
-                <Route path={route.path} key={index} element={route.element} />
+                <Route
+                  path={route.path}
+                  key={index}
+                  element={
+                    route.state ? (
+                      <PageWrapper state={route.state}>
+                        {route.element}
+                      </PageWrapper>
+                    ) : (
+                      route.element
+                    )
+                  }
+                />
               )
             )}
           </Route>

@@ -8,14 +8,15 @@ export const userSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
+      console.log(action.payload);
       if (action.payload === null) {
         localStorage.removeItem("jwt_token");
       } else {
         if (action.payload.token) {
           localStorage.setItem("jwt_token", action.payload.token);
         }
-        state.user = action.payload;
       }
+      state.user = action.payload;
     },
     setListFavorite: (state, action) => {
       state.listFavorites = action.payload;

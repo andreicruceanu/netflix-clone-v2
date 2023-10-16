@@ -85,7 +85,12 @@ const Topbar = () => {
               {menuConfigs.main.map((item, index) => (
                 <Button
                   key={index}
-                  sx={{ color: "#fff", marginRight: 2 }}
+                  sx={{
+                    color: appState.includes(item.state)
+                      ? "primary.contrastText"
+                      : "inherit",
+                    mr: 2,
+                  }}
                   component={Link}
                   to={item.path}
                   variant={appState.includes(item.state) ? "contained" : "text"}
