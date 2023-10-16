@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema(
       require: true,
       select: false,
     },
+    profilePicture: {
+      type: String,
+      default: process.env.DEFAULT_AVATAR || undefined,
+    },
     salt: {
       type: String,
       required: true,
