@@ -18,6 +18,7 @@ import menuConfigs from "../../configs/menu.config";
 import { Link } from "react-router-dom";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setThemeMode } from "../../redux/features/themeModeSlice";
+import UserMenu from "./UserMenu";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -114,6 +115,7 @@ const Topbar = () => {
                 </Button>
               )}
             </Stack>
+            {user && <UserMenu />}
           </Toolbar>
         </AppBar>
       </ScrollAppBar>

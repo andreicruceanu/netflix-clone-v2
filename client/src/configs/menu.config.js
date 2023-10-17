@@ -1,6 +1,10 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LiveTvOutlinedIcon from "@mui/icons-material/LiveTvOutlined";
 import SlideshowOutlinedIcon from "@mui/icons-material/SlideshowOutlined";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
+import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 
 const main = [
   {
@@ -28,6 +32,34 @@ const main = [
     state: "new&polular",
   },
 ];
-const menuConfigs = { main };
+
+const user = [
+  {
+    display: "profiles",
+    path: "/profile",
+    icon: <PersonOutlineIcon />,
+    state: "profile",
+  },
+  {
+    display: "favorites",
+    path: "/favorites",
+    icon: <FavoriteBorderOutlinedIcon />,
+    state: "favorite",
+  },
+  {
+    display: "reviews",
+    path: "/reviews",
+    icon: <RateReviewOutlinedIcon />,
+    state: "reviews",
+  },
+  {
+    display: "password update",
+    path: "/password-update",
+    icon: <LockResetOutlinedIcon />,
+    state: "password.update",
+  },
+];
+
+const menuConfigs = { main, user };
 
 export default menuConfigs;
