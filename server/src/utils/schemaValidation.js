@@ -60,3 +60,8 @@ export const schemaUpdatePassword = Joi.object({
     .regex(regexPassword)
     .error(handleError),
 });
+
+export const schemaUpdateUser = Joi.object({
+  firstName: Joi.string().min(3).required().error(handleError),
+  lastName: Joi.string().min(3).required().error(handleError),
+});

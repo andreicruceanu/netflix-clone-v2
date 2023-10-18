@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      require: false,
+      default: null,
     },
     salt: {
       type: String,
