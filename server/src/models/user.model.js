@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema(
       require: true,
       select: false,
     },
+    profilePicture: {
+      type: String,
+      require: false,
+    },
     salt: {
       type: String,
       required: true,

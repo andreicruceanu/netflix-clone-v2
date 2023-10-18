@@ -18,6 +18,7 @@ import menuConfigs from "../../configs/menu.config";
 import { Link } from "react-router-dom";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setThemeMode } from "../../redux/features/themeModeSlice";
+import UserMenu from "./UserMenu";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -85,7 +86,12 @@ const Topbar = () => {
               {menuConfigs.main.map((item, index) => (
                 <Button
                   key={index}
-                  sx={{ color: "#fff", marginRight: 2 }}
+                  sx={{
+                    color: appState.includes(item.state)
+                      ? "primary.contrastText"
+                      : "inherit",
+                    mr: 2,
+                  }}
                   component={Link}
                   to={item.path}
                   variant={appState.includes(item.state) ? "contained" : "text"}
@@ -109,6 +115,7 @@ const Topbar = () => {
                 </Button>
               )}
             </Stack>
+            {user && <UserMenu />}
           </Toolbar>
         </AppBar>
       </ScrollAppBar>
