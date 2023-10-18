@@ -61,7 +61,7 @@ const signin = async (req, res) => {
 
     const user = await userModel
       .findOne({ email })
-      .select("firstName lastName salt id email password");
+      .select("firstName lastName salt id email password profilePicture");
 
     if (!user) {
       return responseHandler.badrequest(res, "User not exist!");
@@ -130,4 +130,50 @@ const getInfoUser = async (req, res) => {
   }
 };
 
-export default { signup, signin, updatePassword, getInfoUser };
+const updateProfileUser = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.id);
+
+    if (!user) {
+      return responseHandler.notfound(res);
+    }
+
+    const validationResult = validateDataFromUser.updateUser({
+      ...req.body,
+    });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.user.id,
+      {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          profilePicture: req.body.profilePicture,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    const { password, ...rest } = updatedUser._doc;
+
+    responseHandler.ok(res, rest);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+export default {
+  signup,
+  signin,
+  updatePassword,
+  getInfoUser,
+  updateProfileUser,
+};
