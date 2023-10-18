@@ -3,6 +3,8 @@ import Home from "../pages/Home";
 import MediaList from "../pages/MediaList";
 import MediaSearch from "../pages/MediaSearch";
 import PersonDetail from "../pages/PersonDetail";
+import ProtectedPage from "../components/common/ProtectedPage";
+import Account from "../pages/Account";
 
 const routes = [
   {
@@ -27,6 +29,15 @@ const routes = [
   {
     path: "/favorites",
     element: <FavoriteList />,
+  },
+  {
+    path: "/account",
+    element: (
+      <ProtectedPage>
+        <Account />
+      </ProtectedPage>
+    ),
+    state: "account",
   },
 ];
 

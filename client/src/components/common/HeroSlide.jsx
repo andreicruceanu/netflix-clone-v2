@@ -16,6 +16,7 @@ import {
   setGenresMovieSlice,
   setGenresSeriesSlice,
 } from "../../redux/features/genresStateSlice";
+import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
   console.log({ mediaType });
@@ -37,9 +38,12 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
       if (err) {
         toast.error(err.message);
       }
+      dispatch(setGlobalLoading(false));
     };
 
     const getGenresMovie = async () => {
+      dispatch(setGlobalLoading(true));
+
       const { response, err } = await genreApi.getList({ mediaType });
 
       if (response) {

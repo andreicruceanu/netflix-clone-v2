@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyCAT9MsiDW1hEneGdpYjTnpHTDxk9I4pYc",
   authDomain: "netflix-clone-80ac4.firebaseapp.com",
@@ -10,5 +9,4 @@ const firebaseConfig = {
   measurementId: "G-6LRMBB9J8R",
 };
 
-const app = initializeApp(firebaseConfig);
-export const storage = getStorage(app);
+export const app = initializeApp(firebaseConfig);

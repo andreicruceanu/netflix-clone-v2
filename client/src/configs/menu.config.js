@@ -35,10 +35,10 @@ const main = [
 
 const user = [
   {
-    display: "profiles",
-    path: "/profile",
+    display: "Account",
+    path: "/account",
     icon: <PersonOutlineIcon />,
-    state: "profile",
+    state: "account",
   },
   {
     display: "favorites",

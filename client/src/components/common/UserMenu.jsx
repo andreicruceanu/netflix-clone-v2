@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import menuConfigs from "../../configs/menu.config";
 import { Link } from "react-router-dom";
 import { setUser } from "../../redux/features/userSlice";
+import avatarDefault from "../../assets/images/default-blue.png";
 
 const UserMenu = () => {
   const { user } = useSelector((state) => state.user);
@@ -47,7 +48,11 @@ const UserMenu = () => {
             }}
             onClick={toggleMenu}
           >
-            <img src={user.profilePicture} width={40} alt={"avatar"} />
+            <img
+              src={user.profilePicture || avatarDefault}
+              width={40}
+              alt="avatar"
+            />
             <KeyboardArrowDownIcon
               style={{
                 transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
@@ -74,7 +79,11 @@ const UserMenu = () => {
                 borderBottom: "1px solid grey",
               }}
             >
-              <img src={user.profilePicture} width={30} alt={"avatar"} />
+              <img
+                src={user.profilePicture || avatarDefault}
+                width={30}
+                alt={"avatar"}
+              />
               <Typography sx={{ marginLeft: ".8rem" }}>
                 Hello, {user.firstName}
               </Typography>
@@ -93,20 +102,22 @@ const UserMenu = () => {
               </ListItemButton>
             ))}
 
-            <ListItemButton
-              sx={{ borderRadius: "10px" }}
+            <ListItemText
+              disableTypography
+              sx={{
+                padding: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderTop: "1px solid grey",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "red",
+                },
+              }}
               onClick={() => dispatch(setUser(null))}
-            >
-              <ListItemIcon>
-                <LogoutOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText
-                disableTypography
-                primary={
-                  <Typography textTransform="uppercase">sign out</Typography>
-                }
-              />
-            </ListItemButton>
+              primary={<Typography>Sign out of Netflix</Typography>}
+            />
           </Menu>
         </>
       )}
