@@ -64,4 +64,5 @@ export const schemaUpdatePassword = Joi.object({
 export const schemaUpdateUser = Joi.object({
   firstName: Joi.string().min(3).required().error(handleError),
   lastName: Joi.string().min(3).required().error(handleError),
+  profilePicture: Joi.required(false),
 });
