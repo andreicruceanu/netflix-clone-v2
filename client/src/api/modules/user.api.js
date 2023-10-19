@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import privateClient from "../client/private.client";
 import publicClient from "../client/public.client";
 
@@ -6,6 +7,8 @@ const userEndpoints = {
   signin: "user/signin",
   getInfo: "user/info",
   updateProfile: "user/update",
+  changePassword: "user/update-password",
+  changeEmail: "user/changeEmail",
 };
 
 const userApi = {
@@ -44,11 +47,34 @@ const userApi = {
   },
   updateProfileUser: async ({ firstName, lastName, profilePicture }) => {
     try {
-      console.log({ firstName, lastName, profilePicture });
       const response = await privateClient.post(userEndpoints.updateProfile, {
         firstName,
         lastName,
         profilePicture,
+      });
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  changePassword: async ({ oldPassword, password, confirmPassword }) => {
+    try {
+      const response = await privateClient.put(userEndpoints.changePassword, {
+        oldPassword,
+        password,
+        confirmPassword,
+      });
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  changeEmail: async ({ oldEmail, newEmail, password }) => {
+    try {
+      const response = await privateClient.put(userEndpoints.changeEmail, {
+        oldEmail,
+        newEmail,
+        password,
       });
       return { response };
     } catch (err) {

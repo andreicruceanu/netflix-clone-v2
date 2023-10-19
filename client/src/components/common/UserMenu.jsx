@@ -11,7 +11,7 @@ import {
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import menuConfigs from "../../configs/menu.config";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/features/userSlice";
 import avatarDefault from "../../assets/images/default-blue.png";
 
@@ -20,6 +20,7 @@ const UserMenu = () => {
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = (e) => {
     setAnchorEl(e.currentTarget);
@@ -32,6 +33,11 @@ const UserMenu = () => {
       setIsOpen(false);
     }
   }, [anchorEl]);
+
+  const handleLogout = () => {
+    dispatch(setUser(null));
+    navigate("/");
+  };
 
   return (
     <>
@@ -115,7 +121,7 @@ const UserMenu = () => {
                   color: "red",
                 },
               }}
-              onClick={() => dispatch(setUser(null))}
+              onClick={handleLogout}
               primary={<Typography>Sign out of Netflix</Typography>}
             />
           </Menu>

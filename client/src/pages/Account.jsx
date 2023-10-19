@@ -21,6 +21,14 @@ import { LoadingButton } from "@mui/lab";
 import { validationForm } from "../utils/ValidationForm";
 import { toast } from "react-toastify";
 import { setUser } from "../redux/features/userSlice";
+import EditIcon from "@mui/icons-material/Edit";
+import ModalDefault from "../components/common/ModalDefaut";
+import FormChangePassword from "../components/common/FormChangePassword";
+import FormChangeEmail from "../components/common/FormChangeEmail";
+const actionModal = {
+  changePassword: "password",
+  changeEmail: "email",
+};
 
 const Account = () => {
   const [image, setImage] = useState(undefined);
@@ -51,6 +59,7 @@ const Account = () => {
         dispatch(setUser(response));
       }
       if (err) {
+        toast.error(err.message);
         setErrorMessage(err.message);
       }
     },
@@ -68,7 +77,7 @@ const Account = () => {
         updateForm.setValues({ firstName, lastName, email, profilePicture });
       }
       if (err) {
-        console.log(err);
+        toast.error(err.message);
       }
     };
     getUserProfile();
@@ -118,123 +127,209 @@ const Account = () => {
     width: 1,
   });
 
+  const [open, setOpen] = useState(false);
+  const [action, setAction] = useState(null);
+
+  const handleModal = (action) => {
+    setAction(action);
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Box sx={{ ...uiConfigs.style.mainContent }}>
+      <ModalDefault open={open} onClose={onClose} action={action}>
+        {action === actionModal.changePassword && <FormChangePassword />}
+        {action === actionModal.changeEmail && (
+          <FormChangeEmail email={updateForm.values.email} />
+        )}
+      </ModalDefault>
       <Container header={"My Account"}>
         <Box
           onSubmit={updateForm.handleSubmit}
           component="form"
-          sx={{ maxWidth: "300px" }}
+          sx={{ maxWidth: "450px", display: "flex" }}
         >
-          <VisuallyHiddenInput
-            accept="image/*"
-            type="file"
-            ref={fileRef}
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-          <img
-            src={updateForm.values?.profilePicture || DefaultAvatar}
-            alt="avatar"
-            width={50}
-            onClick={() => fileRef.current.click()}
-          />
-          <Typography>
-            {imageError ? (
-              <Typography>
-                Error uploading image (file size must be less than 2 MB)
-              </Typography>
-            ) : imagePercent > 0 && imagePercent < 100 ? (
-              <span>{`Uploading: + ${imagePercent} %`}</span>
-            ) : imagePercent === 100 ? (
-              <span>Uploaded succesfully</span>
-            ) : (
-              ""
-            )}
-          </Typography>
-
-          <Stack spacing={3} sx={{ mt: 4 }}>
-            <TextField
-              sx={inputStyledBlack}
-              id="firstName"
-              label="FirstName"
-              variant="outlined"
-              name="firstName"
-              onChange={updateForm.handleChange}
-              value={updateForm.values.firstName}
-              onBlur={updateForm.handleBlur}
-              helperText={
-                updateForm.touched.firstName ? updateForm.errors.firstName : ""
-              }
-              error={
-                updateForm.touched.firstName &&
-                updateForm.errors.firstName !== undefined
-              }
-            />
-            <TextField
-              sx={inputStyledBlack}
-              id="LastName"
-              label="LastName"
-              name="lastName"
-              variant="outlined"
-              onChange={updateForm.handleChange}
-              value={updateForm.values.lastName}
-              onBlur={updateForm.handleBlur}
-              helperText={
-                updateForm.touched.lastName ? updateForm.errors.lastName : ""
-              }
-              error={
-                updateForm.touched.lastName &&
-                updateForm.errors.lastName !== undefined
-              }
-            />
-            <TextField
-              sx={inputStyledBlack}
-              id="Email"
-              label="Email"
-              variant="outlined"
-              name="email"
-              fullWidth
-              disabled
-              onBlur={updateForm.handleBlur}
-              onChange={updateForm.handleChange}
-              value={updateForm.values.email}
-              helperText={
-                updateForm.touched.email ? updateForm.errors.email : ""
-              }
-              error={
-                updateForm.touched.email &&
-                updateForm.errors.email !== undefined
-              }
-            />
-            <TextField
-              sx={inputStyledBlack}
-              id="Password"
-              label="Password"
-              name="password"
-              type="password"
-              variant="outlined"
-              value="*********"
-              disabled
-              fullWidth
-            />
-          </Stack>
-          <LoadingButton
-            type="submit"
-            fullWidth
-            size="large"
-            variant="contained"
-            loading={isLoginRequest}
-            sx={{ marginTop: 4 }}
-          >
-            Sign Up
-          </LoadingButton>
-          {errorMessage && (
-            <Box sx={{ marginTop: 2 }}>
-              <Alert severity="error" variant="outlined">
-                {errorMessage}
-              </Alert>
+          <Box sx={{ mr: 2 }}>
+            <Box sx={{ width: "100px", position: "relative" }}>
+              <VisuallyHiddenInput
+                accept="image/*"
+                id="uploadFile"
+                type="file"
+                ref={fileRef}
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+              <Box
+                component={"img"}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                }}
+                src={updateForm.values?.profilePicture || DefaultAvatar}
+                alt="avatar"
+                onClick={() => fileRef.current.click()}
+              ></Box>
+              <Box
+                sx={{
+                  position: "absolute",
+                  cursor: "pointer",
+                  right: "5px",
+                  bottom: "10px",
+                  width: "20px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  background: "black",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zindex: -99,
+                }}
+                onClick={() => fileRef.current.click()}
+              >
+                <EditIcon sx={{ fontSize: "14px", color: "white" }} />
+              </Box>
             </Box>
-          )}
+
+            <Typography>
+              {imageError ? (
+                <Typography>
+                  Error uploading image (file size must be less than 2 MB)
+                </Typography>
+              ) : imagePercent > 0 && imagePercent < 100 ? (
+                <span>{`Uploading: ${imagePercent} %`}</span>
+              ) : imagePercent === 100 ? (
+                <span>Uploaded succesfully</span>
+              ) : (
+                ""
+              )}
+            </Typography>
+          </Box>
+          <Box sx={{ flex: 1 }}>
+            <Stack spacing={3}>
+              <TextField
+                sx={inputStyledBlack}
+                id="firstName"
+                label="FirstName"
+                variant="outlined"
+                name="firstName"
+                onChange={updateForm.handleChange}
+                value={updateForm.values.firstName}
+                onBlur={updateForm.handleBlur}
+                helperText={
+                  updateForm.touched.firstName
+                    ? updateForm.errors.firstName
+                    : ""
+                }
+                error={
+                  updateForm.touched.firstName &&
+                  updateForm.errors.firstName !== undefined
+                }
+              />
+              <TextField
+                sx={inputStyledBlack}
+                id="LastName"
+                label="LastName"
+                name="lastName"
+                variant="outlined"
+                onChange={updateForm.handleChange}
+                value={updateForm.values.lastName}
+                onBlur={updateForm.handleBlur}
+                helperText={
+                  updateForm.touched.lastName ? updateForm.errors.lastName : ""
+                }
+                error={
+                  updateForm.touched.lastName &&
+                  updateForm.errors.lastName !== undefined
+                }
+              />
+              <TextField
+                sx={inputStyledBlack}
+                id="Email"
+                label="Email"
+                variant="outlined"
+                name="email"
+                fullWidth
+                disabled
+                onBlur={updateForm.handleBlur}
+                onChange={updateForm.handleChange}
+                value={updateForm.values.email}
+                helperText={
+                  updateForm.touched.email ? updateForm.errors.email : ""
+                }
+                error={
+                  updateForm.touched.email &&
+                  updateForm.errors.email !== undefined
+                }
+                InputProps={{
+                  endAdornment: (
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        color: "white",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "red",
+                        },
+                      }}
+                      onClick={() => handleModal(actionModal.changeEmail)}
+                    >
+                      Change
+                    </Typography>
+                  ),
+                }}
+              />
+              <TextField
+                sx={inputStyledBlack}
+                id="Password"
+                label="Password"
+                name="password"
+                type="password"
+                variant="outlined"
+                value="***********"
+                disabled
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <Typography
+                      sx={{
+                        fontSize: "14px",
+                        color: "white",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "red",
+                        },
+                      }}
+                      onClick={() => handleModal(actionModal.changePassword)}
+                    >
+                      Change
+                    </Typography>
+                  ),
+                }}
+              />
+            </Stack>
+            <LoadingButton
+              type="submit"
+              fullWidth
+              size="large"
+              variant="contained"
+              loading={isLoginRequest}
+              sx={{ marginTop: 4 }}
+            >
+              Save
+            </LoadingButton>
+            {errorMessage && (
+              <Box sx={{ marginTop: 2 }}>
+                <Alert severity="error" variant="outlined">
+                  {errorMessage}
+                </Alert>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Container>
     </Box>
