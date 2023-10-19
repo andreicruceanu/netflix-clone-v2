@@ -160,11 +160,11 @@ const updateProfileUser = async (req, res) => {
       },
       {
         new: true,
+        select: "-password",
       }
     );
-    const { password, ...rest } = updatedUser._doc;
 
-    responseHandler.ok(res, rest);
+    responseHandler.ok(res, { ...updatedUser._doc, id: updatedUser._id });
   } catch (error) {
     responseHandler.error(res);
   }
