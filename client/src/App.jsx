@@ -2,10 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import MainLayout from "./components/layout/MainLayout";
 import routes from "./routes/routes";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { useSelector } from "react-redux";
 import themeConfigs from "./configs/theme.configs";
 
+import "react-toastify/dist/ReactToastify.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -17,7 +19,7 @@ const App = () => {
   return (
     <ThemeProvider theme={themeConfigs.custom({ mode: themeMode })}>
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

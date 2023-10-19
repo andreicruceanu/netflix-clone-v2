@@ -5,6 +5,7 @@ const userEndpoints = {
   signup: "user/signup",
   signin: "user/signin",
   getInfo: "user/info",
+  updateProfile: "user/update",
 };
 
 const userApi = {
@@ -36,6 +37,19 @@ const userApi = {
     try {
       const response = await privateClient.get(userEndpoints.getInfo);
 
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  updateProfileUser: async ({ firstName, lastName, profilePicture }) => {
+    try {
+      console.log({ firstName, lastName, profilePicture });
+      const response = await privateClient.post(userEndpoints.updateProfile, {
+        firstName,
+        lastName,
+        profilePicture,
+      });
       return { response };
     } catch (err) {
       return { err };

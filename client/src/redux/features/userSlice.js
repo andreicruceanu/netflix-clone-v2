@@ -8,7 +8,6 @@ export const userSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-      console.log(action.payload);
       if (action.payload === null) {
         localStorage.removeItem("jwt_token");
       } else {
