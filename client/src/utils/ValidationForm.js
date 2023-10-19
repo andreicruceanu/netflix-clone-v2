@@ -24,6 +24,14 @@ const validationForm = {
       )
       .required("Password is required"),
   }),
+  updateProfileUser: Yup.object({
+    firstName: Yup.string()
+      .max(20, "First Name maximum 20 characters")
+      .required("First Name is required"),
+    lastName: Yup.string()
+      .max(20, "Last Name maximum 20 characters")
+      .required("Last Name is required"),
+  }),
 };
 
 export { validationForm };

@@ -19,7 +19,6 @@ import {
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
-  console.log({ mediaType });
   const theme = useTheme();
   const dispatch = useDispatch();
 

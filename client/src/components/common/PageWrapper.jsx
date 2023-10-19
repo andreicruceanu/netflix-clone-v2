@@ -4,7 +4,7 @@ import { setAppState } from "../../redux/features/appStateSlice";
 
 const PageWrapper = ({ state, children }) => {
   const dispatch = useDispatch();
-  console.log(state);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
