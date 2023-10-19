@@ -1,4 +1,5 @@
 import {
+  schemaChangeEmail,
   schemaSignup,
   schemaUpdatePassword,
   schemaUpdateUser,
@@ -10,6 +11,7 @@ const validateDataFromUser = {
   signin: (user) => schemaSignin.validate(user),
   updatePassowrd: (passwordData) => schemaUpdatePassword.validate(passwordData),
   updateUser: (updatedUser) => schemaUpdateUser.validate(updatedUser),
+  changeEmail: (emailData) => schemaChangeEmail.validate(emailData),
 };
 
 export default validateDataFromUser;

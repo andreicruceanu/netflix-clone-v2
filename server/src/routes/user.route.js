@@ -12,6 +12,11 @@ router.put(
   tokenMiddleware.auth,
   userController.updatePassword
 );
+router.put(
+  "/changeEmail",
+  tokenMiddleware.auth,
+  userController.changeEmailUser
+);
 router.post("/update", tokenMiddleware.auth, userController.updateProfileUser);
 router.get("/info", tokenMiddleware.auth, userController.getInfoUser);
 router.post("/favorites", tokenMiddleware.auth, favoriteController.addFavorite);
