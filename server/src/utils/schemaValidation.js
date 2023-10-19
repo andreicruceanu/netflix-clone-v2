@@ -49,20 +49,31 @@ export const schemaSignin = Joi.object({
 });
 
 export const schemaUpdatePassword = Joi.object({
+  oldPassword: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
   password: Joi.string()
     .required()
     .min(8)
     .regex(regexPassword)
     .error(handleError),
-  newPassword: Joi.string()
-    .required()
-    .min(8)
-    .regex(regexPassword)
-    .error(handleError),
+  confirmPassword: Joi.string().required(),
 });
 
 export const schemaUpdateUser = Joi.object({
   firstName: Joi.string().min(3).required().error(handleError),
   lastName: Joi.string().min(3).required().error(handleError),
   profilePicture: Joi.required(false),
+});
+
+export const schemaChangeEmail = Joi.object({
+  oldEmail: Joi.string().email().required().error(handleError),
+  newEmail: Joi.string().email().required().error(handleError),
+  password: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
 });
