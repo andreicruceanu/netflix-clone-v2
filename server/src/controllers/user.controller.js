@@ -2,6 +2,7 @@ import responseHandler from "../handlers/response.handler.js";
 import userModel from "../models/user.model.js";
 import validateDataFromUser from "../utils/userValidation.js";
 import generateToken from "../utils/generateToken.js";
+import likesMoviesModel from "../models/likesMovies.model.js";
 
 const signup = async (req, res) => {
   try {
@@ -227,6 +228,52 @@ const changeEmailUser = async (req, res) => {
   }
 };
 
+const likeMovie = async (req, res) => {
+  try {
+    const { mediaId } = req.body;
+
+    const isLiked = await likesMoviesModel.findOne({
+      userId: req.user.id,
+      mediaId,
+    });
+
+    if (isLiked) {
+      return responseHandler.ok(res, isLiked);
+    }
+
+    const likedMovie = new likesMoviesModel({
+      userId: req.user.id,
+      ...req.body,
+    });
+
+    await likedMovie.save();
+
+    responseHandler.created(res, likedMovie);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+const removeLikeMovie = async (req, res) => {
+  try {
+    const { likeMovieId } = req.params;
+
+    const likeMovie = await likesMoviesModel.findOne({
+      userId: req.user.id,
+      _id: likeMovieId,
+    });
+
+    if (!likeMovie) {
+      return responseHandler.notfound(res);
+    }
+
+    await likesMoviesModel.deleteOne(likeMovie);
+    responseHandler.ok(res);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   signup,
   signin,
@@ -234,4 +281,6 @@ export default {
   getInfoUser,
   updateProfileUser,
   changeEmailUser,
+  likeMovie,
+  removeLikeMovie,
 };

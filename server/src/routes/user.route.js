@@ -25,9 +25,15 @@ router.get(
   tokenMiddleware.auth,
   favoriteController.getFavoritesOfUser
 );
+router.post("/likeMovie", tokenMiddleware.auth, userController.likeMovie);
 router.delete(
   "/favorites/:favoriteId",
   tokenMiddleware.auth,
   favoriteController.removefavorite
+);
+router.delete(
+  "/likeMovie/:likeMovieId",
+  tokenMiddleware.auth,
+  userController.removeLikeMovie
 );
 export default router;
