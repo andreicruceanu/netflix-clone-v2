@@ -1,12 +1,10 @@
 import { LoadingButton } from "@mui/lab";
 import React, { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import favoriteApi from "../../api/modules/favorite.api";
-
 import { addFavorite, removeFavorite } from "../../redux/features/userSlice";
 import { toast } from "react-toastify";
 const ButtonFavorite = ({ media, mediaType }) => {
@@ -83,11 +81,14 @@ const ButtonFavorite = ({ media, mediaType }) => {
   };
 
   useEffect(() => {
+    console.log("Aiciiiiii");
     const favorite = listFavorites.find(
       (e) => e.mediaId.toString() === media.id.toString()
     );
     if (favorite) {
       setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
   }, [listFavorites, media.id]);
 
