@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
 import TrailerVideo from "./TrailerVideo";
 import MoreInfoModal from "./MoreInfoModal";
+import LikeMovie from "./LikeMovie";
 
 const MediaItem = ({ media, mediaType }) => {
   const [title, setTitle] = useState("");
@@ -160,6 +161,7 @@ const MediaItem = ({ media, mediaType }) => {
                   <ButtonCard>
                     <ButtonFavorite media={media} mediaType={mediaType} />
                   </ButtonCard>
+                  <LikeMovie />
                 </Box>
                 <ButtonCard>
                   <ExpandMoreIcon

@@ -4,7 +4,6 @@ const regexPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
 
 const handleError = (error) => {
   error.forEach((err) => {
-    console.log(err);
     switch (err.code) {
       case "any.required":
         err.message = `${err.local.label} is required`;
@@ -20,6 +19,12 @@ const handleError = (error) => {
         break;
       case "string.pattern.base":
         err.message = `The password must have at least 8 characters, uppercase, lowercase, a number and a special character`;
+        break;
+      case "any.only":
+        err.message = `${err.local.label} must be one of ${err.local.valids}`;
+        break;
+      case "number.base":
+        err.message = `${err.local.label} must be a number`;
       default:
         return err;
     }
@@ -49,20 +54,40 @@ export const schemaSignin = Joi.object({
 });
 
 export const schemaUpdatePassword = Joi.object({
+  oldPassword: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
   password: Joi.string()
     .required()
     .min(8)
     .regex(regexPassword)
     .error(handleError),
-  newPassword: Joi.string()
-    .required()
-    .min(8)
-    .regex(regexPassword)
-    .error(handleError),
+  confirmPassword: Joi.string().required().error(handleError),
 });
 
 export const schemaUpdateUser = Joi.object({
   firstName: Joi.string().min(3).required().error(handleError),
   lastName: Joi.string().min(3).required().error(handleError),
   profilePicture: Joi.required(false),
+});
+
+export const schemaChangeEmail = Joi.object({
+  oldEmail: Joi.string().email().required().error(handleError),
+  newEmail: Joi.string().email().required().error(handleError),
+  password: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
+});
+
+export const schemaPreferences = Joi.object({
+  type: Joi.string()
+    .required()
+    .valid("like", "dislike", "none")
+    .error(handleError),
+  mediaId: Joi.number().required().error(handleError),
+  mediaType: Joi.string().required().valid("tv", "movie").error(handleError),
 });

@@ -1,7 +1,6 @@
 import { LoadingButton } from "@mui/lab";
 import React, { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
@@ -38,7 +37,7 @@ const ButtonFavorite = ({ media, mediaType }) => {
       mediaPoster: media.poster_path,
       mediaRate: media.vote_average,
       mediaGenreIds: media.genre_ids,
-      mediaReleaseDate: media.release_date,
+      mediaReleaseDate: media.release_date || media.first_air_date,
     };
 
     const { response, err } = await favoriteApi.add(body);
@@ -88,6 +87,8 @@ const ButtonFavorite = ({ media, mediaType }) => {
     );
     if (favorite) {
       setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
   }, [listFavorites, media.id]);
 
