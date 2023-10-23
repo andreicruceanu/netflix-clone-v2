@@ -6,10 +6,12 @@ import Topbar from "../common/Topbar";
 import { Outlet } from "react-router-dom";
 import AuthModal from "../common/AuthModal";
 import userApi from "../../api/modules/user.api";
-import { setUser } from "../../redux/features/userSlice";
+import { setListPreferences, setUser } from "../../redux/features/userSlice";
+import preferencesApi from "../../api/modules/preferences.api";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     const authUser = async () => {
@@ -23,6 +25,19 @@ const MainLayout = () => {
     };
     authUser();
   }, [dispatch]);
+
+  useEffect(() => {
+    const getPreferences = async () => {
+      const { response, err } = await preferencesApi.getPreferences();
+      if (response) {
+        dispatch(setListPreferences(response));
+      }
+      if (err) {
+        dispatch(setListPreferences([]));
+      }
+    };
+    if (user) getPreferences();
+  }, [user, dispatch]);
 
   return (
     <>

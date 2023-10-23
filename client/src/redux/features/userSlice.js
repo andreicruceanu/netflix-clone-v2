@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     user: null,
     listFavorites: [],
-    listLikedMovies: [],
+    listPreferences: [],
   },
   reducers: {
     setUser: (state, action) => {
@@ -21,14 +21,29 @@ export const userSlice = createSlice({
     setListFavorite: (state, action) => {
       state.listFavorites = action.payload;
     },
-    setListLikedMovies: (state, action) => {
-      state.listLikedMovies = action.payload;
+    setListPreferences: (state, action) => {
+      state.listPreferences = action.payload;
+    },
+    removePreference: (state, action) => {
+      const { mediaId } = action.payload;
+      state.listPreferences = [...state.listPreferences].filter(
+        (preference) => preference.mediaId.toString() !== mediaId.toString()
+      );
     },
     addFavorite: (state, action) => {
       state.listFavorites = [action.payload, ...state.listFavorites];
     },
-    addLikedMovies: (state, action) => {
-      state.listLikedMovies = [action.payload, ...state.listLikedMovies];
+    addPreference: (state, action) => {
+      const existPreference = state.listPreferences.find(
+        (item) => item.id === action.payload.id
+      );
+      if (existPreference) {
+        state.listPreferences = state.listPreferences.map((item) =>
+          item.id === action.payload.id ? action.payload : item
+        );
+      } else {
+        state.listPreferences = [action.payload, ...state.listPreferences];
+      }
     },
     removeFavorite: (state, action) => {
       const { mediaId } = action.payload;
@@ -39,7 +54,14 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, setListFavorite, removeFavorite, addFavorite } =
-  userSlice.actions;
+export const {
+  setUser,
+  setListFavorite,
+  removeFavorite,
+  addFavorite,
+  setListPreferences,
+  removePreference,
+  addPreference,
+} = userSlice.actions;
 
 export default userSlice.reducer;

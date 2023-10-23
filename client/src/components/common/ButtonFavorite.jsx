@@ -50,7 +50,7 @@ const ButtonFavorite = ({ media, mediaType }) => {
     if (response) {
       dispatch(addFavorite(response));
       setIsFavorite(true);
-      // toast.success("Add favorite success");
+      toast.success("Add favorite success");
     }
   };
 
@@ -71,13 +71,13 @@ const ButtonFavorite = ({ media, mediaType }) => {
     setOnRequest(false);
 
     if (err) {
-      //  toast.error(err.message);
+      toast.error(err.message);
     }
 
     if (response) {
       dispatch(removeFavorite(favorite));
       setIsFavorite(false);
-      //toast.success("Remove favorite succes")
+      toast.success("Remove favorite succes");
     }
   };
 

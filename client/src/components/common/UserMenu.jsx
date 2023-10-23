@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
   ListItemButton,
@@ -95,7 +94,12 @@ const UserMenu = () => {
               </Typography>
             </Box>
             {menuConfigs.user.map((item, index) => (
-              <ListItemButton component={Link} to={item.path} key={index}>
+              <ListItemButton
+                component={Link}
+                to={item.path}
+                key={index}
+                onClick={() => setAnchorEl(null)}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText
                   disableTypography
