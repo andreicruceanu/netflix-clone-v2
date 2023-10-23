@@ -20,6 +20,8 @@ const unauthorize = (res) =>
 const notfound = (res) =>
   responseWithData(res, 404, { status: 404, message: "Resource not found" });
 
+const noContent = (res) => responseWithData(res, 204);
+
 export default {
   error,
   badrequest,
@@ -27,4 +29,5 @@ export default {
   created,
   unauthorize,
   notfound,
+  noContent,
 };

@@ -2,6 +2,7 @@ import express from "express";
 import userController from "../controllers/user.controller.js";
 import tokenMiddleware from "../middlewares/token.middleware.js";
 import favoriteController from "../controllers/favorite.controller.js";
+import preferencesController from "../controllers/preferences.controller.js";
 
 const router = express.Router();
 
@@ -25,15 +26,20 @@ router.get(
   tokenMiddleware.auth,
   favoriteController.getFavoritesOfUser
 );
-router.post("/likeMovie", tokenMiddleware.auth, userController.likeMovie);
 router.delete(
   "/favorites/:favoriteId",
   tokenMiddleware.auth,
   favoriteController.removefavorite
 );
-router.delete(
-  "/likeMovie/:likeMovieId",
+router.post(
+  "/preferences",
   tokenMiddleware.auth,
-  userController.removeLikeMovie
+  preferencesController.preferences
 );
+router.get(
+  "/getPreferences",
+  tokenMiddleware.auth,
+  preferencesController.getPreferences
+);
+
 export default router;
