@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import modelOptions from "./model.options.js";
 
 export default mongoose.model(
-  "LikesMovies",
+  "Preferences",
   mongoose.Schema(
     {
       userId: {
@@ -18,6 +18,14 @@ export default mongoose.model(
       mediaId: {
         type: Number,
         required: true,
+      },
+      isLiked: {
+        type: Boolean,
+        default: false,
+      },
+      isDisliked: {
+        type: Boolean,
+        default: false,
       },
     },
     modelOptions
