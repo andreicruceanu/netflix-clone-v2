@@ -28,17 +28,19 @@ const preferences = async (req, res) => {
 
     if (isEvaluated) {
       if (type === "like") {
-        await preferencesModel.updateOne(
+        const movieLiked = await preferencesModel.findOneAndUpdate(
           { _id: isEvaluated.id },
-          { $set: { isLiked: true, isDisliked: false } }
+          { $set: { isLiked: true, isDisliked: false } },
+          { new: true }
         );
-        return responseHandler.noContent(res);
+        return responseHandler.ok(res, movieLiked);
       } else if (type === "dislike") {
-        await preferencesModel.updateOne(
+        const movieDisliked = await preferencesModel.findOneAndUpdate(
           { _id: isEvaluated.id },
-          { $set: { isLiked: false, isDisliked: true } }
+          { $set: { isLiked: false, isDisliked: true } },
+          { new: true }
         );
-        return responseHandler.noContent(res);
+        return responseHandler.ok(res, movieDisliked);
       } else if (type === "none") {
         await preferencesModel.deleteOne({ _id: isEvaluated.id });
         return responseHandler.noContent(res);
