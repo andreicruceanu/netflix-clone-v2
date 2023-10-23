@@ -20,6 +20,7 @@ const MediaItem = ({ media, mediaType }) => {
   const [releaseDate, setReleaseDate] = useState(null);
   const [rate, setRate] = useState(null);
   const [genreId, setGenreId] = useState([]);
+
   const { genresMovie } = useSelector((state) => state.genres);
   const { genresSeries } = useSelector((state) => state.genres);
 

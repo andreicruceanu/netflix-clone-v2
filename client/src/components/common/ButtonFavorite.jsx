@@ -5,6 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import favoriteApi from "../../api/modules/favorite.api";
+
 import { addFavorite, removeFavorite } from "../../redux/features/userSlice";
 import { toast } from "react-toastify";
 const ButtonFavorite = ({ media, mediaType }) => {
@@ -36,7 +37,7 @@ const ButtonFavorite = ({ media, mediaType }) => {
       mediaPoster: media.poster_path,
       mediaRate: media.vote_average,
       mediaGenreIds: media.genre_ids,
-      mediaReleaseDate: media.release_date,
+      mediaReleaseDate: media.release_date || media.first_air_date,
     };
 
     const { response, err } = await favoriteApi.add(body);
@@ -81,7 +82,6 @@ const ButtonFavorite = ({ media, mediaType }) => {
   };
 
   useEffect(() => {
-    console.log("Aiciiiiii");
     const favorite = listFavorites.find(
       (e) => e.mediaId.toString() === media.id.toString()
     );

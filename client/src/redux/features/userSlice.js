@@ -5,6 +5,7 @@ export const userSlice = createSlice({
   initialState: {
     user: null,
     listFavorites: [],
+    listLikedMovies: [],
   },
   reducers: {
     setUser: (state, action) => {
@@ -20,8 +21,14 @@ export const userSlice = createSlice({
     setListFavorite: (state, action) => {
       state.listFavorites = action.payload;
     },
+    setListLikedMovies: (state, action) => {
+      state.listLikedMovies = action.payload;
+    },
     addFavorite: (state, action) => {
       state.listFavorites = [action.payload, ...state.listFavorites];
+    },
+    addLikedMovies: (state, action) => {
+      state.listLikedMovies = [action.payload, ...state.listLikedMovies];
     },
     removeFavorite: (state, action) => {
       const { mediaId } = action.payload;
