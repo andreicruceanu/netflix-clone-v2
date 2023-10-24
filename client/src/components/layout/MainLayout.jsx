@@ -6,8 +6,14 @@ import Topbar from "../common/Topbar";
 import { Outlet } from "react-router-dom";
 import AuthModal from "../common/AuthModal";
 import userApi from "../../api/modules/user.api";
-import { setListPreferences, setUser } from "../../redux/features/userSlice";
+import {
+  setListFavorite,
+  setListPreferences,
+  setUser,
+} from "../../redux/features/userSlice";
 import preferencesApi from "../../api/modules/preferences.api";
+import { toast } from "react-toastify";
+import favoriteApi from "../../api/modules/favorite.api";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -39,6 +45,18 @@ const MainLayout = () => {
     if (user) getPreferences();
   }, [user, dispatch]);
 
+  useEffect(() => {
+    const getFavorites = async () => {
+      const { response, err } = await favoriteApi.getList();
+      if (response) {
+        dispatch(setListFavorite(response));
+      }
+      if (err) toast.error(err.message);
+    };
+    if (user) getFavorites();
+    if (!user) dispatch(setListFavorite([]));
+  }, [user, dispatch]);
+
   return (
     <>
       <GlobalLoading />
@@ -53,6 +71,7 @@ const MainLayout = () => {
         <Box component="main" flexGrow={1} overflow="hidden" minHeight="100vh">
           <Outlet />
         </Box>
+
         {/* main */}
       </Box>
     </>
