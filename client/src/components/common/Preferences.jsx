@@ -101,7 +101,6 @@ const Preferences = ({ mediaType, mediaId }) => {
         item.mediaId === mediaId &&
         (item.isLiked === true || item.isDisliked === true)
     );
-    console.log(listPreferences);
     const { response, err } = await preferencesApi.reactionControl({
       mediaId,
       mediaType,
@@ -149,7 +148,8 @@ const Preferences = ({ mediaType, mediaId }) => {
           variant="text"
           sx={{
             minWidth: "100%",
-            padding: "0",
+            padding: 2,
+            borderRadius: "50%",
             color: "white",
             span: {
               marginRight: "0px",
@@ -158,7 +158,7 @@ const Preferences = ({ mediaType, mediaId }) => {
 
             "&:hover ": {
               border: "none",
-              backgroundColor: "none",
+              background: "none",
             },
           }}
           size="large"
@@ -172,8 +172,9 @@ const Preferences = ({ mediaType, mediaId }) => {
           variant="text"
           sx={{
             minWidth: "100%",
-            padding: "0",
+            padding: 2,
             color: "white",
+            borderRadius: "50%",
             span: {
               marginRight: "0px",
               marginLeft: "0px",
@@ -181,7 +182,7 @@ const Preferences = ({ mediaType, mediaId }) => {
 
             "&:hover ": {
               border: "none",
-              backgroundColor: "none",
+              background: "none",
             },
           }}
           size="large"

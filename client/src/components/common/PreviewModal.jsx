@@ -6,7 +6,7 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { Link } from "react-router-dom";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
@@ -24,19 +24,72 @@ import mediaApi from "../../api/modules/media.api";
 import { toast } from "react-toastify";
 import YouTube from "react-youtube";
 
-function PreviewModal({ media, mediaType, setHover }) {
+const MediaVideo = ({ mediaType, mediaId, posterPath }) => {
+  const [onReadyVideo, setOnReadyVideo] = useState(true);
+
+  const [trailer, setTrailer] = useState(null);
+
+  useEffect(() => {
+    if (mediaType && mediaId) {
+      const getTrailer = async () => {
+        const { response, err } = await mediaApi.getTrailer({
+          mediaType,
+          mediaId,
+        });
+        if (response && response.data !== "") {
+          setTrailer(response);
+        }
+        if (err) {
+          toast.error(err.message);
+        }
+      };
+      getTrailer();
+    }
+  }, [mediaType, mediaId]);
+
+  return (
+    <>
+      {trailer && onReadyVideo ? (
+        <Box
+          sx={{
+            overflow: "hidden",
+            width: "100%",
+
+            aspectRatio: "16/9",
+            pointerEvents: "none",
+          }}
+        >
+          <iframe
+            style={{ width: "100%", height: "100%" }}
+            src={tmdbConfigs.youtubePath(trailer.key)}
+            title={trailer.name}
+          ></iframe>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            width: "100%",
+            height: "50%",
+            borderRadius: "8px 8px 0px 0px",
+            ...uiConfigs.style.backgroundImage(posterPath),
+          }}
+        />
+      )}
+    </>
+  );
+};
+
+const PreviewModal = ({ media, mediaType }) => {
   const [title, setTitle] = useState("");
   const [posterPath, setPosterPath] = useState("");
   const [releaseDate, setReleaseDate] = useState(null);
   const [rate, setRate] = useState(null);
   const [genreId, setGenreId] = useState([]);
-  const [mediaId, setMediaId] = useState(null);
 
   const { genresMovie } = useSelector((state) => state.genres);
   const { genresSeries } = useSelector((state) => state.genres);
 
   useEffect(() => {
-    setMediaId(media.id);
     setTitle(media.title || media.name || media.mediaTitle);
     setGenreId(media.genre_ids);
     setPosterPath(
@@ -70,27 +123,6 @@ function PreviewModal({ media, mediaType, setHover }) {
 
   const [isOpen, setIsOpen] = useState(true);
 
-  const [trailer, setTrailer] = useState(null);
-
-  useEffect(() => {
-    if (mediaType && mediaId) {
-      const getTrailer = async () => {
-        const { response, err } = await mediaApi.getTrailer({
-          mediaType,
-          mediaId,
-        });
-        if (response && response.data !== "") {
-          setTrailer(response);
-          console.log(response);
-        }
-        if (err) {
-          toast.error(err.message);
-        }
-      };
-      getTrailer();
-    }
-  }, [mediaType, mediaId]);
-
   return (
     <>
       <TrailerVideo
@@ -115,25 +147,11 @@ function PreviewModal({ media, mediaType, setHover }) {
             zIndex: 999999,
           }}
         >
-          {trailer ? (
-            <Box sx={{ height: "max-content" }}>
-              <iframe
-                key={trailer.key}
-                src={tmdbConfigs.youtubePath(trailer.key)}
-                width="100%"
-                title={trailer.id}
-                style={{ border: 0 }}
-                allow="accelerometer; autoplay;"
-              ></iframe>
-            </Box>
-          ) : (
-            <Box
-              sx={{
-                width: "100%",
-                height: "50%",
-                borderRadius: "8px 8px 0px 0px",
-                ...uiConfigs.style.backgroundImage(posterPath),
-              }}
+          {posterPath && (
+            <MediaVideo
+              posterPath={posterPath}
+              mediaId={media.id}
+              mediaType={mediaType}
             />
           )}
           <Box
@@ -257,6 +275,6 @@ function PreviewModal({ media, mediaType, setHover }) {
       </Modal>
     </>
   );
-}
+};
 
 export default PreviewModal;

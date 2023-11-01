@@ -97,16 +97,17 @@ const ButtonFavorite = ({ media, mediaType }) => {
       variant="text"
       sx={{
         minWidth: "100%",
-        padding: "0",
+        padding: 2,
+        borderRadius: "50%",
         color: "white",
         span: {
           marginRight: "0px",
           marginLeft: "0px",
         },
 
-        "&:hover ": {
+        "&:hover": {
           border: "none",
-          backgroundColor: "none",
+          background: "none",
         },
       }}
       size="large"
