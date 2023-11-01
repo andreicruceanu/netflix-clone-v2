@@ -80,10 +80,26 @@ const getMoreInfoMedia = async (req, res) => {
   }
 };
 
+const similarMovies = async (req, res) => {
+  try {
+    const { mediaId, mediaType } = req.params;
+
+    const response = await tmdbApi.mediaSimilar({
+      mediaType,
+      mediaId,
+    });
+
+    responseHandler.ok(res, response);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   getList,
   getGenres,
   getTrendingList,
   getTrailerMovie,
   getMoreInfoMedia,
+  similarMovies,
 };
