@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const CastLink = ({ name, id }) => {
+const CastLink = ({ name, id, index }) => {
   return (
     <Box
       component="span"
@@ -15,7 +15,7 @@ const CastLink = ({ name, id }) => {
       <Typography
         variant="body2"
         sx={{
-          color: "#ddd",
+          color: "white",
           textDecoration: "none",
           wordBreak: "break-word",
           marginRight: "3px",
@@ -28,6 +28,7 @@ const CastLink = ({ name, id }) => {
         to={`/person/${id}`}
       >
         {name}
+        {index < 4 && <span>, </span>}
       </Typography>
     </Box>
   );

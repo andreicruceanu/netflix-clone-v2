@@ -139,7 +139,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                 )}
                 <Box
                   sx={{
-                    background: `linear-gradient(77deg,rgba(0,0,0,0),transparent 85%)`,
+                    background: `linear-gradient(77deg,rgba(0,0,0,.6),transparent 85%)`,
                     top: 0,
                     left: 0,
                     bottom: 0,
@@ -153,7 +153,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                   sx={{
                     backgroundColor: "transparent",
                     backgroundImage:
-                      "linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#070707 68%,#010101)",
+                      "linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#000000 68%,#000000)",
                     backgroundRepeat: "repeat-x",
                     backgroundPosition: "0px top",
                     backgroundSize: "100% 100%",
@@ -178,7 +178,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                   <NetflixIconButton
                     size="large"
                     onClick={() => handleMute(muted)}
-                    sx={{ zIndex: 2 }}
+                    sx={{ zIndex: 2, padding: 1.6 }}
                   >
                     {!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
                   </NetflixIconButton>
