@@ -9,9 +9,22 @@ const mediaEndpoints = {
     `${mediaType}/${mediaId}/officialTrailer`,
   moreDetails: ({ mediaType, mediaId }) =>
     `${mediaType}/${mediaId}/moreDetails`,
+  similarMovie: ({ mediaType, mediaId }) => `${mediaType}/${mediaId}/similar`,
+  heroMedia: ({ mediaType, mediaCategory }) =>
+    `${mediaType}/${mediaCategory}/heroMedia`,
 };
 
 const mediaApi = {
+  heroMedia: async ({ mediaType, mediaCategory }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.heroMedia({ mediaType, mediaCategory })
+      );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
   getList: async ({ mediaType, mediaCategory, page }) => {
     try {
       const response = await publicClient.get(
@@ -46,6 +59,16 @@ const mediaApi = {
     try {
       const response = await publicClient.get(
         mediaEndpoints.moreDetails({ mediaType, mediaId })
+      );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  getSimilarMovie: async ({ mediaType, mediaId }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.similarMovie({ mediaType, mediaId })
       );
       return { response };
     } catch (err) {

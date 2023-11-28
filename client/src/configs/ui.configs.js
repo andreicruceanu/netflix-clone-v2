@@ -28,7 +28,7 @@ const uiConfigs = {
       WebkitLineClamp: lines,
     }),
     mainContent: {
-      maxWidth: "1766px",
+      maxWidth: "94%",
       margin: "auto",
       padding: 2,
     },

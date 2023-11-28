@@ -5,8 +5,7 @@ const Container = ({ header, children }) => {
   return (
     <Box
       sx={{
-        marginTop: "5rem",
-        marginBottom: "10rem",
+        margin: "3vw 0",
         marginX: "auto",
         color: "text.primary",
       }}

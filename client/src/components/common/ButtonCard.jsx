@@ -5,16 +5,19 @@ const ButtonCard = ({ background, children }) => {
   return (
     <Box
       sx={{
-        width: "2rem",
-        height: "2rem",
-        border: "1px solid white",
-        background: background ? background : "",
+        width: "3rem",
+        height: "3rem",
+        border: "2px solid grey",
+        background: background ? background : "rgba(255, 255, 255, 0.1)",
         borderRadius: "50%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
-        transition: "background-color 0.3s ease",
+        transition: "0.3s ease",
+        "&:hover": {
+          border: "2px solid white",
+        },
       }}
     >
       {children}

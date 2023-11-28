@@ -1,38 +1,43 @@
-import React, { useEffect, useState } from "react";
-import { useTheme } from "@emotion/react";
-import { Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Box, Stack } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import mediaApi from "../../api/modules/media.api";
-import genreApi from "../../api/modules/genre.api";
-import tmdbConfigs from "../../api/configs/tmdb.configs";
-import uiConfigs from "../../configs/ui.configs";
-import CircularRate from "./CircularRate";
-import { Link } from "react-router-dom";
+import { getRandomNumber } from "../../utils/function";
 import {
   setGenresMovieSlice,
   setGenresSeriesSlice,
 } from "../../redux/features/genresStateSlice";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
+import mediaApi from "../../api/modules/media.api";
+import genreApi from "../../api/modules/genre.api";
+import Player from "video.js";
+import NetflixIconButton from "./NetflixIconButton";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import MaxLineTypography from "./MaxLineTypography";
+import VideoJSPlayer from "./watch/VideoJSPlayer";
+import MaturityRate from "./MaturityRate";
+import PlayButton from "./PlayButton";
+import MoreInfoButton from "./MoreInfoButton";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
-  const theme = useTheme();
   const dispatch = useDispatch();
+  const playerRef = useRef(Player);
+  const [muted, setMuted] = useState(true);
+  const [movieHero, setMovieHero] = useState({});
 
-  const [movies, setMovies] = useState([]);
-  const [genresMovie, setGenresMovie] = useState([]);
+  const maturityRate = useMemo(() => {
+    return getRandomNumber(12, 17);
+  }, []);
 
   useEffect(() => {
-    const getMedias = async () => {
-      const { response, err } = await mediaApi.getList({
+    const getMediaHero = async () => {
+      const { response, err } = await mediaApi.heroMedia({
         mediaType,
         mediaCategory,
       });
       if (response) {
-        setMovies(response.results);
+        setMovieHero(response);
       }
       if (err) {
         toast.error(err.message);
@@ -46,12 +51,11 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
       const { response, err } = await genreApi.getList({ mediaType });
 
       if (response) {
-        setGenresMovie(response.genres);
         dispatch(setGenresMovieSlice(response.genres));
-        getMedias();
+        getMediaHero();
       }
       if (err) {
-        console.log(err);
+        toast.error(err.message);
       }
     };
     getGenresMovie();
@@ -71,124 +75,164 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
     getGenresSeries();
   }, [mediaType, mediaCategory, dispatch]);
 
+  const handleReady = (player) => {
+    playerRef.current = player;
+  };
+  const handleMute = (status) => {
+    if (playerRef.current) {
+      playerRef.current.muted(!status);
+      setMuted(!status);
+    }
+  };
+
   return (
-    <Box
-      sx={{
-        position: "relative",
-        color: "primary.contrastText",
-        "&::before": {
-          content: '""',
-          width: "100%",
-          height: "30%",
-          position: "absolute",
-          bottom: 0,
+    <Box sx={{ position: "relative", zIndex: 1 }}>
+      <Box
+        sx={{
+          mb: 3,
+          pb: "40%",
+          top: 0,
           left: 0,
-          zIndex: 2,
-          pointerEvents: "none",
-          ...uiConfigs.style.gradientBgImage[theme.palette.mode],
-        },
-      }}
-    >
-      <Swiper
-        grabCursor={true}
-        loop={true}
-        style={{ width: "100%", height: "max-content" }}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
+          right: 0,
+          position: "relative",
         }}
-        modules={[Autoplay]}
       >
-        {movies.map((movie, index) => (
-          <SwiperSlide key={index}>
-            <Box
-              sx={{
-                paddingTop: { xs: "130%", sm: "80%", md: "60%", lg: "45%" },
-                backgroundPosition: "top",
-                backgroundSize: "cover",
-                backgroundImage: `url(${tmdbConfigs.backdropPath(
-                  movie.backdrop_path || movie.poster_path
-                )})`,
-              }}
-            />
-            <Box
-              sx={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                ...uiConfigs.style.horizontalGradientBgImage[
-                  theme.palette.mode
-                ],
-              }}
-            />
-            <Box
-              sx={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                paddingX: { sm: "10px", md: "5rem", lg: "10rem" },
-              }}
-            >
+        <Box
+          sx={{
+            width: "100%",
+            height: "56.25vw",
+            position: "absolute",
+          }}
+        >
+          {movieHero && (
+            <>
               <Box
                 sx={{
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  paddingX: "30px",
-                  color: "text.primary",
-                  width: { sm: "unset", md: "30%", lg: "40%" },
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  position: "absolute",
                 }}
               >
-                <Stack spacing={4} direction="column">
-                  <Typography
-                    variant="h4"
-                    fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
-                    fontWeight="700"
-                    sx={{ ...uiConfigs.style.typoLines(2, "left") }}
-                  >
-                    {movie.title || movie.name}
-                  </Typography>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <CircularRate value={movie.vote_average} />
-
-                    <Divider orientation="vertical" />
-                    {[...movie.genre_ids].splice(0, 2).map((genreId, index) => (
-                      <Chip
-                        variant="filled"
-                        color="primary"
-                        key={index}
-                        label={
-                          genresMovie.find((e) => e.id === genreId) &&
-                          genresMovie.find((e) => e.id === genreId).name
-                        }
-                      />
-                    ))}
-                  </Stack>
-                  <Typography
-                    variant="body1"
-                    sx={{ ...uiConfigs.style.typoLines(3) }}
-                  >
-                    {movie.overview}
-                  </Typography>
-                  <Button
-                    variant="contained"
+                {movieHero.officialTrailer && (
+                  <VideoJSPlayer
+                    options={{
+                      loop: true,
+                      muted: true,
+                      autoplay: true,
+                      controls: false,
+                      responsive: true,
+                      fluid: true,
+                      techOrder: ["youtube"],
+                      sources: [
+                        {
+                          type: "video/youtube",
+                          src: `https://www.youtube.com/watch?v=${
+                            movieHero.officialTrailer?.key || "L3oOldViIgY"
+                          }`,
+                        },
+                      ],
+                    }}
+                    onReady={handleReady}
+                  />
+                )}
+                <Box
+                  sx={{
+                    background: `linear-gradient(77deg,rgba(0,0,0,.6),transparent 85%)`,
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: "26.09%",
+                    opacity: 1,
+                    position: "absolute",
+                    transition: "opacity .5s",
+                  }}
+                />
+                <Box
+                  sx={{
+                    backgroundColor: "transparent",
+                    backgroundImage:
+                      "linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#000000 68%,#000000)",
+                    backgroundRepeat: "repeat-x",
+                    backgroundPosition: "0px top",
+                    backgroundSize: "100% 100%",
+                    bottom: 0,
+                    position: "absolute",
+                    height: "14.7vw",
+                    opacity: 1,
+                    top: "auto",
+                    width: "100%",
+                  }}
+                />
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    alignItems: "center",
+                    position: "absolute",
+                    right: 0,
+                    bottom: "35%",
+                  }}
+                >
+                  <NetflixIconButton
                     size="large"
-                    componet={Link}
-                    startIcon={<PlayArrowIcon />}
-                    sx={{ width: "max-content" }}
+                    onClick={() => handleMute(muted)}
+                    sx={{ zIndex: 2, padding: 1.6 }}
                   >
-                    watch now
-                  </Button>
+                    {!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                  </NetflixIconButton>
+                  <MaturityRate>{`${maturityRate}+`}</MaturityRate>
                 </Stack>
               </Box>
-            </Box>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Stack
+                  spacing={4}
+                  sx={{
+                    bottom: "35%",
+                    position: "absolute",
+                    left: { xs: "4%", md: "60px" },
+                    top: 0,
+                    width: "36%",
+                    zIndex: 10,
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <MaxLineTypography
+                    variant="h2"
+                    maxLine={1}
+                    color="text.primary"
+                  >
+                    {movieHero.title}
+                  </MaxLineTypography>
+                  <MaxLineTypography
+                    variant="h5"
+                    maxLine={3}
+                    color="text.primary"
+                  >
+                    {movieHero.overview}
+                  </MaxLineTypography>
+                  <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+                    <PlayButton size="large" />
+                    <MoreInfoButton size="large" />
+                  </Stack>
+                </Stack>
+              </Box>
+            </>
+          )}
+        </Box>
+      </Box>
     </Box>
   );
 };

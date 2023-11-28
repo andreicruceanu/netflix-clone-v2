@@ -8,6 +8,9 @@ import favoriteApi from "../../api/modules/favorite.api";
 
 import { addFavorite, removeFavorite } from "../../redux/features/userSlice";
 import { toast } from "react-toastify";
+import TooltipNetflix from "./TooltipNetflix";
+import { PREFERENCES } from "../../utils/constants";
+
 const ButtonFavorite = ({ media, mediaType }) => {
   const { user, listFavorites } = useSelector((state) => state.user);
 
@@ -50,7 +53,7 @@ const ButtonFavorite = ({ media, mediaType }) => {
     if (response) {
       dispatch(addFavorite(response));
       setIsFavorite(true);
-      // toast.success("Add favorite success");
+      toast.success("Add favorite success");
     }
   };
 
@@ -71,13 +74,13 @@ const ButtonFavorite = ({ media, mediaType }) => {
     setOnRequest(false);
 
     if (err) {
-      //  toast.error(err.message);
+      toast.error(err.message);
     }
 
     if (response) {
       dispatch(removeFavorite(favorite));
       setIsFavorite(false);
-      //toast.success("Remove favorite succes")
+      toast.success("Remove favorite succes");
     }
   };
 
@@ -93,27 +96,32 @@ const ButtonFavorite = ({ media, mediaType }) => {
   }, [listFavorites, media.id]);
 
   return (
-    <LoadingButton
-      variant="text"
-      sx={{
-        minWidth: "100%",
-        padding: "0",
-        color: "white",
-        span: {
-          marginRight: "0px",
-          marginLeft: "0px",
-        },
+    <TooltipNetflix
+      title={isFavorite ? PREFERENCES.removeFavorite : PREFERENCES.addFavorite}
+    >
+      <LoadingButton
+        variant="text"
+        sx={{
+          minWidth: "100%",
+          padding: 1.7,
+          borderRadius: "50%",
+          color: "white",
+          span: {
+            marginRight: "0px",
+            marginLeft: "0px",
+          },
 
-        "&:hover ": {
-          border: "none",
-          backgroundColor: "none",
-        },
-      }}
-      size="large"
-      startIcon={isFavorite ? <FavoriteIcon /> : <AddIcon />}
-      loading={onRequest}
-      onClick={onFavoriteClick}
-    ></LoadingButton>
+          "&:hover": {
+            border: "none",
+            background: "none",
+          },
+        }}
+        size="large"
+        startIcon={isFavorite ? <FavoriteIcon /> : <AddIcon />}
+        loading={onRequest}
+        onClick={onFavoriteClick}
+      ></LoadingButton>
+    </TooltipNetflix>
   );
 };
 

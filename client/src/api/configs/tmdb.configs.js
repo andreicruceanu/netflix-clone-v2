@@ -18,8 +18,11 @@ const backdropPath = (imgEndpoint) =>
 const posterPath = (imgEndpoint) =>
   `https://image.tmdb.org/t/p/w500${imgEndpoint}`;
 
+const similarMoviesImg = (imgEndpoint) =>
+  `https://image.tmdb.org/t/p/w780${imgEndpoint}`;
+
 const youtubePath = (videoId) =>
-  `https://www.youtube.com/embed/${videoId}?controls=0`;
+  `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&color=white&controls=0&playsinline=0&rel=0&enablejsapi=1`;
 
 const tmdbConfigs = {
   mediaType,
@@ -27,6 +30,7 @@ const tmdbConfigs = {
   backdropPath,
   posterPath,
   youtubePath,
+  similarMoviesImg,
   time,
 };
 

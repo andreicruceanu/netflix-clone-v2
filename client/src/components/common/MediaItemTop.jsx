@@ -33,7 +33,7 @@ const MediaItemTop = ({ index, media }) => {
           component="img"
           width="100%"
           height="100%"
-          src={tmdbConfig.posterPath(media.poster_path)}
+          src={tmdbConfig.posterPath(posterPath)}
           alt="poza"
         />
       </Box>
