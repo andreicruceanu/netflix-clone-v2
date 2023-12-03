@@ -13,6 +13,9 @@ import {
   addPreference,
   removePreference,
 } from "../../redux/features/userSlice";
+import NetflixIconButton from "./NetflixIconButton";
+import TooltipNetflix from "./TooltipNetflix";
+import { PREFERENCES } from "../../utils/constants";
 
 const typePreferences = {
   like: "like",
@@ -143,56 +146,62 @@ const Preferences = ({ mediaType, mediaId }) => {
 
   return (
     <>
-      <ButtonCard>
-        <LoadingButton
-          variant="text"
-          sx={{
-            minWidth: "100%",
-            padding: 2,
-            borderRadius: "50%",
-            color: "white",
-            span: {
-              marginRight: "0px",
-              marginLeft: "0px",
-            },
+      <NetflixIconButton>
+        <TooltipNetflix title={isLiked ? PREFERENCES.rated : PREFERENCES.like}>
+          <LoadingButton
+            variant="text"
+            sx={{
+              minWidth: "100%",
+              padding: 1.7,
+              borderRadius: "50%",
+              color: "white",
+              span: {
+                marginRight: "0px",
+                marginLeft: "0px",
+              },
 
-            "&:hover ": {
-              border: "none",
-              background: "none",
-            },
-          }}
-          size="large"
-          loading={onRequestLike}
-          startIcon={isLiked ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
-          onClick={handleLiked}
-        />
-      </ButtonCard>
-      <ButtonCard>
-        <LoadingButton
-          variant="text"
-          sx={{
-            minWidth: "100%",
-            padding: 2,
-            color: "white",
-            borderRadius: "50%",
-            span: {
-              marginRight: "0px",
-              marginLeft: "0px",
-            },
+              "&:hover": {
+                border: "none",
+                background: "none",
+              },
+            }}
+            size="large"
+            loading={onRequestLike}
+            startIcon={isLiked ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
+            onClick={handleLiked}
+          />
+        </TooltipNetflix>
+      </NetflixIconButton>
+      <NetflixIconButton>
+        <TooltipNetflix
+          title={isDisliked ? PREFERENCES.rated : PREFERENCES.dislike}
+        >
+          <LoadingButton
+            variant="text"
+            sx={{
+              minWidth: "100%",
+              padding: 1.7,
+              borderRadius: "50%",
+              color: "white",
+              span: {
+                marginRight: "0px",
+                marginLeft: "0px",
+              },
 
-            "&:hover ": {
-              border: "none",
-              background: "none",
-            },
-          }}
-          size="large"
-          startIcon={
-            isDisliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />
-          }
-          loading={onRequestDislike}
-          onClick={handleDisliked}
-        ></LoadingButton>
-      </ButtonCard>
+              "&:hover": {
+                border: "none",
+                background: "none",
+              },
+            }}
+            size="large"
+            startIcon={
+              isDisliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />
+            }
+            loading={onRequestDislike}
+            onClick={handleDisliked}
+          ></LoadingButton>
+        </TooltipNetflix>
+      </NetflixIconButton>
     </>
   );
 };
