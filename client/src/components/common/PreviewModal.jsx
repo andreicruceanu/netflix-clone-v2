@@ -1,14 +1,6 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemIcon,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import uiConfigs from "../../configs/ui.configs.js";
 import ButtonCard from "./ButtonCard";
@@ -19,10 +11,22 @@ import { useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
 import TrailerVideo from "./TrailerVideo";
 import MoreInfoModal from "./MoreInfoModal";
-import Preferences from "./Preferences";
 import mediaApi from "../../api/modules/media.api";
 import { toast } from "react-toastify";
-import YouTube from "react-youtube";
+import {
+  formatMinuteToReadable,
+  getRandomNumber,
+  getRandomSeasons,
+  getReleaseYear,
+} from "../../utils/function";
+import MaxLineTypography from "./MaxLineTypography";
+import NetflixIconButton from "./NetflixIconButton";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ChipNetflix from "./ChipNetflix";
+import GenreBreadcrumbs from "./GenreBreadcrumbs";
+import Preferences from "./Preferences.jsx";
 
 const MediaVideo = ({ mediaType, mediaId, posterPath }) => {
   const [onReadyVideo, setOnReadyVideo] = useState(true);
@@ -79,16 +83,17 @@ const MediaVideo = ({ mediaType, mediaId, posterPath }) => {
   );
 };
 
-const PreviewModal = ({ media, mediaType }) => {
+const PreviewModal = ({ media, mediaType, anchorElement }) => {
+  console.log(media);
   const [title, setTitle] = useState("");
   const [posterPath, setPosterPath] = useState("");
   const [releaseDate, setReleaseDate] = useState(null);
   const [rate, setRate] = useState(null);
   const [genreId, setGenreId] = useState([]);
-
   const { genresMovie } = useSelector((state) => state.genres);
   const { genresSeries } = useSelector((state) => state.genres);
 
+  const navigate = useNavigate();
   useEffect(() => {
     setTitle(media.title || media.name || media.mediaTitle);
     setGenreId(media.genre_ids);
@@ -100,13 +105,9 @@ const PreviewModal = ({ media, mediaType }) => {
           media.profile_path
       )
     );
-    if (mediaType === tmdbConfigs.mediaType.movie) {
-      setReleaseDate(media.release_date && media.release_date.split("-")[0]);
-    } else {
-      setReleaseDate(
-        media.first_air_date && media.first_air_date.split("-")[0]
-      );
-    }
+    setReleaseDate(
+      getReleaseYear(mediaType, media?.release_date || media?.first_air_date)
+    );
     setRate(media.vote_average || media.mediaRate);
   }, [media, mediaType]);
 
@@ -137,142 +138,100 @@ const PreviewModal = ({ media, mediaType }) => {
         mediaType={mediaType}
         mediaId={media.id}
       />
-      <Modal open={isOpen} sx={{ left: "200px", top: "100px" }}>
-        <Box
-          sx={{
-            position: "absolute",
-            width: "435px",
-            height: "440px",
-            transition: "all 0.3s ease",
-            zIndex: 999999,
+
+      <Card
+        sx={{
+          height: "100%",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            position: "relative",
+            paddingTop: "calc(9 / 16 * 100%)",
           }}
         >
-          {posterPath && (
-            <MediaVideo
-              posterPath={posterPath}
-              mediaId={media.id}
-              mediaType={mediaType}
-            />
-          )}
-          <Box
-            sx={{
-              zIndex: 10,
-              background: "rgba(52, 51, 51, 0.8)",
-              padding: "1rem",
+          <img
+            src={`${tmdbConfigs.backdropPath(posterPath)}`}
+            alt={title}
+            style={{
+              top: 0,
+              height: "100%",
+              objectFit: "cover",
               position: "absolute",
-              width: "100%",
-              transition: "all 0.3s ease",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              borderRadius: "0 0 8px 8px",
+              backgroundPosition: "50%",
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              paddingLeft: "16px",
+              paddingRight: "16px",
+              paddingBottom: "4px",
+              position: "absolute",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                gap: "0.75rem",
-                justifyContent: "space-between",
-                margin: "0 10px",
-              }}
+            <MaxLineTypography
+              maxLine={2}
+              sx={{ width: "80%", fontWeight: 700 }}
+              variant="h6"
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: "0.75rem",
-                  alignItems: "center",
-                }}
-              >
-                <ButtonCard background={"white"}>
-                  <PlayArrowIcon
-                    onClick={() => handleOpenModal("trailerModal")}
-                  />
-                </ButtonCard>
-                <ButtonCard>
-                  <ButtonFavorite media={media} mediaType={mediaType} />
-                </ButtonCard>
-                <Preferences mediaId={media.id} mediaType={mediaType} />
-              </Box>
-              <ButtonCard>
-                <ExpandMoreIcon
-                  sx={{ color: "white" }}
-                  onClick={() => handleOpenModal("moreDetails")}
-                />
-              </ButtonCard>
-            </Box>
-            <Typography
-              variant="body1"
-              fontWeight="700"
-              sx={{
-                color: "white",
-                fontSize: "1.5rem",
-                ...uiConfigs.style.typoLines(2, "left"),
-              }}
-            >
-              {title}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "#ffd12b",
-                  marginRight: ".3rem",
-                }}
-              >
-                <StarRateIcon sx={{ transform: "translateY(-2px)" }} />
-                <Typography variant="body1">{rate}</Typography>
-              </Box>
-              <Typography sx={{ color: "white" }} variant="body1">
-                {releaseDate}
+              {media.title}
+            </MaxLineTypography>
+            <div style={{ flexGrow: 1 }} />
+            <NetflixIconButton>
+              <VolumeUpIcon />
+            </NetflixIconButton>
+          </div>
+        </div>
+        <CardContent>
+          <Stack spacing={1}>
+            <Stack direction="row" spacing={1}>
+              <NetflixIconButton sx={{ p: 0 }} onClick={() => navigate(`/`)}>
+                <PlayCircleIcon sx={{ width: 40, height: 40 }} />
+              </NetflixIconButton>
+              <NetflixIconButton>
+                <ButtonFavorite mediaType={mediaType} media={media} />
+              </NetflixIconButton>
+              <Preferences mediaType={mediaType} mediaId={media.id} />
+              <div style={{ flexGrow: 1 }} />
+              <NetflixIconButton onClick={() => handleOpenModal("moreDetails")}>
+                <ExpandMoreIcon />
+              </NetflixIconButton>
+            </Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography
+                variant="subtitle1"
+                sx={{ color: "success.main" }}
+              >{`${getRandomNumber(50, 100)}% Match`}</Typography>
+              <ChipNetflix label={`${getRandomNumber(9, 17)}+`} />
+              <Typography variant="subtitle2">
+                {mediaType === tmdbConfigs.mediaType.movie
+                  ? `${formatMinuteToReadable(getRandomNumber(90, 160))}`
+                  : getRandomSeasons(6)}
               </Typography>
-            </Box>
-            <List
-              sx={{
-                color: "white",
-                listStyleType: "disc",
-                display: "flex",
-                flexDirection: "row",
-                padding: 0,
-              }}
-            >
-              {(genresMovie.length > 0 || genresSeries.length > 0) &&
-                [...genreId].slice(0, 3).map((genreId, index) => (
-                  <ListItem
-                    key={index}
-                    sx={{
-                      padding: 0,
-                      fontSize: "15px",
-                      width: "initial",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "start",
-                      marginRight: "10px",
-                    }}
-                  >
-                    <ListItemIcon sx={{ minWidth: 0, marginRight: "5px" }}>
-                      <FiberManualRecordIcon style={{ fontSize: 12 }} />
-                    </ListItemIcon>
-                    {mediaType === "movie" && genresMovie
-                      ? genresMovie.find((e) => e.id === genreId)?.name
-                      : mediaType === "tv" && genresSeries
-                      ? genresSeries.find((e) => e.id === genreId)?.name
-                      : null}
-                  </ListItem>
-                ))}
-            </List>
-          </Box>
-        </Box>
-      </Modal>
+            </Stack>
+            <GenreBreadcrumbs
+              genres={
+                mediaType === "movie" && genresMovie
+                  ? genresMovie
+                      .filter((genres) => genreId.includes(genres.id))
+                      .map((genre) => genre.name)
+                  : mediaType === "tv" && genresSeries
+                  ? genresSeries
+                      .filter((genres) => genreId.includes(genres.id))
+                      .map((genre) => genre.name)
+                  : ""
+              }
+            />
+          </Stack>
+        </CardContent>
+      </Card>
     </>
   );
 };
