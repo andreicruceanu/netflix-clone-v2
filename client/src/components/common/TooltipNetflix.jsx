@@ -15,6 +15,7 @@ const CustomTooltip = styled(({ className, ...props }) => (
     backgroundColor: "white",
     color: "black",
     borderRadius: "5px",
+    marginBottom: "22px !important",
   },
   [`& .${tooltipClasses.arrow}`]: {
     color: "white",
@@ -22,8 +23,6 @@ const CustomTooltip = styled(({ className, ...props }) => (
 });
 
 const TooltipNetflix = ({ title, children }) => {
-  const { themeMode } = useSelector((state) => state.themeMode);
-
   return (
     <CustomTooltip
       disableFocusListener

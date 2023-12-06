@@ -3,7 +3,6 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
-import ButtonCard from "./ButtonCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
@@ -23,7 +22,8 @@ const typePreferences = {
   none: "none",
 };
 
-const Preferences = ({ mediaType, mediaId }) => {
+const Preferences = ({ mediaType, mediaId, sx }) => {
+  console.log(sx);
   const { user, listPreferences } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -146,15 +146,15 @@ const Preferences = ({ mediaType, mediaId }) => {
 
   return (
     <>
-      <NetflixIconButton>
+      <NetflixIconButton sx={{ ...sx }}>
         <TooltipNetflix title={isLiked ? PREFERENCES.rated : PREFERENCES.like}>
           <LoadingButton
             variant="text"
             sx={{
               minWidth: "100%",
-              padding: 1.7,
               borderRadius: "50%",
               color: "white",
+              padding: 2,
               span: {
                 marginRight: "0px",
                 marginLeft: "0px",
@@ -172,7 +172,7 @@ const Preferences = ({ mediaType, mediaId }) => {
           />
         </TooltipNetflix>
       </NetflixIconButton>
-      <NetflixIconButton>
+      <NetflixIconButton sx={{ ...sx }}>
         <TooltipNetflix
           title={isDisliked ? PREFERENCES.rated : PREFERENCES.dislike}
         >
@@ -180,14 +180,13 @@ const Preferences = ({ mediaType, mediaId }) => {
             variant="text"
             sx={{
               minWidth: "100%",
-              padding: 1.7,
               borderRadius: "50%",
               color: "white",
+              padding: 2,
               span: {
                 marginRight: "0px",
                 marginLeft: "0px",
               },
-
               "&:hover": {
                 border: "none",
                 background: "none",

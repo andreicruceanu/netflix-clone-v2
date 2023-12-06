@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import uiConfigs from "../../configs/ui.configs.js";
 import PreviewModal from "./PreviewModal";
+import { routesGen } from "../../routes/routes.jsx";
 
 const MediaItem = ({ media, mediaType }) => {
   const [posterPath, setPosterPath] = useState("");
@@ -44,7 +45,11 @@ const MediaItem = ({ media, mediaType }) => {
       >
         <Box
           component={Link}
-          to={"/"}
+          to={
+            mediaType !== "people"
+              ? routesGen.mediaDetail(mediaType, media.mediaId || media.id)
+              : routesGen.person(media.id)
+          }
           sx={{ display: "block", width: "100%", height: "100%" }}
         >
           <Box

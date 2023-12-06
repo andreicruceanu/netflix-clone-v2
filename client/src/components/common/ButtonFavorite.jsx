@@ -103,17 +103,19 @@ const ButtonFavorite = ({ media, mediaType }) => {
         variant="text"
         sx={{
           minWidth: "100%",
-          padding: 1.7,
+          padding: 1.5,
           borderRadius: "50%",
           color: "white",
           span: {
             marginRight: "0px",
             marginLeft: "0px",
           },
-
           "&:hover": {
             border: "none",
             background: "none",
+          },
+          "& .MuiSvgIcon-root": {
+            fontSize: 30,
           },
         }}
         size="large"

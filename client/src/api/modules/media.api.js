@@ -12,6 +12,7 @@ const mediaEndpoints = {
   similarMovie: ({ mediaType, mediaId }) => `${mediaType}/${mediaId}/similar`,
   heroMedia: ({ mediaType, mediaCategory }) =>
     `${mediaType}/${mediaCategory}/heroMedia`,
+  detail: ({ mediaType, mediaId }) => `${mediaType}/detail/${mediaId}`,
 };
 
 const mediaApi = {
@@ -50,6 +51,17 @@ const mediaApi = {
       const response = await publicClient.get(
         mediaEndpoints.trailer({ mediaType, mediaId })
       );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  getDetail: async ({ mediaType, mediaId }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.detail({ mediaType, mediaId })
+      );
+
       return { response };
     } catch (err) {
       return { err };
