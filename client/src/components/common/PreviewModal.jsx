@@ -9,7 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
-import TrailerVideo from "./TrailerVideo";
+//
 import MoreInfoModal from "./MoreInfoModal";
 import mediaApi from "../../api/modules/media.api";
 import { toast } from "react-toastify";
@@ -126,12 +126,12 @@ const PreviewModal = ({ media, mediaType, anchorElement }) => {
 
   return (
     <>
-      <TrailerVideo
+      {/* <TrailerVideo
         open={isModalOpen.trailerModal}
         onClose={() => onClose("trailerModal")}
         mediaType={mediaType}
         mediaId={media.id}
-      />
+      /> */}
       <MoreInfoModal
         open={isModalOpen.moreDetails}
         onClose={() => onClose("moreDetails")}

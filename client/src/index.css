@@ -53,3 +53,17 @@
   text-decoration: none !important;
   color: white;
 }
+.videoImg {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  transition: all 0.7s ease-in-out;
+}
+.videoThumbnail > svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+}

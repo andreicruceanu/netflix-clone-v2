@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 import DetailsBanner from "./detailsBanner/DetailsBanner";
 import Cast from "./cast/Cast";
+import VideosSection from "./videosSection/VideosSection";
 
 const MediaDetail = () => {
   const { user, listFavorites } = useSelector((state) => state.user);
@@ -40,6 +41,7 @@ const MediaDetail = () => {
     <>
       <DetailsBanner media={media} mediaType={mediaType} />
       <Cast casts={media?.credits?.cast} />
+      <VideosSection videos={media.videos} />
     </>
   ) : (
     ""
