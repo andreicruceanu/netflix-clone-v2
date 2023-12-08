@@ -17,7 +17,6 @@ export const getRandomSeasons = (time) =>
   time ? `${Math.floor(Math.random() * time + 2)} seasons` : "";
 
 export const getFormatTime = (mediaType, time) => {
-  console.log(mediaType, time);
   if (mediaType === tmdbConfigs.mediaType.movie && time) {
     return formatMinuteToReadable(time);
   } else {
