@@ -5,6 +5,18 @@ import MediaSearch from "../pages/MediaSearch";
 import PersonDetail from "../pages/PersonDetail";
 import ProtectedPage from "../components/common/ProtectedPage";
 import Account from "../pages/Account";
+import MediaDetail from "../pages/details/MediaDetail";
+
+export const routesGen = {
+  home: "/",
+  mediaList: (type) => `/${type}`,
+  mediaDetail: (type, id) => `/${type}/${id}`,
+  mediaSearch: "/search",
+  person: (id) => `/person/${id}`,
+  favoriteList: "/favorites",
+  reviewList: "/reviews",
+  passwordUpdate: "password-update",
+};
 
 const routes = [
   {
@@ -38,6 +50,10 @@ const routes = [
       </ProtectedPage>
     ),
     state: "account",
+  },
+  {
+    path: "/:mediaType/:mediaId",
+    element: <MediaDetail />,
   },
 ];
 

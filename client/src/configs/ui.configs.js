@@ -3,7 +3,7 @@ const uiConfigs = {
     gradientBgImage: {
       dark: {
         backgroundImage:
-          "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))",
+          "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.3))",
       },
       light: {
         backgroundImage:
@@ -29,8 +29,8 @@ const uiConfigs = {
     }),
     mainContent: {
       maxWidth: "94%",
-      margin: "auto",
-      padding: 2,
+      margin: "0 auto",
+      padding: "0 20px",
     },
     RankSvg: {
       dark: {

@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import MainLayout from "./components/layout/MainLayout";
 import routes from "./routes/routes";
 import { ThemeProvider } from "@mui/material";
@@ -12,6 +11,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "./swiper.css";
+
 import { ToastContainer } from "react-toastify";
 import PageWrapper from "./components/common/PageWrapper";
 const App = () => {

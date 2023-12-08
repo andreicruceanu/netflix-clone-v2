@@ -12,8 +12,8 @@ const CircularRate = ({ value }) => {
       <CircularProgress
         variant="determinate"
         value={value * 10}
-        color="success"
-        size={50}
+        color={value < 5 ? "error" : value < 7 ? "warning" : "success"}
+        size={70}
       />
       <Box
         sx={{
@@ -31,7 +31,7 @@ const CircularRate = ({ value }) => {
           variant="caption"
           component="div"
           fontWeight="700"
-          sx={{ marginTop: "-5px" }}
+          sx={{ marginTop: "-5px", fontSize: "22px" }}
         >
           {Math.floor(value * 10) / 10}
         </Typography>

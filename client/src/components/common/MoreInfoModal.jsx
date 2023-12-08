@@ -1,37 +1,36 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
   Box,
-  Chip,
   Container,
   Dialog,
   DialogContent,
   Grid,
   IconButton,
-  Modal,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  formatMinuteToReadable,
+  getFormatTime,
+  getRandomNumber,
+  getReleaseYear,
+} from "../../utils/function";
 import mediaApi from "../../api/modules/media.api";
-import tmdbConfigs from "../../api/configs/tmdb.configs";
-import uiConfigs from "../../configs/ui.configs.js";
-import { useTheme } from "@emotion/react";
-import Loading from "./Loading";
-import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import ButtonCard from "./ButtonCard";
 import ButtonFavorite from "./ButtonFavorite";
-import { toast } from "react-toastify";
 import Preferences from "./Preferences";
 import VideoJSPlayer from "./watch/VideoJSPlayer";
 import MaxLineTypography from "./MaxLineTypography";
 import PlayButton from "./PlayButton";
 import NetflixIconButton from "./NetflixIconButton";
-import { formatMinuteToReadable, getRandomNumber } from "../../utils/function";
 import ChipNetflix from "./ChipNetflix";
 import CastLink from "./CastLink";
 import SimilarVideoCard from "./SimilarVideoCard";
+import tmdbConfigs from "../../api/configs/tmdb.configs";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
+import TooltipNetflix from "./TooltipNetflix";
 
 function MoreInfoModal({ open, onClose, mediaId, mediaType }) {
   const [media, setMedia] = useState();
@@ -116,25 +115,39 @@ function MoreInfoModal({ open, onClose, mediaId, mediaType }) {
                 height: "calc(9 / 16 * 100%)",
               }}
             >
-              <VideoJSPlayer
-                options={{
-                  loop: true,
-                  autoplay: true,
-                  controls: false,
-                  responsive: true,
-                  fluid: true,
-                  techOrder: ["youtube"],
-                  sources: [
-                    {
-                      type: "video/youtube",
-                      src: `https://www.youtube.com/watch?v=${
-                        media.officialTrailer.key || "L3oOldViIgY"
-                      }`,
-                    },
-                  ],
-                }}
-                onReady={handleReady}
-              />
+              {media?.officialTrailer ? (
+                <VideoJSPlayer
+                  options={{
+                    loop: true,
+                    autoplay: true,
+                    controls: false,
+                    responsive: true,
+                    fluid: true,
+                    techOrder: ["youtube"],
+                    sources: [
+                      {
+                        type: "video/youtube",
+                        src: `https://www.youtube.com/watch?v=${
+                          media.officialTrailer?.key || "L3oOldViIgY"
+                        }`,
+                      },
+                    ],
+                  }}
+                  onReady={handleReady}
+                />
+              ) : (
+                <img
+                  width="100%"
+                  height="100%"
+                  src={tmdbConfigs.backdropPath(
+                    media.backdrop_path ||
+                      media.poster_path ||
+                      media.mediaPoster ||
+                      media.profile_path
+                  )}
+                  alt={media.title || media.name}
+                />
+              )}
 
               <Box
                 sx={{
@@ -192,14 +205,24 @@ function MoreInfoModal({ open, onClose, mediaId, mediaType }) {
                 }}
               >
                 <MaxLineTypography variant="h4" maxLine={1} sx={{ mb: 2 }}>
-                  {media.title}
+                  {media.title || media.name}
                 </MaxLineTypography>
                 <Stack direction="row" spacing={2} sx={{ mb: 3 }}>
-                  <PlayButton sx={{ color: "black", py: 0 }} />
+                  <PlayButton
+                    sx={{ color: "black", background: "white", py: 0 }}
+                  />
                   <NetflixIconButton sx={{ padding: 0 }}>
                     <ButtonFavorite media={media} mediaType={mediaType} />
                   </NetflixIconButton>
-                  <Preferences media={media} mediaType={mediaType} />
+                  <Preferences mediaId={media.id} mediaType={mediaType} />
+                  <Box flexGrow={1} />
+                  <NetflixIconButton
+                    size="large"
+                    onClick={() => handleMute(muted)}
+                    sx={{ zIndex: 2, padding: 1.7 }}
+                  >
+                    {!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                  </NetflixIconButton>
                 </Stack>
 
                 <Container
@@ -213,17 +236,22 @@ function MoreInfoModal({ open, onClose, mediaId, mediaType }) {
                         <Typography
                           variant="subtitle1"
                           sx={{ color: "#46d369" }}
-                        >{`${getRandomNumber(100)}% Match`}</Typography>
+                        >{`${getRandomNumber(50, 100)}% Match`}</Typography>
                         <Typography variant="body2">
-                          {media?.release_date.substring(0, 4) ||
-                            media.first_air_date.substring(0, 4)}
+                          {getReleaseYear(
+                            mediaType,
+                            media?.release_date || media?.first_air_date
+                          )}
                         </Typography>
                         <ChipNetflix
-                          label={`${getRandomNumber(20)}+`}
+                          label={`${getRandomNumber(9, 17)}+`}
                         ></ChipNetflix>
-                        <Typography variant="subtitle2">{`${formatMinuteToReadable(
-                          media.runtime
-                        )}`}</Typography>
+                        <Typography variant="subtitle2">
+                          {getFormatTime(
+                            mediaType,
+                            media?.runtime || media?.number_of_seasons
+                          )}
+                        </Typography>
                         <ChipNetflix label="HD"></ChipNetflix>
                       </Stack>
                       <MaxLineTypography
@@ -242,8 +270,13 @@ function MoreInfoModal({ open, onClose, mediaId, mediaType }) {
                       >
                         Cast :
                       </Typography>
-                      {media.credits.cast.slice(0, 5).map((item) => (
-                        <CastLink name={item.name} id={item.id} />
+                      {media.credits.cast.slice(0, 5).map((item, index) => (
+                        <CastLink
+                          name={item.name}
+                          id={item.id}
+                          key={item.id}
+                          index={index}
+                        />
                       ))}
 
                       <Typography variant="body2" sx={{ my: 1 }}>

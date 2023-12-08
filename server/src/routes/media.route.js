@@ -8,5 +8,6 @@ router.get("/:mediaCategory", mediaController.getList);
 router.get("/:mediaId/officialTrailer", mediaController.getTrailerMovie);
 router.get("/:mediaId/moreDetails", mediaController.getMoreInfoMedia);
 router.get("/:mediaId/similar", mediaController.similarMovies);
+router.get("/:mediaCategory/heroMedia", mediaController.heroMovie);
 
 export default router;

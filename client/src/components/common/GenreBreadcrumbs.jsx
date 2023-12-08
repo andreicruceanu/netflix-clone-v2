@@ -16,7 +16,6 @@ const Separator = (
 );
 
 const GenreBreadcrumbs = ({ genres, ...others }) => {
-  console.log(genres);
   return (
     <Breadcrumbs separator={Separator} {...others}>
       {genres.map((genre, idx) => (

@@ -68,11 +68,20 @@ const getTrailerMovie = async (req, res) => {
 
 const getMoreInfoMedia = async (req, res) => {
   try {
+    ``;
     const { mediaType, mediaId } = req.params;
 
     const media = await tmdbApi.mediaDetail({ mediaType, mediaId });
 
     media.credits = await tmdbApi.mediaCredits({ mediaType, mediaId });
+    const video = await tmdbApi.mediaTrailer({ mediaType, mediaId });
+    const officialTrailer = video.results.find(
+      (video) => video.name === "Official Trailer"
+    );
+
+    media.officialTrailer = officialTrailer
+      ? officialTrailer
+      : video.results[0];
 
     responseHandler.ok(res, media);
   } catch (error) {
@@ -95,6 +104,44 @@ const similarMovies = async (req, res) => {
   }
 };
 
+const heroMovie = async (req, res) => {
+  try {
+    const { page } = req.query;
+
+    const { mediaType, mediaCategory } = req.params;
+
+    const media = await tmdbApi.mediaList({
+      mediaType,
+      mediaCategory,
+      page,
+    });
+    let popularMovie = media.results.length > 0 ? media.results.shift() : null;
+
+    const mediaId = popularMovie.id;
+
+    const video = await tmdbApi.mediaTrailer({ mediaType, mediaId });
+    const officialTrailer = video.results.find(
+      (video) => video.name === "Official Trailer"
+    );
+
+    popularMovie.officialTrailer = officialTrailer
+      ? officialTrailer
+      : video.results[0];
+
+    responseHandler.ok(res, popularMovie);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
+const getDetail = async (req, res) => {
+  try {
+    const { mediaType, mediaId } = req.params;
+
+    const params = { mediaType, mediaId };
+  } catch (error) {}
+};
+
 export default {
   getList,
   getGenres,
@@ -102,4 +149,5 @@ export default {
   getTrailerMovie,
   getMoreInfoMedia,
   similarMovies,
+  heroMovie,
 };
