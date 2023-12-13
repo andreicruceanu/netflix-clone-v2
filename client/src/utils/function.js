@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import tmdbConfigs from "../api/configs/tmdb.configs";
 
 export const getRandomNumber = (minNumber, maxNumber) =>
@@ -30,4 +31,22 @@ export const getReleaseYear = (mediaType, date) => {
   } else {
     return date && date.split("-")[0];
   }
+};
+
+export const totalReview = (value) => {
+  if (value === 1) {
+    return `${value} review`;
+  }
+  return `${value} reviews`;
+};
+
+export const calculateProgress = (value, totalReviews) =>
+  totalReviews !== 0 ? (value / totalReviews) * 100 : 0;
+
+export const formatFullName = (firstName, lastName) =>
+  `${firstName} ${lastName}`;
+
+export const formatDate = (dateString) => {
+  const formattedDate = dayjs(dateString).fromNow();
+  return formattedDate;
 };
