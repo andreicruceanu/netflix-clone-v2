@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Rating, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import LinearProgress, {
   linearProgressClasses,
@@ -10,6 +10,8 @@ import { calculateProgress, totalReview } from "../../../utils/function";
 import tmdbConfigs from "../../../api/configs/tmdb.configs";
 import ReviewItem from "./ReviewItem";
 import CreateReview from "./CreateReview";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthModalOpen } from "../../../redux/features/authModalSlice";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -25,12 +27,41 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 const Reviews = ({ media, mediaType, reviews, rating }) => {
   const [open, setOpen] = useState(false);
+  const [listReviews, setListReviews] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
+  const [page, setPage] = useState(1);
+  const [reviewCount, setReviewCount] = useState(0);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+
+  const skip = 4;
+
+  useEffect(() => {
+    setListReviews([...reviews]);
+    setFilteredReviews([...reviews].splice(0, skip));
+    setReviewCount(reviews.length);
+  }, [reviews]);
 
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => {
+    if (!user) {
+      return dispatch(setAuthModalOpen(true));
+    }
     setOpen(true);
+  };
+
+  const addReviewToList = (newReview) => {
+    setListReviews((prevReviews) => [newReview, ...prevReviews]);
+  };
+
+  const onLoadMore = () => {
+    setFilteredReviews([
+      ...filteredReviews,
+      ...[...listReviews].splice(page * skip, skip),
+    ]);
+    setPage(page + 1);
   };
 
   return (
@@ -40,6 +71,7 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
         handleClose={handleClose}
         media={media}
         mediaType={mediaType}
+        addReviewToList={addReviewToList}
       />
       <Box sx={{ mt: "50px", mb: "60px" }}>
         <ContainerMediaDetails>
@@ -156,7 +188,7 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
               </Box>
             </Box>
           </Box>
-          {reviews.map((item) => (
+          {filteredReviews.map((item) => (
             <Box key={item.id} sx={{ mt: 3 }}>
               <ReviewItem review={item} />
               <Divider
@@ -166,6 +198,9 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
               />
             </Box>
           ))}
+          {filteredReviews.length < listReviews.length && (
+            <Button onClick={onLoadMore}>load more</Button>
+          )}
         </ContainerMediaDetails>
       </Box>
     </React.Fragment>

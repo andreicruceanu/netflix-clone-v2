@@ -8,8 +8,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const ReviewItem = ({ review }) => {
-  const { user } = useSelector((state) => state.user);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(review.content);
 

@@ -9,8 +9,15 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
+import reviewApi from "../../../api/modules/review.api";
 
-const CreateReview = ({ media, mediaType, open, handleClose }) => {
+const CreateReview = ({
+  media,
+  mediaType,
+  open,
+  handleClose,
+  addReviewToList,
+}) => {
   const reviewForm = useFormik({
     initialValues: {
       rating: 5,
@@ -22,10 +29,17 @@ const CreateReview = ({ media, mediaType, open, handleClose }) => {
       mediaPoster: media.poster_path || media.backdrop_path,
     },
     onSubmit: async (values) => {
-      console.log(values);
+      const { response, err } = await reviewApi.create(values);
+      if (response) {
+        console.log(response);
+        addReviewToList(response);
+      }
+      if (err) {
+        console.log("Nu a functionat");
+      }
     },
   });
-  console.log(open);
+
   return (
     <Dialog
       fullWidth
