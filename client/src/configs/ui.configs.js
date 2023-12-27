@@ -3,7 +3,7 @@ const uiConfigs = {
     gradientBgImage: {
       dark: {
         backgroundImage:
-          "linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.3))",
+          "linear-gradient(to top, rgba(20,20,20,1), rgba(20,20,20,0.6))",
       },
       light: {
         backgroundImage:
@@ -27,6 +27,16 @@ const uiConfigs = {
       WebkitBoxOrient: "vertical",
       WebkitLineClamp: lines,
     }),
+    tagline: {
+      fontSize: "20px",
+      lineHeight: "28px",
+      marginBottom: "15px",
+      marginTop: "10px",
+      fontWeight: 600,
+      opacity: 0.6,
+      fontStyle: "italic",
+      xs: { fontSize: "16px" },
+    },
     mainContent: {
       maxWidth: "94%",
       margin: "0 auto",

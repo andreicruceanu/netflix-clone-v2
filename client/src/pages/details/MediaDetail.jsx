@@ -8,15 +8,17 @@ import { toast } from "react-toastify";
 import DetailsBanner from "./detailsBanner/DetailsBanner";
 import Cast from "./cast/Cast";
 import VideosSection from "./videosSection/VideosSection";
+import Reviews from "./reviews/Reviews";
+import Recommendation from "./recommendation/Recommendation";
+import Similar from "./similar/Similar";
 
 const MediaDetail = () => {
   const { user, listFavorites } = useSelector((state) => state.user);
   const [media, setMedia] = useState();
+  const [trailer, setTrailer] = useState("");
   const [onRequest, setOnRequest] = useState(false);
   const dispatch = useDispatch();
   const { mediaType, mediaId } = useParams();
-
-  console.log(media);
 
   useEffect(() => {
     const getMedia = async () => {
@@ -37,11 +39,42 @@ const MediaDetail = () => {
     getMedia();
   }, [mediaType, mediaId, dispatch]);
 
+  useEffect(() => {
+    const getTrailer = async () => {
+      const { response, err } = await mediaApi.getTrailer({
+        mediaType,
+        mediaId,
+      });
+
+      if (response) {
+        setTrailer(response);
+      }
+
+      if (err) toast.error(err.message);
+    };
+    getTrailer();
+  }, [mediaType, mediaId, dispatch]);
+
   return media ? (
     <>
-      <DetailsBanner media={media} mediaType={mediaType} />
+      <DetailsBanner
+        media={media}
+        mediaType={mediaType}
+        officialVideo={trailer}
+      />
       <Cast casts={media?.credits?.cast} />
-      <VideosSection videos={media.videos} />
+      <VideosSection videos={media?.videos} />
+      <Reviews
+        reviews={media?.reviews}
+        rating={media?.rating}
+        mediaType={mediaType}
+        media={media}
+      />
+      <Similar mediaType={mediaType} mediaId={mediaId} />
+      <Recommendation
+        mediaType={mediaType}
+        mediaRecommendation={media.recommend}
+      />
     </>
   ) : (
     ""

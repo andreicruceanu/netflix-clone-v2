@@ -8,9 +8,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const ReviewItem = ({ review }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState(review.content);
-
   return (
     <Box
       sx={{

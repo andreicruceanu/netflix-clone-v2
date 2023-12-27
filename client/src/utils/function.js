@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
 import tmdbConfigs from "../api/configs/tmdb.configs";
+import dayjs from "dayjs";
 
 export const getRandomNumber = (minNumber, maxNumber) =>
   Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
@@ -49,4 +49,12 @@ export const formatFullName = (firstName, lastName) =>
 export const formatDate = (dateString) => {
   const formattedDate = dayjs(dateString).fromNow();
   return formattedDate;
+};
+
+export const formatReleaseDate = (mediaType, date) => {
+  if (mediaType === tmdbConfigs.mediaType.movie) {
+    return dayjs(date).format("MMM D, YYYY");
+  } else {
+    return dayjs(date).format("MMM D, YYYY");
+  }
 };

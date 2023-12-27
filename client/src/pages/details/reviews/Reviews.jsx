@@ -54,6 +54,7 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
 
   const addReviewToList = (newReview) => {
     setListReviews((prevReviews) => [newReview, ...prevReviews]);
+    setFilteredReviews((prevReviews) => [newReview, ...prevReviews]);
   };
 
   const onLoadMore = () => {
@@ -89,7 +90,7 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
             <Box
               sx={{
                 display: "grid",
-                gridTemplateColumns: "15fr 35fr 50fr",
+                gridTemplateColumns: { xs: "40fr 60fr", lg: "15fr 35fr 50fr" },
                 padding: 0,
                 gap: "20px",
                 alignItems: "center",
@@ -97,22 +98,30 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
             >
               <Box
                 sx={{
-                  gridColumn: "3/-1",
-                  gridRow: "2/3",
-                  textAlign: "center",
-                  border: "1px solid #e1e1e5",
-                  padding: "1rem 10rem",
+                  gridColumn: { xs: "2/3", lg: "3/-1" },
+                  gridRow: { xs: "1/2", lg: "2/3" },
+                  textAlign: { xs: "right", md: "right", lg: "center" },
+                  border: { xs: "none", md: "none", lg: "1px solid #e1e1e5" },
+                  padding: { xs: "0", md: "0", lg: "1rem 10rem" },
                 }}
               >
-                <Typography>
+                <Typography
+                  sx={{ display: { xs: "none", md: "none", lg: "block" } }}
+                >
                   Did you like the
                   {mediaType === tmdbConfigs.mediaType.movie
                     ? " movie"
                     : " series"}
                   ?
                 </Typography>
-                <Typography>Tell everyone what you think here.</Typography>
-                <Button onClick={handleOpen}>Adauga recenzie</Button>
+                <Typography
+                  sx={{ display: { xs: "none", md: "none", lg: "block" } }}
+                >
+                  Tell everyone what you think here.
+                </Typography>
+                <Button variant="contained" onClick={handleOpen}>
+                  Add review
+                </Button>
               </Box>
               <Box
                 sx={{
@@ -122,7 +131,7 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
                   flexDirection: "column",
                   justifyContent: "center",
                   textAlign: "center",
-                  height: "100%",
+                  height: { lg: "100%" },
                   background: "#424343",
                   borderRadius: "12px",
                   maxWidth: "240px",
@@ -143,7 +152,15 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
                   defaultValue={rating.rating}
                   precision={0.5}
                   readOnly
-                  sx={{ margin: "0 auto" }}
+                  sx={{
+                    margin: "0 auto",
+                    size: {
+                      xs: "small",
+                      md: "small",
+                      lg: "large",
+                    },
+                  }}
+                  size="small"
                 />
                 <Typography
                   sx={{ fontSize: "16px", fontWeight: 500, mt: "10px" }}
@@ -153,7 +170,7 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
               </Box>
               <Box
                 sx={{
-                  gridColumn: "2/3",
+                  gridColumn: { xs: "2/-1", lg: "2/3" },
                   gridRow: "2/3",
                   display: "flex",
                   flexDirection: "column",
@@ -166,13 +183,11 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
                       display: "grid",
                       gridTemplateColumns: "43px auto 24px",
                       gap: "12px",
-                      marginBlock: "5px",
+                      marginBlock: { xs: "0", lg: "5px" },
                       alignItems: "center",
                     }}
                   >
-                    <Typography component="span" sx={{}}>
-                      {el.name}
-                    </Typography>
+                    <Typography component="span">{el.name}</Typography>
                     <BorderLinearProgress
                       variant="determinate"
                       value={calculateProgress(
@@ -199,7 +214,9 @@ const Reviews = ({ media, mediaType, reviews, rating }) => {
             </Box>
           ))}
           {filteredReviews.length < listReviews.length && (
-            <Button onClick={onLoadMore}>load more</Button>
+            <Button onClick={onLoadMore} sx={{ mt: 1 }} size="large" fullWidth>
+              load more
+            </Button>
           )}
         </ContainerMediaDetails>
       </Box>

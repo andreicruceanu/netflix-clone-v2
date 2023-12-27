@@ -18,7 +18,7 @@ const themeConfigs = {
               contrastText: "#ffffff",
             },
             background: {
-              default: "#000000",
+              default: "#141414",
               paper: "#131313",
               modal: "rgba(0,0,0,0.75)",
             },

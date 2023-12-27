@@ -6,7 +6,11 @@ import tmdbConfigs from "../../../api/configs/tmdb.configs";
 import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import PosterFallback from "../../../assets/images/no-poster.png";
 import MaxLineTypography from "../../../components/common/MaxLineTypography";
-import { getFormatTime, getReleaseYear } from "../../../utils/function";
+import {
+  formatReleaseDate,
+  getFormatTime,
+  getReleaseYear,
+} from "../../../utils/function";
 import Genres from "../../../components/common/Genres";
 import CircularRate from "../../../components/common/CircularRate";
 import { PlayIcon } from "../Playbtn";
@@ -14,11 +18,20 @@ import dayjs from "dayjs";
 import ButtonFavorite from "../../../components/common/ButtonFavorite";
 import NetflixIconButton from "../../../components/common/NetflixIconButton";
 import Preferences from "../../../components/common/Preferences";
+import uiConfigs from "../../../configs/ui.configs.js";
+import VideoPopup from "../../../components/common/VideoPopup.jsx";
 
-const DetailsBanner = ({ media, mediaType }) => {
+const DetailsBanner = ({ media, mediaType, officialVideo }) => {
   const [poster, setPoster] = useState(null);
   const [director, setDirector] = useState([]);
   const [writer, setWriter] = useState([]);
+  const [releaseDate, setReleaseDate] = useState("");
+
+  const [show, setShow] = useState(false);
+  const [videoId, setVideoId] = useState(null);
+
+  const formatDirationMedia =
+    mediaType === "movie" ? "Runtime" : "Number of seasons";
 
   useEffect(() => {
     if (media) {
@@ -34,6 +47,13 @@ const DetailsBanner = ({ media, mediaType }) => {
           (f) =>
             f.job === "Screenplay" || f.job === "Story" || f.job === "Writer"
         )
+      );
+      setVideoId(
+        media.videos.results &&
+          media?.videos?.results.find((el) => el.official === true)?.key
+      );
+      setReleaseDate(
+        media.release_date || media.first_air_date || media.last_air_date
       );
     }
   }, [media]);
@@ -81,26 +101,22 @@ const DetailsBanner = ({ media, mediaType }) => {
                 color="text.primary"
                 sx={{
                   fontWeight: 600,
-                  xs: { fontSize: "8px", lineHeight: "44px" },
+                  fontSize: { xs: "28px", md: "28px" },
+                  lineHeight: "1.5",
                 }}
               >
                 {media.name || media.title}
                 {` (${getReleaseYear(
                   mediaType,
-                  media?.release_date || media?.first_air_date
+                  media?.release_date ||
+                    media?.first_air_date ||
+                    media?.last_air_date
                 )})`}
               </MaxLineTypography>
               <Typography
                 variant="h6"
                 sx={{
-                  fontSize: "20px",
-                  lineHeight: "28px",
-                  marginBottom: "15px",
-                  marginTop: "10px",
-                  fontWeight: 600,
-                  opacity: 0.6,
-                  fontStyle: "italic",
-                  xs: { fontSize: "16px" },
+                  ...uiConfigs.style.tagline,
                 }}
               >
                 {media?.tagline}
@@ -121,26 +137,35 @@ const DetailsBanner = ({ media, mediaType }) => {
                   mediaType={mediaType}
                   sx={{ padding: 0.7, borderColor: "white" }}
                 />
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "20px",
-                    cursor: "pointer",
-                    svg: {
-                      width: "60px",
-                    },
-                  }}
-                >
-                  <PlayIcon />
-                  <Typography>Watch Trailer</Typography>
-                </Box>
+                {officialVideo && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "20px",
+                      cursor: "pointer",
+                    }}
+                    className="playbtn"
+                    onClick={() => {
+                      setVideoId(officialVideo.key);
+                      setShow(true);
+                    }}
+                  >
+                    <PlayIcon />
+                    <Typography className="text">Watch Trailer</Typography>
+                  </Box>
+                )}
               </Stack>
               <Box>
                 <Typography variant="h5" mt={2} sx={{ fontWeight: 600 }}>
                   Overview
                 </Typography>
-                <Typography variant="body1" mt={2} sx={{ fontWeight: 600 }}>
+                <Typography
+                  variant="body1"
+                  mt={2}
+                  sx={{ fontWeight: 500, textAlign: "justify" }}
+                >
                   {media.overview}
                 </Typography>
               </Box>
@@ -150,31 +175,32 @@ const DetailsBanner = ({ media, mediaType }) => {
                   padding: "15px 0",
                 }}
               >
-                <Stack direction="row" spacing={3}>
+                <Stack direction="row" spacing={2.4}>
                   {media?.status && (
                     <Box>
-                      <Typography>
+                      <Typography sx={{ fontWeight: 600 }}>
                         Status:{" "}
-                        <Typography component="span">{media.status}</Typography>
+                        <Typography component="span" sx={{ opacity: "0.5" }}>
+                          {media.status}
+                        </Typography>
                       </Typography>
                     </Box>
                   )}
                   {(media?.release_date || media?.first_air_date) && (
                     <Box>
-                      <Typography>
+                      <Typography sx={{ fontWeight: 600 }}>
                         Release Date:{" "}
-                        <Typography component="span">
-                          {dayjs(media.release_date).format("MMM D, YYYY") ||
-                            dayjs(media.first_air_date).format("MMM D, YYYY")}
+                        <Typography component="span" sx={{ opacity: "0.5" }}>
+                          {formatReleaseDate(mediaType, releaseDate)}
                         </Typography>
                       </Typography>
                     </Box>
                   )}
                   {(media?.runtime || media.number_of_seasons) && (
                     <Box>
-                      <Typography>
-                        Release Date:{" "}
-                        <Typography component="span">
+                      <Typography sx={{ fontWeight: 600 }}>
+                        {formatDirationMedia}:{" "}
+                        <Typography component="span" sx={{ opacity: "0.5" }}>
                           {getFormatTime(
                             mediaType,
                             media?.runtime || media?.number_of_seasons
@@ -193,10 +219,14 @@ const DetailsBanner = ({ media, mediaType }) => {
               >
                 {director?.length > 0 && (
                   <Box>
-                    <Typography>
+                    <Typography sx={{ fontWeight: 600 }}>
                       Director:{" "}
                       {director.map((d, i) => (
-                        <Typography component="span" key={i}>
+                        <Typography
+                          sx={{ opacity: "0.5" }}
+                          component="span"
+                          key={i}
+                        >
                           {d.name}
                           {director.length - 1 !== i && ", "}
                         </Typography>
@@ -213,10 +243,14 @@ const DetailsBanner = ({ media, mediaType }) => {
               >
                 {writer?.length > 0 && (
                   <Box>
-                    <Typography>
+                    <Typography sx={{ fontWeight: 600 }}>
                       Writer:{" "}
                       {writer.map((d, i) => (
-                        <Typography component="span" key={i}>
+                        <Typography
+                          sx={{ opacity: "0.5" }}
+                          component="span"
+                          key={i}
+                        >
                           {d.name}
                           {writer.length - 1 !== i && ", "}
                         </Typography>
@@ -228,6 +262,12 @@ const DetailsBanner = ({ media, mediaType }) => {
             </Box>
           </Box>
         </Box>
+        <VideoPopup
+          show={show}
+          setShow={setShow}
+          videoId={videoId}
+          setVideoId={setVideoId}
+        />
       </ContainerMediaDetails>
     </>
   );
