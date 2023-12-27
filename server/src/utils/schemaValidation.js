@@ -91,3 +91,13 @@ export const schemaPreferences = Joi.object({
   mediaId: Joi.number().required().error(handleError),
   mediaType: Joi.string().required().valid("tv", "movie").error(handleError),
 });
+
+export const schemaReview = Joi.object({
+  title: Joi.string().required().error(handleError),
+  content: Joi.string().required().error(handleError),
+  mediaId: Joi.number().required().error(handleError),
+  mediaPoster: Joi.string().required().error(handleError),
+  mediaType: Joi.string().required().valid("tv", "movie").error(handleError),
+  mediaTitle: Joi.string().required().error(handleError),
+  rating: Joi.number().required().valid(1, 2, 3, 4, 5).error(handleError),
+});
