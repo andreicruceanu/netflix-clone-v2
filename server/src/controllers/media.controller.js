@@ -1,5 +1,8 @@
 import responseHandler from "../handlers/response.handler.js";
+import reviewModel from "../models/review.model.js";
 import tmdbApi from "../tmdb/tmdb.api.js";
+import { calculateRating } from "../utils/calculateRating.js";
+
 const getList = async (req, res) => {
   try {
     const { page } = req.query;
@@ -139,7 +142,34 @@ const getDetail = async (req, res) => {
     const { mediaType, mediaId } = req.params;
 
     const params = { mediaType, mediaId };
-  } catch (error) {}
+
+    const media = await tmdbApi.mediaDetail(params);
+
+    media.credits = await tmdbApi.mediaCredits(params);
+
+    const videos = await tmdbApi.mediaVideos(params);
+
+    media.videos = videos;
+
+    const recommend = await tmdbApi.mediaRecommend(params);
+
+    media.recommend = recommend.results;
+
+    const reviews = await reviewModel
+      .find({ mediaId, mediaType })
+      .populate({
+        path: "user",
+        select: "id firstName lastName profilePicture",
+      })
+      .sort("-createdAt");
+
+    media.reviews = reviews;
+    media.rating = calculateRating(reviews);
+
+    responseHandler.ok(res, media);
+  } catch {
+    responseHandler.error(res);
+  }
 };
 
 export default {
@@ -150,4 +180,5 @@ export default {
   getMoreInfoMedia,
   similarMovies,
   heroMovie,
+  getDetail,
 };

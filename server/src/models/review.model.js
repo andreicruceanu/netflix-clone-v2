@@ -10,6 +10,15 @@ export default mongoose.model(
         ref: "User",
         required: true,
       },
+      title: {
+        type: String,
+        required: true,
+      },
+      rating: {
+        type: Number,
+        require: true,
+        enum: [1, 2, 3, 4, 5],
+      },
       content: {
         type: String,
         required: true,
@@ -20,7 +29,7 @@ export default mongoose.model(
         required: true,
       },
       mediaId: {
-        type: String,
+        type: Number,
         required: true,
       },
       mediaTitle: {
