@@ -6,3 +6,18 @@ export const PREFERENCES = Object.freeze({
   rated: "Rated",
   moreInfo: "Episodes & info",
 });
+export const starItem = [
+  { name: "5 star" },
+  { name: "4 star" },
+  { name: "3 star" },
+  { name: "2 star" },
+  { name: "1 star" },
+];
+
+export const suggestionTitleReveiw = [
+  "A good movie",
+  "Worth seeing",
+  "It's ok",
+  "I liked",
+  "Excellent",
+];

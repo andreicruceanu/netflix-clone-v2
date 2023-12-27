@@ -65,6 +65,14 @@ const validationForm = {
       )
       .required("Password is required"),
   }),
+  createReview: Yup.object({
+    title: Yup.string().required("Title is required"),
+    content: Yup.string().required("Content is required"),
+    rating: Yup.number()
+      .required("Please provide a rating")
+      .min(1, "Minimum rating is 1")
+      .max(5, "Maximum rating is 5"),
+  }),
 };
 
 export { validationForm };

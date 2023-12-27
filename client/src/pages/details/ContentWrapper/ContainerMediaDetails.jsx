@@ -7,7 +7,7 @@ const ContainerMediaDetails = ({ children }) => {
         color: "primary.contrastText",
         width: "100%",
         maxWidth: "1200px",
-        margin: "0 auto",
+        margin: "90px auto",
         padding: "0 20px",
       }}
     >
