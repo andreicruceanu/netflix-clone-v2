@@ -25,7 +25,7 @@ const CastLink = ({ name, id, index }) => {
           },
         }}
         component={Link}
-        to={`/person/${id}`}
+        to={`/actor/${id}`}
       >
         {name}
         {index < 4 && <span>, </span>}

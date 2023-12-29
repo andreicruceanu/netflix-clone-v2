@@ -37,7 +37,7 @@ const Cast = ({ casts }) => {
           >
             {casts.map((cast, index) => (
               <SwiperSlide key={index}>
-                <Link to={routesGen.person(cast.id)} className="LinkCast">
+                <Link to={routesGen.actor(cast.id)} className="LinkCast">
                   <Box
                     sx={{
                       width: { xs: "125px", md: "175px" },

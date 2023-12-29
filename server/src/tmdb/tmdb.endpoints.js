@@ -22,9 +22,9 @@ const tmbdEndpoints = {
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/images`),
   mediaSearch: ({ mediaType, query, page }) =>
     tmdbConfig.getUrl(`${mediaType}/${mediaId}`, { query, page }),
-  personDetail: ({ personId }) => tmdbConfig.getUrl(`person/${personId}`),
-  personMedias: ({ personId }) =>
-    tmdbConfig.getUrl(`person/${personId}/combined_credits`),
+  actorDetail: ({ actorId }) => tmdbConfig.getUrl(`person/${actorId}`),
+  actorMedias: ({ actorId }) =>
+    tmdbConfig.getUrl(`person/${actorId}/combined_credits`),
 };
 
 export default tmbdEndpoints;
