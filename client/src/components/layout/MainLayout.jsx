@@ -14,6 +14,7 @@ import {
 import preferencesApi from "../../api/modules/preferences.api";
 import { toast } from "react-toastify";
 import favoriteApi from "../../api/modules/favorite.api";
+import Footer from "../common/Footer";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ const MainLayout = () => {
 
         {/* main */}
       </Box>
+      <Footer />
     </>
   );
 };

@@ -12,7 +12,7 @@ const VideosSection = ({ videos }) => {
   const [videoId, setVideoId] = useState(null);
 
   return (
-    videos && (
+    videos.lenght > 0 && (
       <Box sx={{ position: "relative", marginBottom: "50px" }}>
         <ContainerMediaDetails>
           <Typography
