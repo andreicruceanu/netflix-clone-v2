@@ -30,7 +30,7 @@ const uiConfigs = {
     tagline: {
       fontSize: "20px",
       lineHeight: "28px",
-      marginBottom: "15px",
+      marginBottom: "5px",
       marginTop: "10px",
       fontWeight: 600,
       opacity: 0.6,

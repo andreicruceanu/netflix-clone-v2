@@ -13,7 +13,7 @@ const CircularRate = ({ value }) => {
         variant="determinate"
         value={value * 10}
         color={value < 5 ? "error" : value < 7 ? "warning" : "success"}
-        size={70}
+        size={60}
       />
       <Box
         sx={{
@@ -31,7 +31,7 @@ const CircularRate = ({ value }) => {
           variant="caption"
           component="div"
           fontWeight="700"
-          sx={{ marginTop: "-5px", fontSize: "22px" }}
+          sx={{ marginTop: "-5px", fontSize: { xs: "16px", md: "22px" } }}
         >
           {Math.floor(value * 10) / 10}
         </Typography>

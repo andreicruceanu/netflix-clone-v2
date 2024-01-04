@@ -10,7 +10,7 @@ const ImageHeader = ({ imgPath }) => {
       sx={{
         zIndex: "-1",
         position: "relative",
-        paddingTop: { xs: "60%", sm: "40%", md: "42%" },
+        paddingTop: { xs: "70%", sm: "55%", md: "40%" },
         backgroundPosition: "top",
         backgroundSize: "cover",
         backgroundImage: `url(${imgPath})`,

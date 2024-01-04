@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import mediaApi from "../../api/modules/media.api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
 import DetailsBanner from "./detailsBanner/DetailsBanner";
 import Cast from "./cast/Cast";
 import VideosSection from "./videosSection/VideosSection";
@@ -13,10 +12,8 @@ import Recommendation from "./recommendation/Recommendation";
 import Similar from "./similar/Similar";
 
 const MediaDetail = () => {
-  const { user, listFavorites } = useSelector((state) => state.user);
   const [media, setMedia] = useState();
   const [trailer, setTrailer] = useState("");
-  const [onRequest, setOnRequest] = useState(false);
   const dispatch = useDispatch();
   const { mediaType, mediaId } = useParams();
 
