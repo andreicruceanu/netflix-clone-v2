@@ -7,7 +7,7 @@ const Genres = ({ data }) => {
       variant="filled"
       color="primary"
       size="small"
-      sx={{ marginLeft: 1, borderRadius: "5px" }}
+      sx={{ mr: 1, mt: 1, borderRadius: "5px" }}
       key={index}
       label={genre.name}
     />

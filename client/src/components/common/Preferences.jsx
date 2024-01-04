@@ -23,7 +23,6 @@ const typePreferences = {
 };
 
 const Preferences = ({ mediaType, mediaId, sx }) => {
-  console.log(sx);
   const { user, listPreferences } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();

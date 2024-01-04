@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Img from "../../../components/common/Img";
 import ImageHeader from "../../../components/common/ImageHeader";
@@ -14,12 +14,15 @@ import {
 import Genres from "../../../components/common/Genres";
 import CircularRate from "../../../components/common/CircularRate";
 import { PlayIcon } from "../Playbtn";
-import dayjs from "dayjs";
 import ButtonFavorite from "../../../components/common/ButtonFavorite";
 import NetflixIconButton from "../../../components/common/NetflixIconButton";
 import Preferences from "../../../components/common/Preferences";
 import uiConfigs from "../../../configs/ui.configs.js";
 import VideoPopup from "../../../components/common/VideoPopup.jsx";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import AddIcon from "@mui/icons-material/Add";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import PlayCircleOutline from "@mui/icons-material/PlayCircleOutline";
 
 const DetailsBanner = ({ media, mediaType, officialVideo }) => {
   const [poster, setPoster] = useState(null);
@@ -33,6 +36,8 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
   const formatDirationMedia =
     mediaType === "movie" ? "Runtime" : "Number of seasons";
 
+  console.log(media);
+  const isMobile = useMediaQuery("(max-width:650px)");
   useEffect(() => {
     if (media) {
       setPoster(
@@ -41,7 +46,11 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
           media?.mediaPoster ||
           media?.profile_path
       );
-      setDirector(media?.credits?.crew.filter((f) => f.job === "Director"));
+      setDirector(
+        media?.credits?.crew
+          .filter((f) => f.job === "Director" || "Production")
+          .splice(0, 5)
+      );
       setWriter(
         media?.credits?.crew.filter(
           (f) =>
@@ -129,18 +138,24 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
                 spacing={{ xs: 1, sm: 2, md: 3 }}
               >
                 <CircularRate value={media?.vote_average} />
-                <NetflixIconButton sx={{ padding: 0.8, borderColor: "white" }}>
+                <NetflixIconButton
+                  sx={{
+                    display: { xs: "none", md: "block" },
+                    padding: 0.8,
+                    borderColor: "white",
+                  }}
+                >
                   <ButtonFavorite media={media} mediaType={mediaType} />
                 </NetflixIconButton>
                 <Preferences
                   mediaId={media.id}
                   mediaType={mediaType}
-                  sx={{ padding: 0.7, borderColor: "white" }}
+                  sx={{ padding: 0.2, borderColor: "white" }}
                 />
                 {officialVideo && (
                   <Box
                     sx={{
-                      display: "flex",
+                      display: { xs: "none", md: "flex" },
                       alignItems: "center",
                       justifyContent: "center",
                       gap: "20px",
@@ -157,6 +172,30 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
                   </Box>
                 )}
               </Stack>
+              {isMobile && (
+                <Stack
+                  sx={{ mt: 2 }}
+                  direction="row"
+                  spacing={2}
+                  justifyContent="space-between"
+                >
+                  {officialVideo && (
+                    <Button
+                      size="small"
+                      fullWidth
+                      variant="contained"
+                      startIcon={<PlayCircleOutline />}
+                      onClick={() => {
+                        setVideoId(officialVideo.key);
+                        setShow(true);
+                      }}
+                    >
+                      Watch Trailer
+                    </Button>
+                  )}
+                  <ButtonFavorite media={media} mediaType={mediaType} />
+                </Stack>
+              )}
               <Box>
                 <Typography variant="h5" mt={2} sx={{ fontWeight: 600 }}>
                   Overview
@@ -235,13 +274,13 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
                   </Box>
                 )}
               </Box>
-              <Box
-                sx={{
-                  borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
-                  padding: "15px 0",
-                }}
-              >
-                {writer?.length > 0 && (
+              {writer?.length > 0 && (
+                <Box
+                  sx={{
+                    borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+                    padding: "15px 0",
+                  }}
+                >
                   <Box>
                     <Typography sx={{ fontWeight: 600 }}>
                       Writer:{" "}
@@ -257,8 +296,8 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
                       ))}
                     </Typography>
                   </Box>
-                )}
-              </Box>
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>
