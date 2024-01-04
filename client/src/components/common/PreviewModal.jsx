@@ -84,7 +84,6 @@ const MediaVideo = ({ mediaType, mediaId, posterPath }) => {
 };
 
 const PreviewModal = ({ media, mediaType, anchorElement }) => {
-  console.log(media);
   const [title, setTitle] = useState("");
   const [posterPath, setPosterPath] = useState("");
   const [releaseDate, setReleaseDate] = useState(null);

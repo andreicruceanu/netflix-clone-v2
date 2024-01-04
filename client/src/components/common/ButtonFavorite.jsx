@@ -34,14 +34,16 @@ const ButtonFavorite = ({ media, mediaType }) => {
 
   useEffect(() => {
     const favorite = listFavorites.find(
-      (e) => e.mediaId.toString() === media.id.toString()
+      (e) => e.id.toString() === media.id.toString()
     );
     if (favorite) {
       setIsFavorite(true);
     } else {
       setIsFavorite(false);
     }
-  }, [listFavorites, media.id]);
+  }, [listFavorites, media]);
+
+  console.log(isFavorite);
 
   return isMobile ? (
     <LoadingButton
