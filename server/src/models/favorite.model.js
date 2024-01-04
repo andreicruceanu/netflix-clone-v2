@@ -10,36 +10,60 @@ export default mongoose.model(
         ref: "User",
         required: true,
       },
+      adult: {
+        type: Boolean,
+        required: false,
+      },
+      backdrop_path: {
+        type: String,
+      },
+      genre_ids: {
+        type: Array,
+        required: true,
+      },
+      id: {
+        type: Number,
+        required: true,
+      },
       mediaType: {
         type: String,
         enum: ["tv", "movie"],
         required: true,
       },
-      mediaId: {
+      original_language: {
+        type: String,
+      },
+      original_title: {
+        type: String,
+      },
+      overview: {
+        type: String,
+      },
+      popularity: {
         type: Number,
-        required: true,
       },
-      mediaTitle: {
+      poster_path: {
         type: String,
-        required: true,
       },
-      mediaGenreIds: {
-        type: Array,
-        required: true,
+      release_date: {
+        type: String,
       },
-      mediaRate: {
+      title: {
+        type: String,
+      },
+      tagline: {
+        type: String,
+      },
+      vote_average: {
         type: Number,
-        required: true,
       },
-      mediaPoster: {
-        type: String,
-        required: true,
-      },
-      mediaReleaseDate: {
-        type: String,
-        required: true,
+      vote_count: {
+        type: Number,
       },
     },
-    modelOptions
+    {
+      versionKey: false,
+      timestamps: true,
+    }
   )
 );

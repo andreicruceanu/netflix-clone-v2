@@ -8,7 +8,7 @@ const ActorMediaGrid = ({ actorId }) => {
   const [medias, setMedias] = useState([]);
   const [filteredMedias, setFilteredMedias] = useState([]);
   const [page, setPage] = useState(1);
-  const skip = 8;
+  const skip = 12;
 
   useEffect(() => {
     const getMedias = async () => {
@@ -45,7 +45,14 @@ const ActorMediaGrid = ({ actorId }) => {
     <>
       <Grid container spacing={1} sx={{ mr: "-8px !important" }}>
         {filteredMedias.map((media, index) => (
-          <Grid item xs={6} sm={4} md={2} key={index}>
+          <Grid
+            item
+            xs={6}
+            sm={4}
+            md={2}
+            key={index}
+            sx={{ marginBottom: 2.6 }}
+          >
             <MediaItem media={media} mediaType={media.media_type} />
           </Grid>
         ))}

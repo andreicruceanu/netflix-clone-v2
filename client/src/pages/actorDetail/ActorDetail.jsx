@@ -8,6 +8,7 @@ import uiConfigs from "../../configs/ui.configs";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import ActorMediaGrid from "./ActorMediaGrid";
+import Container from "../../components/common/Container";
 
 const ActorDetail = () => {
   const { actorId } = useParams();
@@ -81,7 +82,9 @@ const ActorDetail = () => {
               </Stack>
             </Box>
           </Box>
-          <ActorMediaGrid actorId={actorId} />
+          <Container header="Medias">
+            <ActorMediaGrid actorId={actorId} />
+          </Container>
         </Box>
       )}
     </>

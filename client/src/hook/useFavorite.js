@@ -22,24 +22,19 @@ export const useFavorites = () => {
     setOnRequest(true);
 
     const body = {
-      mediaId: media.id,
-      mediaTitle: media.title || media.name,
+      ...media,
       mediaType: mediaType,
-      mediaPoster: media.poster_path,
-      mediaRate: media.vote_average,
-      mediaGenreIds: media.genre_ids,
-      mediaReleaseDate: media.release_date || media.first_air_date,
     };
 
     const favorite = listFavorites.find(
-      (e) => e.mediaId.toString() === media.id.toString()
+      (e) => e.id.toString() === media.id.toString()
     );
 
     let response, err;
 
     if (favorite) {
       ({ response, err } = await favoriteApi.remove({
-        favoriteId: favorite.id,
+        favoriteId: favorite._id,
       }));
     } else {
       ({ response, err } = await favoriteApi.add(body));

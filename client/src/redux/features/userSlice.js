@@ -46,9 +46,9 @@ export const userSlice = createSlice({
       }
     },
     removeFavorite: (state, action) => {
-      const { mediaId } = action.payload;
+      const { id } = action.payload;
       state.listFavorites = [...state.listFavorites].filter(
-        (movie) => movie.mediaId.toString() !== mediaId.toString()
+        (movie) => movie.id.toString() !== id.toString()
       );
     },
   },
