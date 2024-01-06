@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setThemeMode } from "../../redux/features/themeModeSlice";
 import UserMenu from "./UserMenu";
+import SearchBox from "./SearchBox";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -105,7 +106,13 @@ const Topbar = () => {
               </IconButton>
             </Box>
             {/* main menu */}
-            <Stack spacing={3} direction="row" alignItems="center">
+            <Stack
+              spacing={3}
+              direction="row"
+              alignItems="center"
+              sx={{ mr: 3 }}
+            >
+              <SearchBox />
               {!user && (
                 <Button
                   variant="contained"
@@ -114,8 +121,8 @@ const Topbar = () => {
                   sign in
                 </Button>
               )}
+              {user && <UserMenu />}
             </Stack>
-            {user && <UserMenu />}
           </Toolbar>
         </AppBar>
       </ScrollAppBar>

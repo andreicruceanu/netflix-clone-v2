@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import uiConfigs from "../configs/ui.configs";
 import Container from "../components/common/Container";
@@ -7,39 +7,13 @@ import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
 import favoriteApi from "../api/modules/favorite.api";
 import { toast } from "react-toastify";
 import MediaItem from "../components/common/MediaItem";
-import { removeFavorite } from "../redux/features/userSlice";
-
-const FavoriteItem = (media, onRemoved) => {
-  const dispatch = useDispatch();
-
-  const [onRequest, setOnRequest] = useState(false);
-
-  const onRemove = async () => {
-    if (onRequest) return;
-    setOnRequest(true);
-
-    const { response, err } = await favoriteApi.remove({
-      favoriteId: media.id,
-    });
-    setOnRequest(false);
-
-    if (err) toast.error(err.message);
-    if (response) {
-      toast.success("Remove favorite success");
-      dispatch(removeFavorite({ mediaId: media.mediaId }));
-      onRemoved(media.id);
-    }
-  };
-
-  return <></>;
-};
 
 const FavoriteList = () => {
   const [count, setCount] = useState(0);
   const [filteredMedias, setFilteredMedias] = useState([]);
   const [page, setPage] = useState(1);
   const [medias, setMedias] = useState([]);
-  const { user, listFavorites } = useSelector((state) => state.user);
+  const { listFavorites } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const skip = 8;
@@ -62,9 +36,18 @@ const FavoriteList = () => {
 
   useEffect(() => {
     setMedias([...listFavorites]);
-    setFilteredMedias([...listFavorites].splice(0, skip));
+    setFilteredMedias([...listFavorites.slice(0, skip)]);
+    setCount([...listFavorites].length);
   }, [listFavorites]);
 
+  const onLoadMore = () => {
+    const startIndex = filteredMedias.length;
+    const endIndex = startIndex + skip;
+    const newElements = medias.slice(startIndex, endIndex);
+
+    setFilteredMedias([...filteredMedias, ...newElements]);
+    setPage(page + 1);
+  };
   return (
     <Box sx={{ ...uiConfigs.style.mainContent }}>
       <Container header={`My List (${count})`}>
@@ -75,6 +58,11 @@ const FavoriteList = () => {
             </Grid>
           ))}
         </Grid>
+        {filteredMedias.length < medias.length && (
+          <Button fullWidth onClick={onLoadMore}>
+            load more
+          </Button>
+        )}
       </Container>
     </Box>
   );

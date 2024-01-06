@@ -172,6 +172,18 @@ const getDetail = async (req, res) => {
   }
 };
 
+const search = async (req, res) => {
+  try {
+    const { query, page } = req.query;
+
+    const response = await tmdbApi.mediaSearch({ query, page });
+
+    responseHandler.ok(res, response);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   getList,
   getGenres,
@@ -181,4 +193,5 @@ export default {
   similarMovies,
   heroMovie,
   getDetail,
+  search,
 };

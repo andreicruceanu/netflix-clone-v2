@@ -69,6 +69,7 @@ const UserMenu = () => {
             onClose={() => setAnchorEl(null)}
             anchorEl={anchorEl}
             sx={{
+              mr: 2,
               ".MuiPaper-root": {
                 backgroundColor: "black",
                 marginTop: "10px",
