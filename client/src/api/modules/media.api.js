@@ -13,6 +13,7 @@ const mediaEndpoints = {
   heroMedia: ({ mediaType, mediaCategory }) =>
     `${mediaType}/${mediaCategory}/heroMedia`,
   detail: ({ mediaType, mediaId }) => `${mediaType}/detail/${mediaId}`,
+  search: ({ query, page }) => `/search?query=${query}&page=${page}`,
 };
 
 const mediaApi = {
@@ -82,6 +83,17 @@ const mediaApi = {
       const response = await publicClient.get(
         mediaEndpoints.similarMovie({ mediaType, mediaId })
       );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  search: async ({ query, page }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.search({ query, page })
+      );
+
       return { response };
     } catch (err) {
       return { err };

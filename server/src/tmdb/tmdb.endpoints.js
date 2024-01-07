@@ -20,8 +20,8 @@ const tmbdEndpoints = {
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/recommendations`),
   mediaImages: ({ mediaType, mediaId }) =>
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/images`),
-  mediaSearch: ({ mediaType, query, page }) =>
-    tmdbConfig.getUrl(`${mediaType}/${mediaId}`, { query, page }),
+  mediaSearch: ({ query, page }) =>
+    tmdbConfig.getUrl(`search/multi`, { query, page }),
   actorDetail: ({ actorId }) => tmdbConfig.getUrl(`person/${actorId}`),
   actorMedias: ({ actorId }) =>
     tmdbConfig.getUrl(`person/${actorId}/combined_credits`),

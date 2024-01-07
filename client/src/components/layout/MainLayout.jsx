@@ -15,6 +15,7 @@ import preferencesApi from "../../api/modules/preferences.api";
 import { toast } from "react-toastify";
 import favoriteApi from "../../api/modules/favorite.api";
 import Footer from "../common/Footer";
+import { SearchProvider } from "../context/SearchContext";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -60,22 +61,29 @@ const MainLayout = () => {
 
   return (
     <>
-      <GlobalLoading />
-      <AuthModal />
+      <SearchProvider>
+        <GlobalLoading />
+        <AuthModal />
 
-      <Box display="flex" minHeight="100vh">
-        {/* Header */}
-        <Topbar />
-        {/* Header */}
+        <Box display="flex" minHeight="100vh">
+          {/* Header */}
+          <Topbar />
+          {/* Header */}
 
-        {/* main */}
-        <Box component="main" flexGrow={1} overflow="hidden" minHeight="100vh">
-          <Outlet />
+          {/* main */}
+          <Box
+            component="main"
+            flexGrow={1}
+            overflow="hidden"
+            minHeight="100vh"
+          >
+            <Outlet />
+          </Box>
+
+          {/* main */}
         </Box>
-
-        {/* main */}
-      </Box>
-      <Footer />
+        <Footer />
+      </SearchProvider>
     </>
   );
 };

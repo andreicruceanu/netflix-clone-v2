@@ -1,6 +1,7 @@
 const mediaType = {
   movie: "movie",
   tv: "tv",
+  person: "person",
 };
 const time = {
   day: "day",
