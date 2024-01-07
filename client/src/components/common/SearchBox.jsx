@@ -2,16 +2,22 @@ import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputBase } from "@mui/material";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchGlobal } from "../context/SearchContext";
 
 let timer;
-const timeout = 500;
+const timeout = 1000;
 
 const SearchBox = () => {
-  const [isFocused, setIsFocused] = useState(false);
   const searchInputRef = useRef(null);
-  const [query, setQuery] = useState("");
   const navigate = useNavigate();
+
+  const [search, setSearch] = useSearchParams();
+  const [isFocused, setIsFocused] = useState(
+    search.get("query") ? true : false
+  );
+
+  const { setQuerySearch } = useSearchGlobal();
 
   const handleClickSearchIcon = () => {
     if (!isFocused) {
@@ -52,14 +58,28 @@ const SearchBox = () => {
 
   const onQueryChange = (e) => {
     const newQuery = e.target.value;
-
-    clearTimeout(timer);
+    if (timer) {
+      clearTimeout(timer);
+    }
 
     timer = setTimeout(() => {
-      setQuery(newQuery);
-      navigate(`/search?query=${newQuery}`);
+      if (newQuery.length === 0) {
+        search.delete("query");
+        setIsFocused(false);
+        setSearch(search, {
+          replace: true,
+        });
+        navigate("/");
+      } else {
+        search.set("query", newQuery);
+        navigate(`/search?query=${newQuery}&page=1`, {
+          replace: true,
+        });
+      }
     }, timeout);
   };
+
+  setQuerySearch(search.get("query"));
 
   return (
     <Search>
@@ -75,8 +95,9 @@ const SearchBox = () => {
         onBlur={() => {
           setIsFocused(false);
         }}
+        autoFocus={search.get("query") ? true : false}
         onChange={onQueryChange}
-        value={query}
+        defaultValue={search.get("query") || ""}
       />
     </Search>
   );
