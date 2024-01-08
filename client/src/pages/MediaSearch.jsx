@@ -35,11 +35,10 @@ const MediaSearch = () => {
     )
     .flatMap((el) =>
       el.media_type === tmdbConfigs.mediaType.movie
-        ? [el] // Dacă este film, returnează direct elementul
+        ? [el]
         : el.known_for.map((knownForItem) => ({
             ...el,
             ...knownForItem,
-            // Dacă ai nevoie de alte modificări sau adăugiri aici
           }))
     );
   useEffect(() => {
@@ -55,8 +54,6 @@ const MediaSearch = () => {
   }, [searchResponse]);
 
   if (loading) return <Loading />;
-
-  console.log(movies);
 
   return (
     searchResponse && (
