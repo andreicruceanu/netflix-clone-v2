@@ -36,12 +36,18 @@ const AuthModal = () => {
           top: "50%",
           left: "50%",
           transform: "translate(-50% , -50%)",
-          width: "100%",
-          maxWidth: { xs: "300px", md: "450px" },
+          width: "450px",
+          maxWidth: "100%",
           outline: "none",
-          backgroundColor: "background.modal",
-          padding: { xs: 3, md: "60px 68px 40px" },
+          backgroundColor: {
+            xs: "black",
+            md: "rgba(0, 0, 0, 0.73)",
+          },
+          padding: { xs: 3, md: "30px 68px 40px" },
           minHeight: { xs: "420px", md: "520px" },
+          color: "#737373",
+          marginBottom: "8%",
+          borderRadius: "4px",
         }}
       >
         {action === actionState.signup && (

@@ -81,10 +81,9 @@ const SigninForm = ({ switchAuthState }) => {
     <Box component="form" onSubmit={signinForm.handleSubmit}>
       <Stack spacing={3}>
         <TextField
-          sx={inputStyledBlack}
           id="email"
           label="Email"
-          variant="outlined"
+          variant="filled"
           name="email"
           onBlur={signinForm.handleBlur}
           onChange={signinForm.handleChange}
@@ -94,9 +93,17 @@ const SigninForm = ({ switchAuthState }) => {
             signinForm.touched.email && signinForm.errors.email !== undefined
           }
           fullWidth
+          color="secondary"
+          InputLabelProps={{
+            style: { color: "#8c8c8c" },
+          }}
+          sx={{
+            boxSizing: "border-box",
+            borderRadius: "2px",
+            backgroundColor: "#222",
+          }}
         />
         <TextField
-          sx={inputStyledBlack}
           id="password"
           name="password"
           label="Password"
@@ -104,7 +111,8 @@ const SigninForm = ({ switchAuthState }) => {
           onChange={signinForm.handleChange}
           value={signinForm.values.password}
           type={visible ? "password" : "text"}
-          variant="outlined"
+          variant="filled"
+          color="secondary"
           error={
             signinForm.touched.password &&
             signinForm.errors.password !== undefined
@@ -116,6 +124,14 @@ const SigninForm = ({ switchAuthState }) => {
             endAdornment: (
               <EndAdorment visible={visible} setVisible={setVisible} />
             ),
+          }}
+          InputLabelProps={{
+            style: { color: "#8c8c8c" },
+          }}
+          sx={{
+            boxSizing: "border-box",
+            borderRadius: "2px",
+            backgroundColor: "#222",
           }}
           fullWidth
         />
