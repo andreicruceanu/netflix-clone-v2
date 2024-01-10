@@ -4,6 +4,7 @@ import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Box,
+  Button,
   IconButton,
   InputAdornment,
   Stack,
@@ -47,69 +48,55 @@ const SignupForm = () => {
       if (err) setErrorMessage(err.message);
     },
   });
-  const EndAdorment = () => {
-    return (
-      <InputAdornment position="end">
-        <IconButton
-          sx={{
-            color: visible
-              ? theme.palette.input.label
-              : theme.palette.input.visible,
-          }}
-          onClick={() => setVisible(!visible)}
-        >
-          {visible ? (
-            <VisibilityOffIcon sx={{ fontSize: 22 }} />
-          ) : (
-            <RemoveRedEyeIcon sx={{ fontSize: 22 }} />
-          )}
-        </IconButton>
-      </InputAdornment>
-    );
-  };
 
   return (
-    <Box component="form" onSubmit={signupForm.handleSubmit}>
+    <Box
+      component="form"
+      onSubmit={signupForm.handleSubmit}
+      sx={{ marginTop: { xs: "0", md: "25%", lg: "25%" } }}
+    >
       <Stack spacing={3}>
-        <TextField
-          sx={inputStyledBlack}
-          id="firstName"
-          label="FirstName"
-          variant="outlined"
-          name="firstName"
-          onChange={signupForm.handleChange}
-          value={signupForm.values.firstName}
-          onBlur={signupForm.handleBlur}
-          helperText={
-            signupForm.touched.firstName ? signupForm.errors.firstName : ""
-          }
-          error={
-            signupForm.touched.firstName &&
-            signupForm.errors.firstName !== undefined
-          }
-        />
-        <TextField
-          sx={inputStyledBlack}
-          id="LastName"
-          label="LastName"
-          name="lastName"
-          variant="outlined"
-          onChange={signupForm.handleChange}
-          value={signupForm.values.lastName}
-          onBlur={signupForm.handleBlur}
-          helperText={
-            signupForm.touched.lastName ? signupForm.errors.lastName : ""
-          }
-          error={
-            signupForm.touched.lastName &&
-            signupForm.errors.lastName !== undefined
-          }
-        />
+        <Stack direction="row" spacing={2}>
+          <TextField
+            sx={inputStyledBlack}
+            id="firstName"
+            label="FirstName"
+            variant="filled"
+            name="firstName"
+            onChange={signupForm.handleChange}
+            value={signupForm.values.firstName}
+            onBlur={signupForm.handleBlur}
+            helperText={
+              signupForm.touched.firstName ? signupForm.errors.firstName : ""
+            }
+            error={
+              signupForm.touched.firstName &&
+              signupForm.errors.firstName !== undefined
+            }
+          />
+          <TextField
+            sx={inputStyledBlack}
+            id="LastName"
+            label="LastName"
+            name="lastName"
+            variant="filled"
+            onChange={signupForm.handleChange}
+            value={signupForm.values.lastName}
+            onBlur={signupForm.handleBlur}
+            helperText={
+              signupForm.touched.lastName ? signupForm.errors.lastName : ""
+            }
+            error={
+              signupForm.touched.lastName &&
+              signupForm.errors.lastName !== undefined
+            }
+          />
+        </Stack>
         <TextField
           sx={inputStyledBlack}
           id="Email"
           label="Email"
-          variant="outlined"
+          variant="filled"
           name="email"
           fullWidth
           onBlur={signupForm.handleBlur}
@@ -126,7 +113,7 @@ const SignupForm = () => {
           label="Password"
           name="password"
           type={visible ? "password" : "text"}
-          variant="outlined"
+          variant="filled"
           onChange={signupForm.handleChange}
           onBlur={signupForm.handleBlur}
           value={signupForm.values.password}
@@ -138,7 +125,16 @@ const SignupForm = () => {
             signupForm.errors.password !== undefined
           }
           InputProps={{
-            endAdornment: <EndAdorment />,
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  sx={{ color: "white", padding: 2 }}
+                  onClick={() => setVisible(!visible)}
+                >
+                  {visible ? "Hide" : "Show"}
+                </Button>
+              </InputAdornment>
+            ),
           }}
           fullWidth
         />
@@ -148,7 +144,7 @@ const SignupForm = () => {
         fullWidth
         size="large"
         variant="contained"
-        sx={{ marginTop: 4 }}
+        sx={{ marginTop: 4, mb: 2 }}
         loading={isLoginRequest}
       >
         Sign Up
