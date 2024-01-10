@@ -1,9 +1,9 @@
 import {
   Alert,
   Box,
+  Button,
   Checkbox,
   FormControlLabel,
-  IconButton,
   InputAdornment,
   Link as MUILink,
   Stack,
@@ -14,15 +14,13 @@ import {
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import React, { useState } from "react";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useFormik } from "formik";
 import { validationForm } from "../../utils/ValidationForm";
-import { inputStyledBlack } from "../../utils/InputStyle";
 import userApi from "../../api/modules/user.api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/userSlice";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
+import { inputStyledBlack } from "../../utils/InputStyle";
 
 const SigninForm = ({ switchAuthState }) => {
   const theme = useTheme();
@@ -56,29 +54,12 @@ const SigninForm = ({ switchAuthState }) => {
     },
   });
 
-  const EndAdorment = ({ visible, setVisible }) => {
-    return (
-      <InputAdornment position="end">
-        <IconButton
-          sx={{
-            color: visible
-              ? theme.palette.input.label
-              : theme.palette.input.visible,
-          }}
-          onClick={() => setVisible(!visible)}
-        >
-          {visible ? (
-            <VisibilityOffIcon sx={{ fontSize: 22 }} />
-          ) : (
-            <RemoveRedEyeIcon sx={{ fontSize: 22 }} />
-          )}
-        </IconButton>
-      </InputAdornment>
-    );
-  };
-
   return (
-    <Box component="form" onSubmit={signinForm.handleSubmit}>
+    <Box
+      component="form"
+      onSubmit={signinForm.handleSubmit}
+      sx={{ marginTop: { xs: "0", md: "25%", lg: "25%" } }}
+    >
       <Stack spacing={3}>
         <TextField
           id="email"
@@ -97,11 +78,8 @@ const SigninForm = ({ switchAuthState }) => {
           InputLabelProps={{
             style: { color: "#8c8c8c" },
           }}
-          sx={{
-            boxSizing: "border-box",
-            borderRadius: "2px",
-            backgroundColor: "#222",
-          }}
+          sx={inputStyledBlack}
+          autoComplete="off"
         />
         <TextField
           id="password"
@@ -122,17 +100,20 @@ const SigninForm = ({ switchAuthState }) => {
           }
           InputProps={{
             endAdornment: (
-              <EndAdorment visible={visible} setVisible={setVisible} />
+              <InputAdornment position="end">
+                <Button
+                  sx={{ color: "white", padding: 2 }}
+                  onClick={() => setVisible(!visible)}
+                >
+                  {visible ? "Hide" : "Show"}
+                </Button>
+              </InputAdornment>
             ),
           }}
           InputLabelProps={{
             style: { color: "#8c8c8c" },
           }}
-          sx={{
-            boxSizing: "border-box",
-            borderRadius: "2px",
-            backgroundColor: "#222",
-          }}
+          sx={inputStyledBlack}
           fullWidth
         />
       </Stack>

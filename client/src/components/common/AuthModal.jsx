@@ -1,11 +1,19 @@
-import { Box, Modal, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Modal,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-
+import Logo from "./Logo";
+import CloseIcon from "@mui/icons-material/Close";
 const actionState = {
   signin: "signin",
   signup: "signup",
@@ -24,12 +32,10 @@ const AuthModal = () => {
     if (authModalOpen) setAction(actionState.signin);
   }, [authModalOpen]);
 
+  const isMobile = useMediaQuery("(max-width:650px)");
+
   return (
-    <Modal
-      open={authModalOpen}
-      onClose={handleModalClose}
-      sx={{ background: { xs: "" } }}
-    >
+    <Modal open={authModalOpen} onClose={handleModalClose}>
       <Box
         sx={{
           position: "absolute",
@@ -39,12 +45,9 @@ const AuthModal = () => {
           width: "450px",
           maxWidth: "100%",
           outline: "none",
-          backgroundColor: {
-            xs: "black",
-            md: "rgba(0, 0, 0, 0.73)",
-          },
+          backgroundColor: "black",
           padding: { xs: 3, md: "30px 68px 40px" },
-          minHeight: { xs: "420px", md: "520px" },
+          minHeight: { xs: "100vh", md: "620px" },
           color: "#737373",
           marginBottom: "8%",
           borderRadius: "4px",
@@ -52,7 +55,12 @@ const AuthModal = () => {
       >
         {action === actionState.signup && (
           <Box
-            sx={{ position: "absolute", top: "20px", left: "20px" }}
+            sx={{
+              position: "absolute",
+              top: "80px",
+              left: { xs: "30xp", md: "60px" },
+              color: "#dad9d9",
+            }}
             onClick={() => switchAuthState(actionState.signin)}
           >
             <Typography
@@ -67,7 +75,17 @@ const AuthModal = () => {
             </Typography>
           </Box>
         )}
-        <Box sx={{ textAlign: "left" }}>
+        {isMobile && (
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Logo />
+            <CloseIcon sx={{ color: "white" }} onClick={handleModalClose} />
+          </Stack>
+        )}
+        <Box sx={{ textAlign: "left", mt: { xs: "35%", md: 0 } }}>
           <Typography
             variant="h4"
             sx={{
@@ -76,6 +94,7 @@ const AuthModal = () => {
               fontWeight: "500",
               wordWrap: "break-word",
               marginBottom: "28px",
+              color: "white",
             }}
           >
             {action === actionState.signin ? "Sign In" : "Sign Up"}
@@ -87,6 +106,15 @@ const AuthModal = () => {
           )}
           {action === actionState.signup && <SignupForm />}
         </Box>
+        <Grid>
+          <Typography variant="caption">
+            This page is protected by Google reCAPTCHA to ensure you are not a
+            bot.
+          </Typography>
+          <Typography variant="caption" sx={{ color: "#0071eb" }}>
+            Learn more.
+          </Typography>
+        </Grid>
       </Box>
     </Modal>
   );
