@@ -38,9 +38,9 @@ const uiConfigs = {
       xs: { fontSize: "16px" },
     },
     mainContent: {
-      maxWidth: "94%",
+      maxWidth: "93%",
       margin: "0 auto",
-      padding: "0 20px",
+      padding: { xs: 0, md: "0 20px" },
     },
     RankSvg: {
       dark: {

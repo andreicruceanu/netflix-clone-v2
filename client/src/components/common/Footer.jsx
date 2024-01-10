@@ -1,23 +1,20 @@
 import React from "react";
 import {
   Box,
-  Button,
   Container,
   Grid,
   MenuItem,
-  Paper,
   Select,
   Stack,
   Typography,
 } from "@mui/material";
-import Logo from "./Logo";
 import menuConfigs from "../../configs/menu.config";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "black", color: "grey.700", mt: 6 }}>
-      <Container maxWidth="lg" sx={{ py: 6 }}>
+    <Box sx={{ bgcolor: "#141414", color: "grey.700", mt: 5 }}>
+      <Container maxWidth="lg" sx={{ py: 3 }}>
         <Stack spacing={4}>
           <Typography>Questions? Call 007-803-321-2130</Typography>
 
@@ -69,6 +66,16 @@ const Footer = () => {
                   <Typography variant="caption" component="a" href="#">
                     Only on Netflix
                   </Typography>
+                  {menuConfigs.main.map((item, index) => (
+                    <Typography
+                      key={index}
+                      variant="caption"
+                      component={Link}
+                      to={item.path}
+                    >
+                      {item.display}
+                    </Typography>
+                  ))}
                 </Stack>
               </Grid>
               <Grid item xs={6} md={3}>

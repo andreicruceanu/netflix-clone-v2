@@ -110,13 +110,14 @@ const Topbar = () => {
               spacing={3}
               direction="row"
               alignItems="center"
-              sx={{ mr: 3 }}
+              sx={{ mr: { xs: "0", md: 3 } }}
             >
               <SearchBox />
               {!user && (
                 <Button
                   variant="contained"
                   onClick={() => dispatch(setAuthModalOpen(true))}
+                  sx={{ minWidth: "87px" }}
                 >
                   sign in
                 </Button>
