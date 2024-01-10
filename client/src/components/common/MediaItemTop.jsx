@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 const MediaItemTop = ({ index, media }) => {
   const [posterPath, setPosterPath] = useState("");
+  console.log(media);
 
   useEffect(() => {
     setPosterPath(media.poster_path);

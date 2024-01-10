@@ -33,7 +33,7 @@ const MediaItem = ({ media, mediaType }) => {
 
   return (
     <>
-      {isHovered && <PreviewModal media={media} mediaType={mediaType} />}
+      {/* {isHovered && <PreviewModal media={media} mediaType={mediaType} />} */}
 
       <Box
         className="card"

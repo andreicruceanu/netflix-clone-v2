@@ -5,7 +5,7 @@ const Container = ({ header, children }) => {
   return (
     <Box
       sx={{
-        marginTop: "5rem",
+        marginTop: { xs: "2rem", md: "5rem" },
         marginX: "auto",
         color: "text.primary",
       }}
@@ -24,13 +24,17 @@ const Container = ({ header, children }) => {
                 position: "absolute",
                 left: { xs: "20px", md: "0" },
                 top: "100%",
-                height: "5px",
+                height: { xs: "3px", md: "5px" },
                 width: "100px",
                 backgroundColor: "primary.main",
               },
             }}
           >
-            <Typography variant="h5" fontWeight="700" textTransform="uppercase">
+            <Typography
+              sx={{ fontSize: { xs: "15px", md: "22px" } }}
+              fontWeight="700"
+              textTransform="uppercase"
+            >
               {header}
             </Typography>
           </Box>

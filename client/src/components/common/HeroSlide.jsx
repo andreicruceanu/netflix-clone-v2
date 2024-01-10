@@ -44,35 +44,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
       }
       dispatch(setGlobalLoading(false));
     };
-
-    const getGenresMovie = async () => {
-      dispatch(setGlobalLoading(true));
-
-      const { response, err } = await genreApi.getList({ mediaType });
-
-      if (response) {
-        dispatch(setGenresMovieSlice(response.genres));
-        getMediaHero();
-      }
-      if (err) {
-        toast.error(err.message);
-      }
-    };
-    getGenresMovie();
-  }, [mediaType, mediaCategory, dispatch]);
-
-  useEffect(() => {
-    const getGenresSeries = async () => {
-      const { response, err } = await genreApi.getList({ mediaType: "tv" });
-
-      if (response) {
-        dispatch(setGenresSeriesSlice(response.genres));
-      }
-      if (err) {
-        console.log(err);
-      }
-    };
-    getGenresSeries();
+    getMediaHero();
   }, [mediaType, mediaCategory, dispatch]);
 
   const handleReady = (player) => {
@@ -90,7 +62,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
       <Box
         sx={{
           mb: 3,
-          pb: "40%",
+          pb: "58%",
           top: 0,
           left: 0,
           right: 0,
@@ -151,17 +123,14 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                 />
                 <Box
                   sx={{
-                    backgroundColor: "transparent",
                     backgroundImage:
-                      "linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#000000 68%,#000000)",
-                    backgroundRepeat: "repeat-x",
-                    backgroundPosition: "0px top",
+                      "linear-gradient(to top, #141414, rgba(20,20,20,0.1))",
                     backgroundSize: "100% 100%",
                     bottom: 0,
                     position: "absolute",
                     height: "14.7vw",
                     opacity: 1,
-                    top: "auto",
+
                     width: "100%",
                   }}
                 />

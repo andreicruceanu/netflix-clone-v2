@@ -47,7 +47,7 @@ const AuthModal = () => {
           outline: "none",
           backgroundColor: "black",
           padding: { xs: 3, md: "30px 68px 40px" },
-          minHeight: { xs: "100vh", md: "620px" },
+          minHeight: { xs: "100svh", md: "620px" },
           color: "#737373",
           marginBottom: "8%",
           borderRadius: "4px",
@@ -57,7 +57,7 @@ const AuthModal = () => {
           <Box
             sx={{
               position: "absolute",
-              top: "80px",
+              top: "100px",
               left: { xs: "30xp", md: "60px" },
               color: "#dad9d9",
             }}
@@ -80,12 +80,13 @@ const AuthModal = () => {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
+            sx={{ mt: 2 }}
           >
             <Logo />
             <CloseIcon sx={{ color: "white" }} onClick={handleModalClose} />
           </Stack>
         )}
-        <Box sx={{ textAlign: "left", mt: { xs: "35%", md: 0 } }}>
+        <Box sx={{ textAlign: "left", mt: { xs: "25%", md: 0 } }}>
           <Typography
             variant="h4"
             sx={{
