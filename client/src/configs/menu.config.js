@@ -9,7 +9,7 @@ import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
 const main = [
   {
     display: "Home",
-    path: "/",
+    path: "/browse",
     icon: <HomeOutlinedIcon />,
     state: "home",
   },

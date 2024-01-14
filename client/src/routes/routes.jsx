@@ -8,52 +8,53 @@ import MediaDetail from "../pages/details/MediaDetail";
 import ActorDetail from "../pages/actorDetail/ActorDetail";
 
 export const routesGen = {
-  home: "/",
-  mediaList: (type) => `/${type}`,
-  mediaDetail: (type, id) => `/${type}/${id}`,
+  home: "/browse",
+  mediaList: (type) => `/browse/${type}`,
+  mediaDetail: (type, id) => `/browse/${type}/${id}`,
   mediaSearch: "/search",
-  actor: (id) => `/actor/${id}`,
-  favoriteList: "/favorites",
+  actor: (id) => `/browse/actor/${id}`,
+  favoriteList: "/browse/favorites",
   reviewList: "/reviews",
   passwordUpdate: "password-update",
-  search: (query) => `/search/:${query}`,
+  search: (query) => `/browse/search/:${query}`,
 };
 
 const routes = [
   {
-    index: true,
     element: <Home />,
+    path: "/browse",
     state: "home",
+    index: true,
   },
   {
-    path: "/:mediaType",
+    path: "/browse/:mediaType",
     element: <MediaList />,
   },
   {
-    path: "/actor/:actorId",
+    path: "/browse/actor/:actorId",
     element: <ActorDetail />,
     state: "actor.detail",
   },
   {
-    path: "/search",
+    path: "/browse/search",
     element: <MediaSearch />,
     state: "search",
   },
   {
-    path: "/favorites",
+    path: "/browse/favorites",
     element: <FavoriteList />,
   },
   {
-    path: "/account",
+    path: "/browse/account",
     element: (
       <ProtectedPage>
         <Account />
       </ProtectedPage>
     ),
-    state: "account",
+    state: "/browse/account",
   },
   {
-    path: "/:mediaType/:mediaId",
+    path: "/browse/:mediaType/:mediaId",
     element: <MediaDetail />,
   },
 ];

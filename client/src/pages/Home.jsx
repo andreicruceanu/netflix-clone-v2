@@ -37,7 +37,6 @@ const Home = () => {
   useEffect(() => {
     const getGenresMovie = async () => {
       dispatch(setGlobalLoading(true));
-
       const { response, err } = await genreApi.getList({
         mediaType: tmdbConfigs.mediaType.movie,
       });
