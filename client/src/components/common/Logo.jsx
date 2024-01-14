@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <Box component={Link} to="/" sx={{ display: "flex", md: "none" }}>
+    <Box component={Link} to="/browse" sx={{ display: "flex", md: "none" }}>
       <Box
         component={"img"}
         src={logo}
