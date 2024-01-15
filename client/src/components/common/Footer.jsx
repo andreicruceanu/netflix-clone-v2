@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <Box sx={{ bgcolor: "#141414", color: "grey.700", mt: 5 }}>
+    <Box sx={{ bgcolor: "common.black", color: "grey.700", mt: 5 }}>
       <Container maxWidth="lg" sx={{ py: 3 }}>
         <Stack spacing={4}>
           <Typography>Questions? Call 007-803-321-2130</Typography>

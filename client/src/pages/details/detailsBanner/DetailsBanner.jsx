@@ -20,8 +20,6 @@ import Preferences from "../../../components/common/Preferences";
 import uiConfigs from "../../../configs/ui.configs.js";
 import VideoPopup from "../../../components/common/VideoPopup.jsx";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import AddIcon from "@mui/icons-material/Add";
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 import PlayCircleOutline from "@mui/icons-material/PlayCircleOutline";
 
 const DetailsBanner = ({ media, mediaType, officialVideo }) => {
@@ -36,7 +34,6 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
   const formatDirationMedia =
     mediaType === "movie" ? "Runtime" : "Number of seasons";
 
-  console.log(media);
   const isMobile = useMediaQuery("(max-width:650px)");
   useEffect(() => {
     if (media) {
@@ -67,6 +64,7 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
     }
   }, [media]);
 
+  console.log(officialVideo);
   return (
     <>
       <ImageHeader

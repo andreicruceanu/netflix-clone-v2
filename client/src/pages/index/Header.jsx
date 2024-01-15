@@ -10,7 +10,6 @@ import {
   Stack,
   Toolbar,
   Typography,
-  useMediaQuery,
 } from "@mui/material";
 import AuthModal from "../../components/common/AuthModal";
 import { useDispatch } from "react-redux";
@@ -18,12 +17,11 @@ import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import ImgBackdrop from "../../assets/images/backdrop.jpg";
 import BorderedBottomBox from "./BorderedBottomBox";
 import { Link } from "react-router-dom";
-import Features from "./Features";
 import { ReactComponent as Logo } from "../../assets/images/netflix.svg";
+import Footer from "../../components/common/Footer";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const isMobile = useMediaQuery("(max-width: 600px)");
 
   return (
     <>
@@ -42,6 +40,7 @@ const Header = () => {
               alignItems: "center",
               justifyContent: "space-between",
               minHeight: "0px",
+              padding: 0,
             }}
           >
             <Box
@@ -214,7 +213,6 @@ const Header = () => {
           </Container>
         </Box>
       </BorderedBottomBox>
-      <Features />
     </>
   );
 };

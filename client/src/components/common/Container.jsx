@@ -15,14 +15,14 @@ const Container = ({ header, children }) => {
           <Box
             sx={{
               position: "relative",
-              paddingX: { xs: "20px", md: 0 },
+              paddingX: 0,
               maxWidth: "1466px",
               marginX: "auto",
               width: "100%",
               "&::before": {
                 content: '""',
                 position: "absolute",
-                left: { xs: "20px", md: "0" },
+                left: 0,
                 top: "100%",
                 height: { xs: "3px", md: "5px" },
                 width: "100px",

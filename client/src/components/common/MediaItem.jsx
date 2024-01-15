@@ -11,8 +11,6 @@ const MediaItem = ({ media, mediaType }) => {
   const [posterPath, setPosterPath] = useState("");
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log(media);
-
   useEffect(() => {
     setPosterPath(
       tmdbConfigs.posterPath(

@@ -41,5 +41,6 @@ router.get(
   tokenMiddleware.auth,
   preferencesController.getPreferences
 );
+router.post("/reset-password", userController.resetPassword);
 
 export default router;

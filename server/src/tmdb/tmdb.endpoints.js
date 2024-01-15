@@ -22,6 +22,15 @@ const tmbdEndpoints = {
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/images`),
   mediaSearch: ({ query, page }) =>
     tmdbConfig.getUrl(`search/multi`, { query, page }),
+  mediaDiscover: ({ mediaType, genreId }) =>
+    tmdbConfig.getUrl(`discover/${mediaType}`, {
+      include_adult: false,
+      include_video: false,
+      language: "en-US",
+      page: 1,
+      with_genres: genreId,
+      sort_by: "popularity.desc",
+    }),
   actorDetail: ({ actorId }) => tmdbConfig.getUrl(`person/${actorId}`),
   actorMedias: ({ actorId }) =>
     tmdbConfig.getUrl(`person/${actorId}/combined_credits`),

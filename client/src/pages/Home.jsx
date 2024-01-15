@@ -14,6 +14,7 @@ import {
 } from "../redux/features/genresStateSlice";
 import { toast } from "react-toastify";
 import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
+import MediaSlideWithGenre from "../components/common/MediaSlideWithGenre";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -94,6 +95,38 @@ const Home = () => {
           <MediaSlide
             mediaType={tmdbConfigs.mediaType.tv}
             mediaCategory={tmdbConfigs.mediaCategory.top_rated}
+          />
+        </Container>
+
+        <Container header="Comedy  Movies">
+          <MediaSlideWithGenre
+            mediaType={tmdbConfigs.mediaType.movie}
+            genreName={tmdbConfigs.genresName.comedy}
+          />
+        </Container>
+
+        <Container header="Documentary  Movies">
+          <MediaSlideWithGenre
+            mediaType={tmdbConfigs.mediaType.movie}
+            genreName={tmdbConfigs.genresName.documentary}
+          />
+        </Container>
+        <Container header="Action  Movies">
+          <MediaSlideWithGenre
+            mediaType={tmdbConfigs.mediaType.movie}
+            genreName={tmdbConfigs.genresName.action}
+          />
+        </Container>
+        <Container header="Drama  Serials TV">
+          <MediaSlideWithGenre
+            mediaType={tmdbConfigs.mediaType.tv}
+            genreName={tmdbConfigs.genresName.drama}
+          />
+        </Container>
+        <Container header="Reality  Serials TV">
+          <MediaSlideWithGenre
+            mediaType={tmdbConfigs.mediaType.tv}
+            genreName={tmdbConfigs.genresName.reality}
           />
         </Container>
       </Box>
