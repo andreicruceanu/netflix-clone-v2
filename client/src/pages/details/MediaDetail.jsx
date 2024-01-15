@@ -45,7 +45,8 @@ const MediaDetail = () => {
       });
 
       if (response) {
-        setTrailer(response);
+        const isEmptyObject = Object.keys(response).length === 0;
+        setTrailer(isEmptyObject ? false : response);
       }
 
       if (err) toast.error(err.message);

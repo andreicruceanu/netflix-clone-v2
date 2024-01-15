@@ -3,6 +3,14 @@ const mediaType = {
   tv: "tv",
   person: "person",
 };
+const genresName = {
+  comedy: "Comedy",
+  family: "Family",
+  documentary: "Documentary",
+  drama: "Drama",
+  reality: "Reality",
+  action: "Action",
+};
 const time = {
   day: "day",
   week: "week",
@@ -17,7 +25,7 @@ const backdropPath = (imgEndpoint) =>
   `https://image.tmdb.org/t/p/original${imgEndpoint}`;
 
 const posterPath = (imgEndpoint) =>
-  `https://image.tmdb.org/t/p/w500${imgEndpoint}`;
+  imgEndpoint ? `https://image.tmdb.org/t/p/w500${imgEndpoint}` : undefined;
 
 const similarMoviesImg = (imgEndpoint) =>
   `https://image.tmdb.org/t/p/w780${imgEndpoint}`;
@@ -38,6 +46,7 @@ const tmdbConfigs = {
   similarMoviesImg,
   time,
   youtubePhoto,
+  genresName,
 };
 
 export default tmdbConfigs;

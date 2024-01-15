@@ -14,6 +14,7 @@ const mediaEndpoints = {
     `${mediaType}/${mediaCategory}/heroMedia`,
   detail: ({ mediaType, mediaId }) => `${mediaType}/detail/${mediaId}`,
   search: ({ query, page }) => `/search?query=${query}&page=${page}`,
+  discover: ({ mediaType, genreId }) => `/${mediaType}/discover/${genreId}`,
 };
 
 const mediaApi = {
@@ -31,6 +32,16 @@ const mediaApi = {
     try {
       const response = await publicClient.get(
         mediaEndpoints.list({ mediaType, mediaCategory, page })
+      );
+      return { response };
+    } catch (err) {
+      return { err };
+    }
+  },
+  getDiscover: async ({ mediaType, genreId }) => {
+    try {
+      const response = await publicClient.get(
+        mediaEndpoints.discover({ mediaType, genreId })
       );
       return { response };
     } catch (err) {

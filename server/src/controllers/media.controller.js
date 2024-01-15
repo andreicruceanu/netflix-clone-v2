@@ -62,7 +62,11 @@ const getTrailerMovie = async (req, res) => {
 
     responseHandler.ok(
       res,
-      officialTrailer ? officialTrailer : response.results[0]
+      officialTrailer
+        ? officialTrailer
+        : response.results[0]
+        ? response.results[0]
+        : {}
     );
   } catch (err) {
     responseHandler.error(res);
@@ -184,6 +188,17 @@ const search = async (req, res) => {
   }
 };
 
+const discover = async (req, res) => {
+  const { mediaType, genreId } = req.params;
+
+  try {
+    const response = await tmdbApi.mediaDiscover({ mediaType, genreId });
+    responseHandler.ok(res, response);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   getList,
   getGenres,
@@ -194,4 +209,5 @@ export default {
   heroMovie,
   getDetail,
   search,
+  discover,
 };
