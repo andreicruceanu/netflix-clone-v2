@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { routesGen } from "../../routes/routes";
 
 const CastLink = ({ name, id, index }) => {
   return (
@@ -25,7 +26,7 @@ const CastLink = ({ name, id, index }) => {
           },
         }}
         component={Link}
-        to={`/actor/${id}`}
+        to={routesGen.actor(id)}
       >
         {name}
         {index < 4 && <span>, </span>}
