@@ -1,7 +1,7 @@
 const RankIcons = (fillColor) => [
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -16,13 +16,13 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_954">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   <svg
-    width="135"
-    height="196"
+    width="100%"
+    height="100%"
     viewBox="0 0 135 196"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -35,8 +35,8 @@ const RankIcons = (fillColor) => [
     />
   </svg>,
   <svg
-    width="136"
-    height="196"
+    width="100%"
+    height="100%"
     viewBox="0 0 136 196"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -49,8 +49,8 @@ const RankIcons = (fillColor) => [
     />
   </svg>,
   <svg
-    width="135"
-    height="196"
+    width="100%"
+    height="100%"
     viewBox="0 0 135 196"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -63,8 +63,8 @@ const RankIcons = (fillColor) => [
     />
   </svg>,
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -79,13 +79,13 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_949">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -100,13 +100,13 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_948">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -121,13 +121,13 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_947">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -142,13 +142,13 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_946">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -163,13 +163,13 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_945">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,
   <svg
-    width="145"
-    height="206"
+    width="100%"
+    height="100%"
     viewBox="0 0 145 206"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -184,7 +184,7 @@ const RankIcons = (fillColor) => [
     </g>
     <defs>
       <clipPath id="clip0_5_952">
-        <rect width="145" height="206" fill="white" />
+        <rect width="100%" height="100%" fill="white" />
       </clipPath>
     </defs>
   </svg>,

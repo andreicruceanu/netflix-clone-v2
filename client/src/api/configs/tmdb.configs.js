@@ -10,6 +10,10 @@ const genresName = {
   drama: "Drama",
   reality: "Reality",
   action: "Action",
+  war: "War & Politics",
+  actionTv: "Action & Adventure",
+  kids: "Kids",
+  horror: "Horror",
 };
 const time = {
   day: "day",
@@ -26,6 +30,9 @@ const backdropPath = (imgEndpoint) =>
 
 const posterPath = (imgEndpoint) =>
   imgEndpoint ? `https://image.tmdb.org/t/p/w500${imgEndpoint}` : undefined;
+
+const posterPathW300 = (imgEndpoint) =>
+  `https://image.tmdb.org/t/p/w300${imgEndpoint}`;
 
 const similarMoviesImg = (imgEndpoint) =>
   `https://image.tmdb.org/t/p/w780${imgEndpoint}`;
@@ -47,6 +54,7 @@ const tmdbConfigs = {
   time,
   youtubePhoto,
   genresName,
+  posterPathW300,
 };
 
 export default tmdbConfigs;
