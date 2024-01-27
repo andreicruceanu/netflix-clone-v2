@@ -69,10 +69,10 @@ const SearchBox = () => {
         setSearch(search, {
           replace: true,
         });
-        navigate("/");
+        navigate("/browse");
       } else {
         search.set("query", newQuery);
-        navigate(`/search?query=${newQuery}&page=1`, {
+        navigate(`/browse/search?query=${newQuery}&page=1`, {
           replace: true,
         });
       }

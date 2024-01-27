@@ -18,7 +18,7 @@ const Footer = () => {
         <Stack spacing={4}>
           <Typography>Questions? Call 007-803-321-2130</Typography>
 
-          <Box>
+          <Box sx={{ color: "grey" }}>
             <Grid container spacing={4}>
               <Grid item xs={6} md={3}>
                 <Stack spacing={2}>

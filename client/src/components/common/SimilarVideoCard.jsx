@@ -9,62 +9,67 @@ import MaxLineTypography from "./MaxLineTypography";
 import ChipNetflix from "./ChipNetflix";
 import NetflixIconButton from "./NetflixIconButton";
 import ButtonFavorite from "./ButtonFavorite";
+import { Link } from "react-router-dom";
+import { routesGen } from "../../routes/routes";
 
 const SimilarVideoCard = ({ movie, mediaType }) => {
   return (
     <Card>
-      <div
-        style={{
-          width: "100%",
-          position: "relative",
-          paddingTop: "calc(9 / 16 * 100%)",
-        }}
-      >
-        <img
-          src={tmdbConfigs.similarMoviesImg(
-            movie.backdrop_path ||
-              movie.poster_path ||
-              movie.mediaPoster ||
-              movie.profile_path
-          )}
+      <Link to={routesGen.mediaDetail(mediaType, movie.id)}>
+        <div
           style={{
-            top: 0,
+            width: "100%",
             height: "100%",
-            position: "absolute",
-          }}
-          alt={movie.name}
-        />
-        <div
-          style={{
-            top: 10,
-            right: 15,
-            position: "absolute",
+            position: "relative",
+            paddingTop: "calc(9 / 16 * 100%)",
           }}
         >
-          <Typography variant="subtitle2">{`${formatMinuteToReadable(
-            getRandomNumber(80, 150)
-          )}`}</Typography>
-        </div>
-        <div
-          style={{
-            left: 0,
-            right: 0,
-            bottom: 0,
-            paddingLeft: "16px",
-            paddingRight: "16px",
-            paddingBottom: "4px",
-            position: "absolute",
-          }}
-        >
-          <MaxLineTypography
-            maxLine={1}
-            sx={{ width: "80%", fontWeight: 700 }}
-            variant="subtitle1"
+          <img
+            src={tmdbConfigs.similarMoviesImg(
+              movie.backdrop_path ||
+                movie.poster_path ||
+                movie.mediaPoster ||
+                movie.profile_path
+            )}
+            style={{
+              top: 0,
+              height: "100%",
+              position: "absolute",
+            }}
+            alt={movie.name}
+          />
+          <div
+            style={{
+              top: 10,
+              right: 15,
+              position: "absolute",
+            }}
           >
-            {movie.title || movie.name}
-          </MaxLineTypography>
+            <Typography variant="subtitle2">{`${formatMinuteToReadable(
+              getRandomNumber(80, 150)
+            )}`}</Typography>
+          </div>
+          <div
+            style={{
+              left: 0,
+              right: 0,
+              bottom: 0,
+              paddingLeft: "16px",
+              paddingRight: "16px",
+              paddingBottom: "4px",
+              position: "absolute",
+            }}
+          >
+            <MaxLineTypography
+              maxLine={1}
+              sx={{ width: "80%", fontWeight: 700 }}
+              variant="subtitle1"
+            >
+              {movie.title || movie.name}
+            </MaxLineTypography>
+          </div>
         </div>
-      </div>
+      </Link>
       <CardContent>
         <Stack spacing={1}>
           <Stack direction="row" alignItems="center">

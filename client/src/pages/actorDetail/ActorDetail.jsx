@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import actorApi from "../../api/modules/actor.api";
 import { toast } from "react-toastify";
@@ -9,12 +9,17 @@ import tmdbConfigs from "../../api/configs/tmdb.configs";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import ActorMediaGrid from "./ActorMediaGrid";
 import Container from "../../components/common/Container";
+import { setCloseModal } from "../../redux/features/infoModal";
 
 const ActorDetail = () => {
   const { actorId } = useParams();
 
   const [actor, setActor] = useState();
   const dispatch = useDispatch();
+
+  const { isOpen } = useSelector((state) => state.infoModal);
+
+  const handleCloseModal = () => dispatch(setCloseModal());
 
   useEffect(() => {
     const getActor = async () => {
@@ -30,7 +35,9 @@ const ActorDetail = () => {
     getActor();
   }, [actorId, dispatch]);
 
-  console.log(actor);
+  useEffect(() => {
+    if (isOpen) handleCloseModal();
+  }, [isOpen]);
 
   return (
     <>

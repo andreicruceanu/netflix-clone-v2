@@ -16,6 +16,9 @@ import { toast } from "react-toastify";
 import favoriteApi from "../../api/modules/favorite.api";
 import Footer from "../common/Footer";
 import { SearchProvider } from "../context/SearchContext";
+import PortalProvider from "../provider/PortalProvider";
+import VideoPortalContainer from "../common/VideoPortalContainer";
+import InfoModal from "../common/InfoModal";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -64,7 +67,7 @@ const MainLayout = () => {
       <SearchProvider>
         <GlobalLoading />
         <AuthModal />
-
+        <InfoModal />
         <Box display="flex" minHeight="100vh">
           {/* Header */}
           <Topbar />
@@ -77,7 +80,10 @@ const MainLayout = () => {
             overflow="hidden"
             minHeight="100vh"
           >
-            <Outlet />
+            <PortalProvider>
+              <Outlet />
+              <VideoPortalContainer />
+            </PortalProvider>
           </Box>
 
           {/* main */}

@@ -5,17 +5,18 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import LockResetOutlinedIcon from "@mui/icons-material/LockResetOutlined";
+import { routesGen } from "../routes/routes";
 
 const main = [
   {
     display: "Home",
-    path: "/browse",
+    path: `${routesGen.home}`,
     icon: <HomeOutlinedIcon />,
     state: "home",
   },
   {
     display: "TV Shows",
-    path: "/tv",
+    path: `${routesGen.tvShows(22)}`,
     icon: <LiveTvOutlinedIcon />,
     state: "tv",
   },

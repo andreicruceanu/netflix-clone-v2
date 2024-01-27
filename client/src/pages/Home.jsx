@@ -123,10 +123,10 @@ const Home = () => {
             genreName={tmdbConfigs.genresName.drama}
           />
         </Container>
-        <Container header="Reality  Serials TV">
+        <Container header="Horror Movies">
           <MediaSlideWithGenre
-            mediaType={tmdbConfigs.mediaType.tv}
-            genreName={tmdbConfigs.genresName.reality}
+            mediaType={tmdbConfigs.mediaType.movie}
+            genreName={tmdbConfigs.genresName.horror}
           />
         </Container>
       </Box>
