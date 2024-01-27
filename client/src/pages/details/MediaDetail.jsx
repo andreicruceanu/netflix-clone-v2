@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import mediaApi from "../../api/modules/media.api";
 import { useParams } from "react-router-dom";
@@ -10,12 +10,16 @@ import VideosSection from "./videosSection/VideosSection";
 import Reviews from "./reviews/Reviews";
 import Recommendation from "./recommendation/Recommendation";
 import Similar from "./similar/Similar";
+import { setCloseModal } from "../../redux/features/infoModal";
 
 const MediaDetail = () => {
   const [media, setMedia] = useState();
   const [trailer, setTrailer] = useState("");
   const dispatch = useDispatch();
   const { mediaType, mediaId } = useParams();
+  const { isOpen } = useSelector((state) => state.infoModal);
+
+  const handleCloseModal = () => dispatch(setCloseModal());
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,6 +57,10 @@ const MediaDetail = () => {
     };
     getTrailer();
   }, [mediaType, mediaId, dispatch]);
+
+  useEffect(() => {
+    if (isOpen) handleCloseModal();
+  }, [isOpen]);
 
   return media ? (
     <>

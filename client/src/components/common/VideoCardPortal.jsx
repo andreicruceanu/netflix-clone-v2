@@ -6,9 +6,10 @@ import uiConfigs from "../../configs/ui.configs.js";
 import ButtonCard from "./ButtonCard";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import StarRateIcon from "@mui/icons-material/StarRate";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
+//
+import MoreInfoModal from "./InfoModal.jsx";
 import mediaApi from "../../api/modules/media.api";
 import { toast } from "react-toastify";
 import {
@@ -21,85 +22,26 @@ import MaxLineTypography from "./MaxLineTypography";
 import NetflixIconButton from "./NetflixIconButton";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ChipNetflix from "./ChipNetflix";
 import GenreBreadcrumbs from "./GenreBreadcrumbs";
 import Preferences from "./Preferences.jsx";
-import InfoModal from "./InfoModal.jsx";
+import { usePortal } from "../provider/PortalProvider.jsx";
 import { setOpenModal } from "../../redux/features/infoModal.js";
 
-const MediaVideo = ({ mediaType, mediaId, posterPath }) => {
-  const [onReadyVideo, setOnReadyVideo] = useState(true);
-
-  const [trailer, setTrailer] = useState(null);
-
-  useEffect(() => {
-    if (mediaType && mediaId) {
-      const getTrailer = async () => {
-        const { response, err } = await mediaApi.getTrailer({
-          mediaType,
-          mediaId,
-        });
-        if (response && response.data !== "") {
-          setTrailer(response);
-        }
-        if (err) {
-          toast.error(err.message);
-        }
-      };
-      getTrailer();
-    }
-  }, [mediaType, mediaId]);
-
-  return (
-    <>
-      {trailer && onReadyVideo ? (
-        <Box
-          sx={{
-            overflow: "hidden",
-            width: "100%",
-
-            aspectRatio: "16/9",
-            pointerEvents: "none",
-          }}
-        >
-          <iframe
-            style={{ width: "100%", height: "100%" }}
-            src={tmdbConfigs.youtubePath(trailer.key)}
-            title={trailer.name}
-          ></iframe>
-        </Box>
-      ) : (
-        <Box
-          sx={{
-            width: "100%",
-            height: "50%",
-            borderRadius: "8px 8px 0px 0px",
-            ...uiConfigs.style.backgroundImage(posterPath),
-          }}
-        />
-      )}
-    </>
-  );
-};
-
-const PreviewModal = ({ media, mediaType, anchorElement }) => {
+const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
   const [title, setTitle] = useState("");
-  const [mediaId, setMediaId] = useState(undefined);
   const [posterPath, setPosterPath] = useState("");
-  const [releaseDate, setReleaseDate] = useState(null);
-  const [rate, setRate] = useState(null);
   const [genreId, setGenreId] = useState([]);
+  const [mediaId, setMediaId] = useState(undefined);
   const { genresMovie } = useSelector((state) => state.genres);
   const { genresSeries } = useSelector((state) => state.genres);
-
+  const rect = anchorElement.getBoundingClientRect();
+  const setPortal = usePortal();
   const dispatch = useDispatch();
-
-  const handleOpenModal = (mediaId, mediaType) =>
-    dispatch(setOpenModal(mediaId, mediaType));
 
   const navigate = useNavigate();
   useEffect(() => {
+    setMediaId(media.id);
     setTitle(media.title || media.name || media.mediaTitle);
     setGenreId(media.genre_ids);
     setPosterPath(
@@ -110,24 +52,16 @@ const PreviewModal = ({ media, mediaType, anchorElement }) => {
           media.profile_path
       )
     );
-    setMediaId(media.id);
-    setReleaseDate(
-      getReleaseYear(mediaType, media?.release_date || media?.first_air_date)
-    );
-    setRate(media.vote_average || media.mediaRate);
   }, [media, mediaType]);
 
   return (
     <>
-      {/* <TrailerVideo
-        open={isModalOpen.trailerModal}
-        onClose={() => onClose("trailerModal")}
-        mediaType={mediaType}
-        mediaId={media.id}
-      /> */}
-
       <Card
+        onPointerLeave={() => {
+          setPortal(null, null);
+        }}
         sx={{
+          width: rect.width * 1.2,
           height: "100%",
         }}
       >
@@ -144,6 +78,7 @@ const PreviewModal = ({ media, mediaType, anchorElement }) => {
             style={{
               top: 0,
               height: "100%",
+              width: "100%",
               objectFit: "cover",
               position: "absolute",
               backgroundPosition: "50%",
@@ -185,11 +120,13 @@ const PreviewModal = ({ media, mediaType, anchorElement }) => {
               <NetflixIconButton>
                 <ButtonFavorite mediaType={mediaType} media={media} />
               </NetflixIconButton>
-              <Preferences mediaType={mediaType} mediaId={mediaId} />
+              <Preferences mediaType={mediaType} mediaId={media.id} />
               <div style={{ flexGrow: 1 }} />
-              <div onClick={() => console.log("aici")}>
+              <NetflixIconButton
+                onClick={() => dispatch(setOpenModal({ mediaId, mediaType }))}
+              >
                 <ExpandMoreIcon />
-              </div>
+              </NetflixIconButton>
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center">
               <Typography
@@ -223,4 +160,4 @@ const PreviewModal = ({ media, mediaType, anchorElement }) => {
   );
 };
 
-export default PreviewModal;
+export default VideoCardPortal;

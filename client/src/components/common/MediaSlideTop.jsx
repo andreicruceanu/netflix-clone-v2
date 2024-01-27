@@ -6,9 +6,11 @@ import { toast } from "react-toastify";
 import MediaItemTop from "./MediaItemTop";
 import { useDispatch } from "react-redux";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
+import { useMediaQuery } from "@mui/material";
 
 const MediaSlideTop = ({ mediaType, time }) => {
   const [medias, setMedias] = useState([]);
+  const isMobile = useMediaQuery("(max-width:850px)");
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,7 +35,11 @@ const MediaSlideTop = ({ mediaType, time }) => {
       {medias.slice(0, 10).map((media, index) => (
         <SwiperSlide
           key={index}
-          style={{ width: "285px", height: "205px", marginRight: "25px" }}
+          style={{
+            width: isMobile ? "210px" : "285px",
+            height: isMobile ? "160px" : "205px",
+            marginRight: "25px",
+          }}
         >
           <MediaItemTop media={media} index={index} />
         </SwiperSlide>
