@@ -1,21 +1,22 @@
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
-import { InputBase } from "@mui/material";
+import { InputBase, useMediaQuery } from "@mui/material";
 import { useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSearchGlobal } from "../context/SearchContext";
+import CloseIcon from "@mui/icons-material/Close";
 
-let timer;
-const timeout = 1000;
-
-const SearchBox = () => {
+const SearchBox = ({ handleHideen }) => {
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
+  const [searchText, setSearchText] = useState("");
 
   const [search, setSearch] = useSearchParams();
   const [isFocused, setIsFocused] = useState(
     search.get("query") ? true : false
   );
+
+  const isMobile = useMediaQuery("(max-width:650px)");
 
   const { setQuerySearch } = useSearchGlobal();
 
@@ -24,11 +25,14 @@ const SearchBox = () => {
       setIsFocused(true);
       searchInputRef.current?.focus();
     }
+    if (isMobile) {
+      handleHideen();
+    }
   };
 
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
-    width: "100%",
+    width: isMobile ? "80%" : "100%",
     display: "flex",
     alignItems: "center",
     ...(isFocused && {
@@ -36,9 +40,10 @@ const SearchBox = () => {
       backgroundColor: "black",
     }),
   }));
+
   const SearchIconWrapper = styled("div")({
     cursor: "pointer",
-    padding: "8px", // Adjust the padding as needed
+    padding: isMobile ? "5px" : "8px", // Adjust the padding as needed
     height: "100%",
     display: "flex",
     alignItems: "center",
@@ -52,31 +57,31 @@ const SearchBox = () => {
       duration: theme.transitions.duration.standard,
     }),
     "& .MuiInputBase-input": {
-      padding: "8px", // Adjust padding as needed
+      padding: "2px", // Adjust padding as needed
     },
   }));
 
   const onQueryChange = (e) => {
     const newQuery = e.target.value;
-    if (timer) {
-      clearTimeout(timer);
+    setSearchText(newQuery);
+    if (newQuery.length === 0) {
+      search.delete("query");
+      setIsFocused(false);
+      setSearch(search, {
+        replace: true,
+      });
+      navigate("/browse");
+    } else {
+      search.set("query", newQuery);
+      navigate(`/browse/search?query=${newQuery}&page=1`, {
+        replace: true,
+      });
     }
+  };
 
-    timer = setTimeout(() => {
-      if (newQuery.length === 0) {
-        search.delete("query");
-        setIsFocused(false);
-        setSearch(search, {
-          replace: true,
-        });
-        navigate("/browse");
-      } else {
-        search.set("query", newQuery);
-        navigate(`/browse/search?query=${newQuery}&page=1`, {
-          replace: true,
-        });
-      }
-    }, timeout);
+  const handleClose = (e) => {
+    e.stopPropagation(); // Oprește propagarea evenimentului către părinți
+    console.log("text");
   };
 
   setQuerySearch(search.get("query"));
@@ -84,7 +89,11 @@ const SearchBox = () => {
   return (
     <Search>
       <SearchIconWrapper onClick={handleClickSearchIcon}>
-        <SearchIcon />
+        {searchText.length > 0 ? (
+          <CloseIcon onClick={handleClose} />
+        ) : (
+          <SearchIcon />
+        )}
       </SearchIconWrapper>
       <StyledInputBase
         ref={searchInputRef}
