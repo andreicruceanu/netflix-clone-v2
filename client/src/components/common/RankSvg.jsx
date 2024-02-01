@@ -1,12 +1,8 @@
-import { useTheme } from "@emotion/react";
 import React from "react";
-import uiConfigs from "../../configs/ui.configs";
 import RankIcons from "../../utils/rank";
 
 const RankSvg = ({ numberIcon }) => {
-  const theme = useTheme();
-
-  const fillColor = uiConfigs.style.gradientBgImage[theme.palette.mode].color;
+  const fillColor = "#000";
 
   const handleBuildSvg = (numberIcon, fillColor) => {
     switch (numberIcon) {

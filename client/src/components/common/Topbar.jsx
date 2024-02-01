@@ -1,4 +1,4 @@
-import React, { cloneElement } from "react";
+import React, { cloneElement, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
@@ -15,11 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { themeModes } from "../../configs/theme.configs";
 import Logo from "./Logo";
 import menuConfigs from "../../configs/menu.config";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setThemeMode } from "../../redux/features/themeModeSlice";
 import UserMenu from "./UserMenu";
 import SearchBox from "./SearchBox";
+import { routesGen } from "../../routes/routes";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -45,16 +46,27 @@ const ScrollAppBar = ({ children, window }) => {
 };
 
 const Topbar = () => {
+  const [showButton, setShowButton] = useState(true);
   const { themeMode } = useSelector((state) => state.themeMode);
   const { user } = useSelector((state) => state.user);
   const { appState } = useSelector((state) => state.appState);
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const onSwithTheme = () => {
     const theme =
       themeMode === themeModes.dark ? themeModes.light : themeModes.dark;
     dispatch(setThemeMode(theme));
   };
+
+  const handleHideen = () => {
+    setShowButton(false);
+  };
+
+  useEffect(() => {
+    if (location.pathname === routesGen.home) {
+      setShowButton(true);
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -110,19 +122,24 @@ const Topbar = () => {
               spacing={3}
               direction="row"
               alignItems="center"
+              justifyContent="flex-end"
               sx={{ mr: { xs: "0", md: 3 } }}
             >
-              <SearchBox />
-              {!user && (
-                <Button
-                  variant="contained"
-                  onClick={() => dispatch(setAuthModalOpen(true))}
-                  sx={{ minWidth: "87px" }}
-                >
-                  sign in
-                </Button>
+              <SearchBox handleHideen={handleHideen} />
+              {showButton && (
+                <Box>
+                  {!user && (
+                    <Button
+                      variant="contained"
+                      onClick={() => dispatch(setAuthModalOpen(true))}
+                      sx={{ minWidth: "87px" }}
+                    >
+                      sign in
+                    </Button>
+                  )}
+                  {user && <UserMenu />}
+                </Box>
               )}
-              {user && <UserMenu />}
             </Stack>
           </Toolbar>
         </AppBar>
