@@ -18,7 +18,7 @@ export const routesGen = {
   favoriteList: "/browse/favorites",
   reviewList: "/reviews",
   passwordUpdate: "password-update",
-  search: (query) => `/browse/search/:${query}`,
+  search: (query) => `/browse/search?query=${query}&page=1`,
 };
 
 const routes = [

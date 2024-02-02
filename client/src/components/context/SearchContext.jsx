@@ -34,7 +34,9 @@ export const SearchProvider = ({ children }) => {
   }, [querySearch, fetchMediaSearch]);
 
   return (
-    <SearchContext.Provider value={{ loading, setQuerySearch, searchResponse }}>
+    <SearchContext.Provider
+      value={{ loading, setQuerySearch, searchResponse, querySearch }}
+    >
       {children}
     </SearchContext.Provider>
   );
