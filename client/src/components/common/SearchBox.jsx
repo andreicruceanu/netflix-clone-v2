@@ -1,17 +1,20 @@
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputBase, useMediaQuery } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSearchGlobal } from "../context/SearchContext";
 import CloseIcon from "@mui/icons-material/Close";
+import { routesGen } from "../../routes/routes";
+
+let timer;
+const timeout = 1000;
 
 const SearchBox = ({ handleHideen }) => {
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
-  const [searchText, setSearchText] = useState("");
-
   const [search, setSearch] = useSearchParams();
+
   const [isFocused, setIsFocused] = useState(
     search.get("query") ? true : false
   );
@@ -32,7 +35,7 @@ const SearchBox = ({ handleHideen }) => {
 
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
-    width: isMobile ? "80%" : "100%",
+    width: isMobile ? "90%" : "100%",
     display: "flex",
     alignItems: "center",
     ...(isFocused && {
@@ -63,20 +66,25 @@ const SearchBox = ({ handleHideen }) => {
 
   const onQueryChange = (e) => {
     const newQuery = e.target.value;
-    setSearchText(newQuery);
-    if (newQuery.length === 0) {
-      search.delete("query");
-      setIsFocused(false);
-      setSearch(search, {
-        replace: true,
-      });
-      navigate("/browse");
-    } else {
-      search.set("query", newQuery);
-      navigate(`/browse/search?query=${newQuery}&page=1`, {
-        replace: true,
-      });
+
+    if (timer) {
+      clearTimeout(timer);
     }
+    timer = setTimeout(() => {
+      if (newQuery.length === 0) {
+        search.delete("query");
+        setIsFocused(false);
+        setSearch(search, {
+          replace: true,
+        });
+        navigate(routesGen.home);
+      } else {
+        search.set("query", newQuery);
+        navigate(routesGen.search(newQuery), {
+          replace: true,
+        });
+      }
+    }, timeout);
   };
 
   const handleClose = (e) => {
@@ -84,12 +92,17 @@ const SearchBox = ({ handleHideen }) => {
     console.log("text");
   };
 
-  setQuerySearch(search.get("query"));
+  useEffect(() => {
+    setQuerySearch(search.get("query"));
+    if (isMobile && search.get("query")) {
+      handleHideen();
+    }
+  }, [search.get("query"), setQuerySearch]);
 
   return (
     <Search>
       <SearchIconWrapper onClick={handleClickSearchIcon}>
-        {searchText.length > 0 ? (
+        {search.get("query")?.length > 0 ? (
           <CloseIcon onClick={handleClose} />
         ) : (
           <SearchIcon />

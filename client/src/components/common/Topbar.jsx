@@ -21,6 +21,7 @@ import { setThemeMode } from "../../redux/features/themeModeSlice";
 import UserMenu from "./UserMenu";
 import SearchBox from "./SearchBox";
 import { routesGen } from "../../routes/routes";
+import { useSearchGlobal } from "../context/SearchContext";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -51,6 +52,8 @@ const Topbar = () => {
   const { user } = useSelector((state) => state.user);
   const { appState } = useSelector((state) => state.appState);
   const dispatch = useDispatch();
+
+  const { querySearch } = useSearchGlobal();
   const location = useLocation();
   const onSwithTheme = () => {
     const theme =
