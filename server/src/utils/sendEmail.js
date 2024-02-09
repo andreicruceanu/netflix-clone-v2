@@ -6,8 +6,8 @@ const sendEmail = async (to, subject, content) => {
     port: process.env.SMTP_PORT || 500,
     secure: false,
     auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
+      user: process.env.SMTP_USER || "test",
+      pass: process.env.SMTP_PASS || "test",
     },
   });
 
