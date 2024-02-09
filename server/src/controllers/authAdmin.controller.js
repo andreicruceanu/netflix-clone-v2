@@ -1,7 +1,7 @@
 import responseHandler from "../handlers/response.handler.js";
 import generateToken from "../utils/generateToken.js";
 import userAdminModel from "../models/userAdmin.model.js";
-import adminOTPModel from "../models/AdminOTPVerification.model.js";
+import adminOTPModel from "../models/adminOTPVerification.model.js";
 import { sendEmail } from "../utils/sendEmail.js";
 
 const createAdmin = async (req, res) => {
