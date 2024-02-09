@@ -100,7 +100,11 @@ const updatePassword = async (req, res) => {
       .select("password salt id");
 
     if (!user) {
-      return responseHandler.unauthorize(res);
+      return responseHandler.unauthorize(
+        res,
+        "Authentication required. Please log in to access this resource.",
+        false
+      );
     }
 
     if (!user.validPassword(oldPassword)) {
@@ -185,8 +189,6 @@ const changeEmailUser = async (req, res) => {
       );
     }
 
-    console.log("a");
-
     const user = await userModel
       .findOne({ email: oldEmail })
       .select("firstName lastName salt id email password profilePicture");
@@ -219,7 +221,6 @@ const changeEmailUser = async (req, res) => {
         select: "-password -salt",
       }
     );
-    console.log(updateEmail);
 
     responseHandler.ok(res, { ...updateEmail._doc, id: updateEmail._id });
   } catch (err) {

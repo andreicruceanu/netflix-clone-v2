@@ -11,10 +11,11 @@ const ok = (res, data) => responseWithData(res, 200, data);
 
 const created = (res, data) => responseWithData(res, 201, data);
 
-const unauthorize = (res) =>
+const unauthorize = (res, message, result) =>
   responseWithData(res, 401, {
     status: 401,
-    message: "Authentication required. Please log in to access this resource.",
+    message,
+    result,
   });
 
 const notfound = (res) =>
