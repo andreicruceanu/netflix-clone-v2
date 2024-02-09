@@ -1,6 +1,4 @@
 import responseHandler from "../handlers/response.handler.js";
-import userModel from "../models/user.model.js";
-import validateDataFromUser from "../utils/userValidation.js";
 import generateToken from "../utils/generateToken.js";
 import userAdminModel from "../models/userAdmin.model.js";
 import adminOTPModel from "../models/AdminOTPVerification.model.js";
