@@ -96,11 +96,13 @@ const sendOTPVerification = async (req, res) => {
 
     if (isRequestExisting) {
       isRequestExisting.hashOTP(otp);
+      const hashedOTP = isRequestExisting.otp;
       const result = await adminOTPModel.findByIdAndUpdate(
         isRequestExisting._id,
         {
           $set: {
-            otp: isRequestExisting.otp,
+            otp: hashedOTP,
+            salt: isRequestExisting.salt,
             createdAt: Date.now(),
             expiresAt: Date.now() + 3600000,
           },
@@ -118,7 +120,7 @@ const sendOTPVerification = async (req, res) => {
       return responseHandler.ok(res, { email });
     }
 
-    const newOTPVerification = await new adminOTPModel({
+    const newOTPVerification = new adminOTPModel({
       userId: req.user.id,
       otp: otp,
       email,
@@ -154,24 +156,22 @@ const verifyOTP = async (req, res) => {
       userId: req.user.id,
       email: req.user.email,
     });
-    console.log(userOTPVerification);
+
     if (!userOTPVerification) {
-      console.log("a");
       return responseHandler.notfound(res);
     }
 
+    if (!userOTPVerification.verifyOTP(code)) {
+      console.log(userOTPVerification.verifyOTP(code));
+      return responseHandler.unauthorize(res, "The code is invalid", false);
+    }
+
     if (userOTPVerification.expiresAt < Date.now()) {
-      console.log("b");
       return responseHandler.unauthorize(
         res,
         "Code has expired. Plase try again",
         false
       );
-    }
-
-    if (!userOTPVerification.verifyOTP(code)) {
-      console.log(!userOTPVerification.verifyOTP(code));
-      return responseHandler.unauthorize(res, "The code is invalid", false);
     }
 
     responseHandler.ok(res, { message: "The 2FA code is valid", result: true });
