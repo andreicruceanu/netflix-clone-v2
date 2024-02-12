@@ -4,6 +4,14 @@ import crypto from "crypto";
 
 const userAdminSchema = new mongoose.Schema(
   {
+    firstName: {
+      type: String,
+      require: true,
+    },
+    lastName: {
+      type: String,
+      require: true,
+    },
     username: {
       type: String,
       require: true,
@@ -29,6 +37,11 @@ const userAdminSchema = new mongoose.Schema(
       required: false,
       default: false,
     },
+    changePassword: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     twoFactorAuth: {
       type: Boolean,
       required: false,
@@ -36,7 +49,7 @@ const userAdminSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "superAdmin"],
+      enum: ["admin", "guest", "owner"],
       required: true,
     },
   },

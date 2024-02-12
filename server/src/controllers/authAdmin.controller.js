@@ -6,7 +6,7 @@ import { sendEmail } from "../utils/sendEmail.js";
 
 const createAdmin = async (req, res) => {
   try {
-    const { email, username, password, role } = req.body;
+    const { lastName, firstName, email, username, password, role } = req.body;
     //
     // const validationResult = validateDataFromUser.signup({ ...req.body });
 
@@ -17,17 +17,28 @@ const createAdmin = async (req, res) => {
     //   );
     // }
 
-    const checkAdmin = await userAdminModel.findOne({ email });
+    const checkEmail = await userAdminModel.findOne({ email });
 
-    if (checkAdmin) {
+    if (checkEmail) {
       return responseHandler.badrequest(
         res,
         "The email already exists. Add another email address!"
       );
     }
 
+    const checkUsername = await userAdminModel.findOne({ username });
+
+    if (checkUsername) {
+      return responseHandler.badrequest(
+        res,
+        "The username exists. Add another username!"
+      );
+    }
+
     const admin = new userAdminModel();
 
+    admin.firstName = firstName;
+    admin.lastName = lastName;
     admin.username = username;
     admin.email = email;
     admin.setPassword(password);
