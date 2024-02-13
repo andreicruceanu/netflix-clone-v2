@@ -101,3 +101,32 @@ export const schemaReview = Joi.object({
   mediaTitle: Joi.string().required().error(handleError),
   rating: Joi.number().required().valid(1, 2, 3, 4, 5).error(handleError),
 });
+
+export const schemaCreateAdmin = Joi.object({
+  firstName: Joi.string().min(3).required().error(handleError),
+  lastName: Joi.string().required().error(handleError),
+  email: Joi.string().email().required().error(handleError),
+  username: Joi.string().required().error(handleError),
+  password: Joi.string()
+    .min(8)
+    .required()
+    .regex(regexPassword)
+    .error(handleError),
+  role: Joi.string()
+    .required()
+    .valid("admin", "guest", "owner")
+    .error(handleError),
+});
+
+export const schemaLoginAdmin = Joi.object({
+  username: Joi.string().required().error(handleError),
+  password: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
+});
+
+export const schemaForgotPasswordCheckEmail = Joi.object({
+  email: Joi.string().email().required().error(handleError),
+});
