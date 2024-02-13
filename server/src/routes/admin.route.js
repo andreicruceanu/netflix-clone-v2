@@ -3,7 +3,12 @@ import userAdminController from "../controllers/authAdmin.controller.js";
 import tokenMiddleware from "../middlewares/token.middleware.js";
 
 const router = express.Router();
-router.post("/create", userAdminController.createAdmin);
+router.post(
+  "/create",
+  tokenMiddleware.authAdmin,
+  tokenMiddleware.createAdmin,
+  userAdminController.createAdmin
+);
 router.post("/login", userAdminController.loginAdmin);
 router.post(
   "/2FAmail/:email",

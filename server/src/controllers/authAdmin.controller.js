@@ -3,19 +3,21 @@ import generateToken from "../utils/generateToken.js";
 import userAdminModel from "../models/userAdmin.model.js";
 import adminOTPModel from "../models/adminOTPVerification.model.js";
 import { sendEmail } from "../utils/sendEmail.js";
+import schemaAdminValidate from "../utils/adminValidation.js";
 
 const createAdmin = async (req, res) => {
   try {
     const { lastName, firstName, email, username, password, role } = req.body;
-    //
-    // const validationResult = validateDataFromUser.signup({ ...req.body });
 
-    // if (validationResult.error) {
-    //   return responseHandler.badrequest(
-    //     res,
-    //     validationResult.error.details[0].message
-    //   );
-    // }
+    const validationResult = schemaAdminValidate.createAdmin({ ...req.body });
+    console.log(validationResult);
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
 
     const checkEmail = await userAdminModel.findOne({ email });
 
@@ -58,14 +60,14 @@ const loginAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // const validationResult = validateDataFromUser.signin({ ...req.body });
+    const validationResult = schemaAdminValidate.login({ ...req.body });
 
-    // if (validationResult.error) {
-    //   return responseHandler.badrequest(
-    //     res,
-    //     validationResult.error.details[0].message
-    //   );
-    // }
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
 
     const admin = await userAdminModel
       .findOne({ username })

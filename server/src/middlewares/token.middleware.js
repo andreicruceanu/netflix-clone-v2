@@ -66,4 +66,20 @@ const authAdmin = async (req, res, next) => {
   next();
 };
 
-export default { auth, tokenDecode, authAdmin };
+const createAdmin = async (req, res, next) => {
+  if (!req.user) {
+    return responseHandler.unauthorize(res, "User not exist !", false);
+  }
+
+  if (req.user.role !== "owner") {
+    return responseHandler.unauthorize(
+      res,
+      "You cannot create admins because you are not the owner!",
+      false
+    );
+  }
+
+  next();
+};
+
+export default { auth, tokenDecode, createAdmin, authAdmin };
