@@ -1,5 +1,6 @@
 import responseHandler from "../handlers/response.handler.js";
 import generateToken from "../utils/generateToken.js";
+import forgotPasswordTemplate from "../utils/templateMails/ForgotPasswordMail.js";
 import userAdminModel from "../models/userAdmin.model.js";
 import adminOTPModel from "../models/adminOTPVerification.model.js";
 import { sendEmail } from "../utils/sendEmail.js";
@@ -94,6 +95,18 @@ const loginAdmin = async (req, res) => {
 
 const sendOTPVerification = async (req, res) => {
   try {
+    const { email } = req.body;
+
+    const validationResult = schemaAdminValidate.login({ ...req.body });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+  } catch (error) {}
+  try {
     const { email } = req.params;
 
     const isRequestExisting = await adminOTPModel.findOne({
@@ -125,11 +138,14 @@ const sendOTPVerification = async (req, res) => {
       if (!result) {
         return responseHandler.notfound(res);
       }
-      const subject = "Security code to access the Admin Panel account";
 
       const content = `<p> Enter <b>${otp} in the app.`;
 
-      await sendEmail(email, subject, content);
+      await sendEmail(
+        email,
+        "Security code to access the Admin Panel account",
+        content
+      );
       return responseHandler.ok(res, { email });
     }
 
@@ -188,7 +204,45 @@ const verifyOTP = async (req, res) => {
     }
 
     responseHandler.ok(res, { message: "The 2FA code is valid", result: true });
-  } catch (error) {}
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+const sendResetPasswordLink = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const validationResult = schemaAdminValidate.forgotPasswordCheckEmail({
+      ...req.body,
+    });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+
+    const userCheck = await userAdminModel.findOne({ email });
+
+    if (!userCheck) {
+      return responseHandler.badrequest(res, "Email not exist !");
+    }
+
+    const token = generateToken(userCheck.id);
+
+    await sendEmail(
+      userCheck.email,
+      "Password Reset",
+      forgotPasswordTemplate(userCheck.firstName, token)
+    );
+    responseHandler.ok(res, {
+      message: "Email password reset has been sent.",
+      result: true,
+    });
+  } catch (error) {
+    responseHandler.error(res);
+  }
 };
 
 export default {
@@ -196,4 +250,5 @@ export default {
   loginAdmin,
   sendOTPVerification,
   verifyOTP,
+  sendResetPasswordLink,
 };

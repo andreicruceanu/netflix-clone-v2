@@ -9,6 +9,7 @@ router.post(
   tokenMiddleware.createAdmin,
   userAdminController.createAdmin
 );
+
 router.post("/login", userAdminController.loginAdmin);
 router.post(
   "/2FAmail/:email",
@@ -20,5 +21,6 @@ router.post(
   tokenMiddleware.authAdmin,
   userAdminController.verifyOTP
 );
+router.post("/resetPassword", userAdminController.sendResetPasswordLink);
 
 export default router;

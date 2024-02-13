@@ -126,3 +126,7 @@ export const schemaLoginAdmin = Joi.object({
     .regex(regexPassword)
     .error(handleError),
 });
+
+export const schemaForgotPasswordCheckEmail = Joi.object({
+  email: Joi.string().email().required().error(handleError),
+});
