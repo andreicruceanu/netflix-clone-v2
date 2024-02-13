@@ -95,18 +95,6 @@ const loginAdmin = async (req, res) => {
 
 const sendOTPVerification = async (req, res) => {
   try {
-    const { email } = req.body;
-
-    const validationResult = schemaAdminValidate.login({ ...req.body });
-
-    if (validationResult.error) {
-      return responseHandler.badrequest(
-        res,
-        validationResult.error.details[0].message
-      );
-    }
-  } catch (error) {}
-  try {
     const { email } = req.params;
 
     const isRequestExisting = await adminOTPModel.findOne({
