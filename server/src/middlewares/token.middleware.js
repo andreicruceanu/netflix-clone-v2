@@ -3,7 +3,7 @@ import responseHandler from "../handlers/response.handler.js";
 import userModel from "../models/user.model.js";
 import userAdminModel from "../models/userAdmin.model.js";
 
-const tokenDecode = (req) => {
+const bearerTokenDecode = (req) => {
   try {
     const bearerHeader = req.headers["authorization"];
 
@@ -18,8 +18,19 @@ const tokenDecode = (req) => {
   }
 };
 
+const bodyTokenDecode = (token) => {
+  try {
+    if (token) {
+      return jsonwebtoken.verify(token, process.env.JWT_TOKEN_SECRET);
+    }
+    return false;
+  } catch (error) {
+    return false;
+  }
+};
+
 const auth = async (req, res, next) => {
-  const tokenDecoded = tokenDecode(req);
+  const tokenDecoded = bearerTokenDecode(req);
 
   if (!tokenDecoded)
     return responseHandler.unauthorize(
@@ -43,7 +54,7 @@ const auth = async (req, res, next) => {
 };
 
 const authAdmin = async (req, res, next) => {
-  const tokenDecoded = tokenDecode(req);
+  const tokenDecoded = bearerTokenDecode(req);
 
   if (!tokenDecoded)
     return responseHandler.unauthorize(
@@ -82,4 +93,19 @@ const createAdmin = async (req, res, next) => {
   next();
 };
 
-export default { auth, tokenDecode, createAdmin, authAdmin };
+const verifyTokenResetPassword = async (req, res, next) => {
+  const tokenDecoded = bodyTokenDecode(req.body.token);
+  if (!tokenDecoded)
+    return responseHandler.unauthorize(res, "Token is invalid", false);
+
+  req.userId = tokenDecoded.data;
+  next();
+};
+
+export default {
+  auth,
+  bearerTokenDecode,
+  createAdmin,
+  authAdmin,
+  verifyTokenResetPassword,
+};
