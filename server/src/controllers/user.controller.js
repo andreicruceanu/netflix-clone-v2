@@ -100,11 +100,7 @@ const updatePassword = async (req, res) => {
       .select("password salt id");
 
     if (!user) {
-      return responseHandler.unauthorize(
-        res,
-        "Authentication required. Please log in to access this resource.",
-        false
-      );
+      return responseHandler.unauthorize(res, "User not found !", false);
     }
 
     if (!user.validPassword(oldPassword)) {

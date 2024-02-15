@@ -233,10 +233,43 @@ const sendResetPasswordLink = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  const { newPassword } = req.body;
+  try {
+    const validationResult = schemaAdminValidate.resetPassword({
+      ...req.body,
+    });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+
+    const admin = await userAdminModel
+      .findById(req.userId)
+      .select("password salt id");
+
+    if (!admin) {
+      return responseHandler.unauthorize(res, "Admin not found !", false);
+    }
+
+    admin.setPassword(newPassword);
+
+    await admin.save();
+
+    responseHandler.ok(res, { result: true });
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   createAdmin,
   loginAdmin,
   sendOTPVerification,
   verifyOTP,
   sendResetPasswordLink,
+  resetPassword,
 };

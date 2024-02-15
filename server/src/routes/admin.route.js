@@ -22,5 +22,10 @@ router.post(
   userAdminController.verifyOTP
 );
 router.post("/resetPassword", userAdminController.sendResetPasswordLink);
+router.post(
+  "/confirmResetPassword",
+  tokenMiddleware.verifyTokenResetPassword,
+  userAdminController.resetPassword
+);
 
 export default router;
