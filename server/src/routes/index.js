@@ -6,6 +6,7 @@ import trendingRoute from "./trending.route.js";
 import actorRoute from "./actor.route.js";
 import searchRoute from "./search.route.js";
 import adminRouter from "./admin.route.js";
+import createMovieRouter from "./createMovie.route.js";
 
 const router = express.Router();
 
@@ -16,4 +17,5 @@ router.use("/actor", actorRoute);
 router.use("/reviews", reviewRoute);
 router.use("/:mediaType", mediaRoute);
 router.use("/search", searchRoute);
+router.use("/admin/createMovie", createMovieRouter);
 export default router;

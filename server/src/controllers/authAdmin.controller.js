@@ -11,7 +11,6 @@ const createAdmin = async (req, res) => {
     const { lastName, firstName, email, username, password, role } = req.body;
 
     const validationResult = schemaAdminValidate.createAdmin({ ...req.body });
-    console.log(validationResult);
 
     if (validationResult.error) {
       return responseHandler.badrequest(
@@ -59,7 +58,9 @@ const createAdmin = async (req, res) => {
 
 const loginAdmin = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { password } = req.body;
+
+    const username = req.body.username.toLowerCase();
 
     const validationResult = schemaAdminValidate.login({ ...req.body });
 
@@ -77,7 +78,7 @@ const loginAdmin = async (req, res) => {
       );
 
     if (!admin) {
-      return responseHandler.badrequest(res, "Admin not exist!");
+      return responseHandler.badrequest(res, "Incorrect email or password");
     }
     if (!admin.validPassword(password)) {
       return responseHandler.badrequest(res, "Wrong password");
@@ -198,7 +199,7 @@ const verifyOTP = async (req, res) => {
 };
 
 const sendResetPasswordLink = async (req, res) => {
-  const { email } = req.body;
+  const email = req.body.email.toLowerCase();
   try {
     const validationResult = schemaAdminValidate.forgotPasswordCheckEmail({
       ...req.body,
