@@ -68,6 +68,8 @@ const getInfo = async (req, res) => {
 const uploadImages = async (req, res) => {
   const { mediaId } = req.body;
 
+  console.log(req.files);
+
   if (!req.files) {
     return responseHandler.badrequest(res, "Images not upload , try again");
   }
