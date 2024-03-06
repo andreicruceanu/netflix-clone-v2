@@ -5,8 +5,12 @@ import http from "http";
 import mongoose from "mongoose";
 import "dotenv/config";
 import routes from "./src/routes/index.js";
-
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+app.use("/public/images", express.static(__dirname + "/public/images"));
 
 app.use(cors());
 app.use(express.json());
