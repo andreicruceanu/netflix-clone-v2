@@ -139,3 +139,10 @@ export const schemaResetPassword = Joi.object({
     .regex(regexPassword)
     .error(handleError),
 });
+
+export const schemaAddVideoMovie = Joi.object({
+  key: Joi.string().required().error(handleError),
+  siteMovie: Joi.string().required().error(handleError),
+  typeVideo: Joi.string().required().error(handleError),
+  mediaId: Joi.number().required().error(handleError),
+});
