@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import responseHandler from "../handlers/response.handler.js";
 import movieModel from "../models/movie.model.js";
 import validateDataFromUser from "../utils/userValidation.js";
+import cloudinary from "../utils/cloudinary.js";
 
 const createMovie = async (req, res) => {
   const { title, overview, imdb_id, tagline, runtime, budget, revenue } =
@@ -68,18 +69,31 @@ const getInfo = async (req, res) => {
 const uploadImages = async (req, res) => {
   const { mediaId } = req.body;
 
-  console.log("reuploadImages  : ", req);
-
-  if (!req.files) {
-    return responseHandler.badrequest(res, "Images not upload , try again");
+  if (!req.files?.poster || !req.files?.backdrop) {
+    return responseHandler.badrequest(res, "poster and backdrop is required!");
   }
-
-  const { poster, backdrop } = req.files;
 
   if (!mediaId) {
     return responseHandler.badrequest(res, "mediaId is required");
   }
-  if (!poster || !backdrop) {
+
+  const resultUploudPoster = await cloudinary.uploader.upload(
+    req.files.poster[0].path,
+    {
+      folder: "movies",
+    }
+  );
+
+  const resultUploudBackdrop = await cloudinary.uploader.upload(
+    req.files.backdrop[0].path,
+    {
+      folder: "movies",
+    }
+  );
+
+  console.log(resultUploudPoster, resultUploudBackdrop);
+
+  if (!resultUploudPoster || !resultUploudBackdrop) {
     return responseHandler.badrequest(res, "Images not upload , try again");
   }
 
@@ -96,8 +110,8 @@ const uploadImages = async (req, res) => {
       movie._id,
       {
         $set: {
-          backdrop_path: `/${backdrop[0].filename}`,
-          poster_path: `/${poster[0].filename}`,
+          backdrop_path: resultUploudBackdrop.secure_url,
+          poster_path: resultUploudPoster.secure_url,
           state_movie: "images_saved",
         },
       },
