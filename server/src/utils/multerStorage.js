@@ -8,6 +8,7 @@ const FILE_TYPE_MAP = {
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    console.log("File", file);
     const isValid = FILE_TYPE_MAP[file.mimetype];
     let uploadError = new Error("invalid image type");
 
@@ -15,6 +16,7 @@ const storage = multer.diskStorage({
       uploadError = null;
     }
     cb(uploadError, "public/images");
+    console.log("is OK");
   },
   filename: function (req, file, cb) {
     const extension = FILE_TYPE_MAP[file.mimetype];

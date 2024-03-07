@@ -31,8 +31,6 @@ const createMovie = async (req, res) => {
 const deleteMovie = async (req, res) => {
   const { movieId } = req.params;
 
-  console.log(req);
-
   if (!movieId) {
     return responseHandler.badrequest(res, "mediaId is required");
   }
@@ -70,7 +68,7 @@ const getInfo = async (req, res) => {
 const uploadImages = async (req, res) => {
   const { mediaId } = req.body;
 
-  console.log(req.files);
+  console.log("reuploadImages  : ", req);
 
   if (!req.files) {
     return responseHandler.badrequest(res, "Images not upload , try again");
