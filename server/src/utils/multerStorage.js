@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const extension = FILE_TYPE_MAP[file.mimetype];
     cb(null, `${crypto.randomBytes(6).toString("hex")}.${extension}`);
+    console.log("is Good", file, cb);
   },
 });
 const uploadOptions = multer({ storage: storage }).fields([
