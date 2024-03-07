@@ -31,6 +31,8 @@ const createMovie = async (req, res) => {
 const deleteMovie = async (req, res) => {
   const { movieId } = req.params;
 
+  console.log(req);
+
   if (!movieId) {
     return responseHandler.badrequest(res, "mediaId is required");
   }
