@@ -1,6 +1,7 @@
 import express from "express";
 import userAdminController from "../controllers/authAdmin.controller.js";
 import tokenMiddleware from "../middlewares/token.middleware.js";
+import adminMiddleware from "../middlewares/admin.middleware.js";
 
 const router = express.Router();
 router.post(
@@ -26,6 +27,20 @@ router.post(
   "/confirmResetPassword",
   tokenMiddleware.verifyTokenResetPassword,
   userAdminController.resetPassword
+);
+
+router.delete(
+  "/deleteUser/:userId",
+  tokenMiddleware.authAdmin,
+  adminMiddleware.verifyAdmin,
+  userAdminController.deleteUser
+);
+
+router.patch(
+  "/updateProfile/:userId",
+  tokenMiddleware.authAdmin,
+  adminMiddleware.verifyAdmin,
+  userAdminController.editUser
 );
 
 export default router;

@@ -5,6 +5,7 @@ import userAdminModel from "../models/userAdmin.model.js";
 import adminOTPModel from "../models/adminOTPVerification.model.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import schemaAdminValidate from "../utils/adminValidation.js";
+import userModel from "../models/user.model.js";
 
 const createAdmin = async (req, res) => {
   try {
@@ -180,7 +181,6 @@ const verifyOTP = async (req, res) => {
     }
 
     if (!userOTPVerification.verifyOTP(code)) {
-      console.log(userOTPVerification.verifyOTP(code));
       return responseHandler.unauthorize(res, "The code is invalid", false);
     }
 
@@ -266,6 +266,56 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    if (!req.params.userId) {
+      return responseHandler.badrequest(res, "userId is required");
+    }
+    const deleteUser = await userModel.findByIdAndDelete(req.params.userId);
+
+    responseHandler.ok(res, deleteUser);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+const editUser = async (req, res) => {
+  const { userId } = req.params;
+  const { firstName, lastName, email } = req.body;
+  if (!userId) {
+    return responseHandler.badrequest(res, "userId is required");
+  }
+
+  try {
+    const user = await userModel.findById(userId);
+
+    if (!user) {
+      return responseHandler.badrequest(res, "User not exist!");
+    }
+
+    const checkEmail = await userModel.findOne({ email });
+
+    if (checkEmail && checkEmail._id.toString() !== userId) {
+      return responseHandler.badrequest(
+        res,
+        "The email already exists. Add another email address!"
+      );
+    }
+
+    const updateUser = await userModel.findByIdAndUpdate(
+      { _id: userId },
+      { firstName, lastName, email },
+      {
+        new: true,
+      }
+    );
+
+    return responseHandler.ok(res, updateUser);
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   createAdmin,
   loginAdmin,
@@ -273,4 +323,6 @@ export default {
   verifyOTP,
   sendResetPasswordLink,
   resetPassword,
+  deleteUser,
+  editUser,
 };
