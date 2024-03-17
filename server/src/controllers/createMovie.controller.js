@@ -91,8 +91,6 @@ const uploadImages = async (req, res) => {
     }
   );
 
-  console.log(resultUploudPoster, resultUploudBackdrop);
-
   if (!resultUploudPoster || !resultUploudBackdrop) {
     return responseHandler.badrequest(res, "Images not upload , try again");
   }
