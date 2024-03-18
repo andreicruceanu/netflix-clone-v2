@@ -146,3 +146,15 @@ export const schemaAddVideoMovie = Joi.object({
   typeVideo: Joi.string().required().error(handleError),
   mediaId: Joi.number().required().error(handleError),
 });
+export const schemaCreateMovie = Joi.object({
+  title: Joi.string().required().min(3).error(handleError),
+  tagline: Joi.string().required().min(10).error(handleError),
+  budget: Joi.number().required().error(handleError),
+  revenue: Joi.number().required().error(handleError),
+  status: Joi.string().required().error(handleError),
+  adult: Joi.boolean().required().error(handleError),
+  runtime: Joi.number().required().error(handleError),
+  release_date: Joi.date().required().error(handleError),
+  genre_ids: Joi.array().min(3).error(handleError),
+  overview: Joi.string().required().min(15).error(handleError),
+});

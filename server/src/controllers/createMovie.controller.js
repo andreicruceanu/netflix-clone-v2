@@ -5,25 +5,32 @@ import validateDataFromUser from "../utils/userValidation.js";
 import cloudinary from "../utils/cloudinary.js";
 
 const createMovie = async (req, res) => {
-  const { title, overview, imdb_id, tagline, runtime, budget, revenue } =
-    req.body;
+  const validationResult = validateDataFromUser.createMovie({
+    ...req.body,
+  });
+
+  if (validationResult.error) {
+    return responseHandler.badrequest(
+      res,
+      validationResult.error.details[0].message
+    );
+  }
 
   const id = Math.floor(Math.random() * 100000);
-
-  const movie = new movieModel({
-    ...req.body,
-    id,
-    state_movie: "primary_saved",
-    admin_created: req.user.username,
-    admin_id: req.user.id,
-  });
-
-  await movie.save();
-
-  responseHandler.created(res, {
-    ...movie._doc,
-  });
   try {
+    const movie = new movieModel({
+      ...req.body,
+      id,
+      state_movie: "primary_saved",
+      admin_created: req.user.username,
+      admin_id: req.user.id,
+    });
+
+    await movie.save();
+
+    responseHandler.created(res, {
+      ...movie._doc,
+    });
   } catch {
     responseHandler.error(res);
   }
@@ -176,10 +183,45 @@ const addVideoMovie = async (req, res) => {
   }
 };
 
+const editMovie = async (req, res) => {
+  const {
+    title,
+    overview,
+    imdb_id,
+    tagline,
+    runtime,
+    budget,
+    revenue,
+    movieId,
+    key,
+    siteMovie,
+    typeVideo,
+  } = req.body;
+
+  if (!movieId) {
+    return responseHandler.badrequest(res, "mediaId is required");
+  }
+  if (!mongoose.Types.ObjectId.isValid(movieId)) {
+    return responseHandler.badrequest(res, "Invalid movieId");
+  }
+  try {
+    const deletedMovie = await movieModel.findByIdAndDelete(movieId);
+
+    if (!deletedMovie) {
+      return responseHandler.badrequest(res, "Movie not found");
+    }
+
+    return;
+  } catch {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   createMovie,
   getInfo,
   uploadImages,
   deleteMovie,
   addVideoMovie,
+  editMovie,
 };

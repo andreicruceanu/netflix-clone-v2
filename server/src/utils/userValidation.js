@@ -1,6 +1,7 @@
 import {
   schemaAddVideoMovie,
   schemaChangeEmail,
+  schemaCreateMovie,
   schemaPreferences,
   schemaReview,
   schemaSignup,
@@ -18,6 +19,7 @@ const validateDataFromUser = {
   preferences: (preferencesData) => schemaPreferences.validate(preferencesData),
   createReview: (review) => schemaReview.validate(review),
   addVideoMovie: (data) => schemaAddVideoMovie.validate(data),
+  createMovie: (data) => schemaCreateMovie.validate(data),
 };
 
 export default validateDataFromUser;
