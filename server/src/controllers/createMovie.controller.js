@@ -3,6 +3,7 @@ import responseHandler from "../handlers/response.handler.js";
 import movieModel from "../models/movie.model.js";
 import validateDataFromUser from "../utils/userValidation.js";
 import cloudinary from "../utils/cloudinary.js";
+import { validationEditMovie } from "../utils/validationEditMovie.js";
 
 const createMovie = async (req, res) => {
   const validationResult = validateDataFromUser.createMovie({
@@ -183,45 +184,96 @@ const addVideoMovie = async (req, res) => {
   }
 };
 
-const editMovie = async (req, res) => {
-  const {
-    title,
-    overview,
-    imdb_id,
-    tagline,
-    runtime,
-    budget,
-    revenue,
-    movieId,
-    key,
-    siteMovie,
-    typeVideo,
-  } = req.body;
+const editMovieWithImages = async (req, res) => {
+  const customValidationMovieEdit = validationEditMovie(req);
 
-  if (!movieId) {
-    return responseHandler.badrequest(res, "mediaId is required");
-  }
-  if (!mongoose.Types.ObjectId.isValid(movieId)) {
-    return responseHandler.badrequest(res, "Invalid movieId");
+  if (customValidationMovieEdit) {
+    return responseHandler.badrequest(
+      res,
+      customValidationMovieEdit?.errorMessage
+    );
   }
   try {
-    const deletedMovie = await movieModel.findByIdAndDelete(movieId);
+    const movie = await movieModel.findById(req.body.movieId);
 
-    if (!deletedMovie) {
+    if (!movie) {
       return responseHandler.badrequest(res, "Movie not found");
     }
 
-    return;
+    let backdropPath, posterPath;
+
+    if (req.files.poster) {
+      const resultUploudPoster = await cloudinary.uploader.upload(
+        req.files.poster[0].path,
+        {
+          folder: "movies",
+        }
+      );
+      if (!resultUploudPoster) {
+        return responseHandler.badrequest(
+          res,
+          "Backdrop not upload , try again"
+        );
+      }
+      posterPath = resultUploudPoster.secure_url;
+    }
+
+    if (req.files.backdrop) {
+      const resultUploudBackdrop = await cloudinary.uploader.upload(
+        req.files.backdrop[0].path,
+        {
+          folder: "movies",
+        }
+      );
+      if (!resultUploudBackdrop) {
+        return responseHandler.badrequest(
+          res,
+          "Backdrop not upload , try again"
+        );
+      }
+      backdropPath = resultUploudBackdrop.secure_url;
+    }
+
+    const movieData = {
+      ...req.body,
+      budget: Number(req.body?.budget),
+      revenue: Number(req.body?.revenue),
+      adult: Boolean(req.body?.adult),
+      genre_ids: req.body?.genre_ids.split(","),
+      backdrop_path: backdropPath ? backdropPath : req.body.backdrop,
+      poster_path: posterPath ? posterPath : req.body.poster,
+      officialTrailer: {
+        siteMovie: req.body?.siteMovie,
+        type: req.body?.typeVideo,
+        name: req.body?.typeVideo,
+        key: req.body?.key,
+      },
+      state_movie: "completd",
+      lastAdminUpdate: req.user.username,
+    };
+
+    const editedMovie = await movieModel.findByIdAndUpdate(
+      req.body.movieId,
+      {
+        $set: movieData,
+      },
+      { new: true }
+    );
+
+    if (!editedMovie) {
+      return responseHandler.notfound(res);
+    }
+
+    responseHandler.ok(res, editedMovie);
   } catch {
     responseHandler.error(res);
   }
 };
-
 export default {
   createMovie,
   getInfo,
   uploadImages,
   deleteMovie,
   addVideoMovie,
-  editMovie,
+  editMovieWithImages,
 };
