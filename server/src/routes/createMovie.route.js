@@ -13,7 +13,7 @@ router.post(
   createMovieController.createMovie
 );
 router.get("/info", createMovieController.getInfo);
-router.put(
+router.patch(
   "/uploadImages",
   tokenMiddleware.authAdmin,
   adminMiddleware.verifyAdmin,
@@ -27,7 +27,7 @@ router.delete(
   createMovieController.deleteMovie
 );
 
-router.put(
+router.patch(
   "/addVideo",
   tokenMiddleware.authAdmin,
   adminMiddleware.verifyAdmin,
