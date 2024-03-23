@@ -29,14 +29,6 @@ export default mongoose.model(
         type: Number,
         required: true,
       },
-      original_language: {
-        type: String,
-        required: false,
-      },
-      popularity: {
-        type: Number,
-        required: false,
-      },
       overview: {
         type: String,
         required: false,

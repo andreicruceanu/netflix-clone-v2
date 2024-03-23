@@ -16,7 +16,9 @@ const signup = async (req, res) => {
       );
     }
 
-    const checkUser = await userModel.findOne({ email });
+    const emailUser = email.toLowerCase();
+
+    const checkUser = await userModel.findOne({ email: emailUser });
 
     if (checkUser) {
       return responseHandler.badrequest(
@@ -29,7 +31,7 @@ const signup = async (req, res) => {
 
     user.firstName = firstName;
     user.lastName = lastName;
-    user.email = email;
+    user.email = email.toLowerCase();
     user.setPassword(password);
 
     await user.save();
