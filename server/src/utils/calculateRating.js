@@ -1,5 +1,4 @@
 export const calculateRating = (reviews) => {
-  console.log(reviews);
   const ratingStats = {
     totalReviews: reviews.length,
     rating:
