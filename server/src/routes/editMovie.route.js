@@ -7,11 +7,11 @@ import { uploadOptions } from "../utils/multerStorage.js";
 const router = express.Router({ mergeParams: true });
 
 router.put(
-  "/newImage",
+  "/",
   tokenMiddleware.authAdmin,
   adminMiddleware.verifyAdmin,
   uploadOptions,
-  createMovieController.editMovieWithImages
+  createMovieController.editMovie
 );
 
 export default router;
