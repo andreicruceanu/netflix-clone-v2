@@ -184,7 +184,7 @@ const addVideoMovie = async (req, res) => {
   }
 };
 
-const editMovieWithImages = async (req, res) => {
+const editMovie = async (req, res) => {
   const customValidationMovieEdit = validationEditMovie(req);
 
   if (customValidationMovieEdit) {
@@ -202,7 +202,7 @@ const editMovieWithImages = async (req, res) => {
 
     let backdropPath, posterPath;
 
-    if (req.files.poster) {
+    if (req.files?.poster) {
       const resultUploudPoster = await cloudinary.uploader.upload(
         req.files.poster[0].path,
         {
@@ -218,7 +218,7 @@ const editMovieWithImages = async (req, res) => {
       posterPath = resultUploudPoster.secure_url;
     }
 
-    if (req.files.backdrop) {
+    if (req.files?.backdrop) {
       const resultUploudBackdrop = await cloudinary.uploader.upload(
         req.files.backdrop[0].path,
         {
@@ -239,7 +239,9 @@ const editMovieWithImages = async (req, res) => {
       budget: Number(req.body?.budget),
       revenue: Number(req.body?.revenue),
       adult: Boolean(req.body?.adult),
-      genre_ids: req.body?.genre_ids.split(","),
+      genre_ids: !Array.isArray(req.body?.genre_ids)
+        ? req.body?.genre_ids.split(",")
+        : req.body?.genre_ids,
       backdrop_path: backdropPath ? backdropPath : req.body.backdrop,
       poster_path: posterPath ? posterPath : req.body.poster,
       officialTrailer: {
@@ -248,7 +250,7 @@ const editMovieWithImages = async (req, res) => {
         name: req.body?.typeVideo,
         key: req.body?.key,
       },
-      state_movie: "completd",
+      state_movie: "completed",
       lastAdminUpdate: req.user.username,
     };
 
@@ -265,15 +267,17 @@ const editMovieWithImages = async (req, res) => {
     }
 
     responseHandler.ok(res, editedMovie);
-  } catch {
+  } catch (error) {
+    console.log(error);
     responseHandler.error(res);
   }
 };
+
 export default {
   createMovie,
   getInfo,
   uploadImages,
   deleteMovie,
   addVideoMovie,
-  editMovieWithImages,
+  editMovie,
 };
