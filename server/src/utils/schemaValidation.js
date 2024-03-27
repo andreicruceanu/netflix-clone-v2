@@ -140,6 +140,14 @@ export const schemaResetPassword = Joi.object({
     .error(handleError),
 });
 
+export const schemaChangePassword = Joi.object({
+  newPassword: Joi.string()
+    .required()
+    .min(8)
+    .regex(regexPassword)
+    .error(handleError),
+});
+
 export const schemaAddVideoMovie = Joi.object({
   key: Joi.string().required().error(handleError),
   siteMovie: Joi.string().required().error(handleError),

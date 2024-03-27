@@ -1,6 +1,7 @@
 import {
   schemaAddVideoMovie,
   schemaChangeEmail,
+  schemaChangePassword,
   schemaCreateMovie,
   schemaEditMovie,
   schemaPreferences,
@@ -22,6 +23,7 @@ const validateDataFromUser = {
   addVideoMovie: (data) => schemaAddVideoMovie.validate(data),
   createMovie: (data) => schemaCreateMovie.validate(data),
   editMovie: (data) => schemaEditMovie.validate(data),
+  changePassword: (data) => schemaChangePassword.validate(data),
 };
 
 export default validateDataFromUser;
