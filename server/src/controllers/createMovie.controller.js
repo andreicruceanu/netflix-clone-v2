@@ -268,7 +268,6 @@ const editMovie = async (req, res) => {
 
     responseHandler.ok(res, editedMovie);
   } catch (error) {
-    console.log(error);
     responseHandler.error(res);
   }
 };

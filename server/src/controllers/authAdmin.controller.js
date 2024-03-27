@@ -6,6 +6,7 @@ import adminOTPModel from "../models/adminOTPVerification.model.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import schemaAdminValidate from "../utils/adminValidation.js";
 import userModel from "../models/user.model.js";
+import validateDataFromUser from "../utils/userValidation.js";
 
 const createAdmin = async (req, res) => {
   try {
@@ -75,7 +76,7 @@ const loginAdmin = async (req, res) => {
     const admin = await userAdminModel
       .findOne({ username })
       .select(
-        "id , username , email , password , salt , role , isActive ,  twoFactorAuth"
+        "id , username , email , password , salt , role , isActive ,  twoFactorAuth , lastName , firstName"
       );
 
     if (!admin) {
@@ -153,7 +154,7 @@ const sendOTPVerification = async (req, res) => {
 
     const subject = "Security code to access the Admin Panel account";
 
-    const content = `<p> Enter <b>${otp} in the app.`;
+    const content = `<p> Enter <b>${otp} </b> in the app.`;
 
     await sendEmail(email, subject, content);
 
@@ -234,6 +235,38 @@ const sendResetPasswordLink = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const { newPassword } = req.body;
+  try {
+    const validationResult = validateDataFromUser.changePassword({
+      ...req.body,
+    });
+
+    if (validationResult.error) {
+      return responseHandler.badrequest(
+        res,
+        validationResult.error.details[0].message
+      );
+    }
+
+    const admin = await userAdminModel
+      .findById(req.user.id)
+      .select("password salt id");
+
+    if (!admin) {
+      return responseHandler.notfound(res, "Admin not found !", false);
+    }
+
+    admin.setPassword(newPassword);
+
+    await admin.save();
+
+    responseHandler.ok(res, { result: true });
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
 const resetPassword = async (req, res) => {
   const { newPassword } = req.body;
   try {
@@ -253,7 +286,7 @@ const resetPassword = async (req, res) => {
       .select("password salt id");
 
     if (!admin) {
-      return responseHandler.unauthorize(res, "Admin not found !", false);
+      return responseHandler.notfound(res, "Admin not found !", false);
     }
 
     admin.setPassword(newPassword);
@@ -316,6 +349,29 @@ const editUser = async (req, res) => {
   }
 };
 
+const updateAdmin = async (req, res) => {
+  const { firstName, lastName } = req.body;
+
+  try {
+    if (!firstName && !lastName) {
+      responseHandler.badrequest(res, "Firstname or Lastname is required!");
+    }
+    const admin = await userAdminModel.findById(req.user.id);
+
+    if (!admin) {
+      return responseHandler.notfound(res, "Admin not found !", false);
+    }
+
+    admin.lastName = lastName;
+    admin.firstName = firstName;
+
+    await admin.save();
+    responseHandler.ok(res, admin);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
 export default {
   createAdmin,
   loginAdmin,
@@ -325,4 +381,6 @@ export default {
   resetPassword,
   deleteUser,
   editUser,
+  changePassword,
+  updateAdmin,
 };

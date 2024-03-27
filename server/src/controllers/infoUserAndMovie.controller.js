@@ -50,7 +50,6 @@ const getInfo = async (req, res) => {
 
     responseHandler.ok(res, { infoAllMoviesAndUsers, lastTenBooksCreated });
   } catch (error) {
-    console.log(error);
     responseHandler.error(res);
   }
 };
@@ -61,7 +60,7 @@ const movieData = async (req, res) => {
     // const adminsPerDay = await getRecordsPerDay("adminusers");
     // const moviesPerDay = await getRecordsPerDay("movies");
     //
-    console.log(usersPerDay);
+
     return;
   } catch (error) {
     responseHandler.error(res);
