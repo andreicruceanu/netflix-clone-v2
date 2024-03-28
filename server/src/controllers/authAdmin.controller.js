@@ -49,9 +49,8 @@ const createAdmin = async (req, res) => {
     admin.role = role;
 
     await admin.save();
-
     await sendEmail(
-      userCheck.email,
+      email,
       "Wolcome to Managed Admin",
       templateCreateAdminMail(firstName, username, password)
     );
