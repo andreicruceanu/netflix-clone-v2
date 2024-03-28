@@ -7,11 +7,11 @@ import { sendEmail } from "../utils/sendEmail.js";
 import schemaAdminValidate from "../utils/adminValidation.js";
 import userModel from "../models/user.model.js";
 import validateDataFromUser from "../utils/userValidation.js";
+import { templateCreateAdminMail } from "../utils/templateMails/TemplateCreateAdminMail.js";
 
 const createAdmin = async (req, res) => {
   try {
     const { lastName, firstName, email, username, password, role } = req.body;
-
     const validationResult = schemaAdminValidate.createAdmin({ ...req.body });
 
     if (validationResult.error) {
@@ -49,6 +49,12 @@ const createAdmin = async (req, res) => {
     admin.role = role;
 
     await admin.save();
+
+    await sendEmail(
+      userCheck.email,
+      "Wolcome to Managed Admin",
+      templateCreateAdminMail(firstName, username, password)
+    );
 
     responseHandler.created(res, {
       message: "The account has been created",

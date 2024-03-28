@@ -11,7 +11,7 @@ const forgotPasswordTemplate = (firstName, token) => {
     <p>Dacă nu ai solicitat tu acest link, poți ignora mesajul.</p>
     <br />
     <p>Numai bine,</p>
-    <p>Numai bine, Echipa MANAGED ADMIN</p>
+    <p>Echipa MANAGED ADMIN</p>
 `;
 };
 
