@@ -1,4 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCloseModal } from "../../redux/features/infoModal";
+import { useRandom } from "../../hook/useRandom";
+import { configsApp } from "../../configs/configsApp";
+import { toast } from "react-toastify";
+import {
+  getFormatTime,
+  getReleaseYear,
+  trailerPath,
+} from "../../utils/function";
 import {
   Box,
   CircularProgress,
@@ -9,12 +19,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { toast } from "react-toastify";
-import {
-  getFormatTime,
-  getRandomNumber,
-  getReleaseYear,
-} from "../../utils/function";
+
 import mediaApi from "../../api/modules/media.api";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
@@ -30,8 +35,6 @@ import SimilarVideoCard from "./SimilarVideoCard";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-import { useDispatch, useSelector } from "react-redux";
-import { setCloseModal } from "../../redux/features/infoModal";
 
 const LoadingModal = () => {
   return (
@@ -79,6 +82,8 @@ function InfoModal() {
   const dispatch = useDispatch();
 
   const handleCloseModal = () => dispatch(setCloseModal());
+
+  const { randomMatch, randomAge } = useRandom(mediaType);
 
   useEffect(() => {
     if (isOpen && mediaType && mediaId) {
@@ -173,10 +178,8 @@ function InfoModal() {
                       techOrder: ["youtube"],
                       sources: [
                         {
-                          type: "video/youtube",
-                          src: `https://www.youtube.com/watch?v=${
-                            media.officialTrailer?.key || "L3oOldViIgY"
-                          }`,
+                          type: configsApp.trailerSource,
+                          src: trailerPath(media.officialTrailer?.key),
                         },
                       ],
                     }}
@@ -290,16 +293,16 @@ function InfoModal() {
                           <Typography
                             variant="subtitle1"
                             sx={{ color: "#46d369" }}
-                          >{`${getRandomNumber(50, 100)}% Match`}</Typography>
+                          >
+                            {randomMatch}
+                          </Typography>
                           <Typography variant="body2">
                             {getReleaseYear(
                               mediaType,
                               media?.release_date || media?.first_air_date
                             )}
                           </Typography>
-                          <ChipNetflix
-                            label={`${getRandomNumber(9, 17)}+`}
-                          ></ChipNetflix>
+                          <ChipNetflix label={randomAge}></ChipNetflix>
                           <Typography variant="subtitle2">
                             {getFormatTime(
                               mediaType,

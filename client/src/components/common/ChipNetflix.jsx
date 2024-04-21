@@ -1,5 +1,4 @@
 import { Chip } from "@mui/material";
-import React from "react";
 
 const ChipNetflix = ({ sx, ...others }) => {
   return (

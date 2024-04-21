@@ -1,8 +1,9 @@
-import React from "react";
+import { PREFERENCES } from "../../utils/constants";
+
 import Button from "@mui/material/Button";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import TooltipNetflix from "./TooltipNetflix";
-import { PREFERENCES } from "../../utils/constants";
+
 export default function MoreInfoButton({ sx, ...others }) {
   return (
     <TooltipNetflix title={PREFERENCES.moreInfo}>

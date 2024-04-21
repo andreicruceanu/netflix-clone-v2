@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ReactPlayer from "react-player/youtube";
+import { trailerPath } from "../../utils/function";
 
 const VideoPopup = ({ show, setShow, videoId, setVideoId }) => {
   const hidePopup = () => {
@@ -64,7 +65,7 @@ const VideoPopup = ({ show, setShow, videoId, setVideoId }) => {
           Close
         </Typography>
         <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${videoId}`}
+          url={trailerPath(videoId)}
           controls
           width="100%"
           height="100%"

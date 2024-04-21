@@ -1,7 +1,7 @@
 import React, { forwardRef, useRef, useState } from "react";
 
 const VideoItemWithHoverPure = React.forwardRef(({ src, handleHover }, ref) => {
-  const [hoverTimeout, setHoverTimeout] = useState(null);
+  const [hoverTimeout] = useState(null);
 
   const hoverTimeoutRef = useRef(hoverTimeout);
 

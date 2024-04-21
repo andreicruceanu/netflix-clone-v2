@@ -16,46 +16,40 @@ const main = [
   },
   {
     display: "TV Shows",
-    path: `${routesGen.tvShows(22)}`,
+    path: "/browse/tv",
     icon: <LiveTvOutlinedIcon />,
     state: "tv",
   },
   {
     display: "Movies",
-    path: "/movie",
+    path: "/browse/movies",
     icon: <SlideshowOutlinedIcon />,
     state: "movie",
-  },
-  {
-    display: "New & Popular",
-    path: "/movie",
-    icon: <SlideshowOutlinedIcon />,
-    state: "new&polular",
   },
 ];
 
 const user = [
   {
     display: "Account",
-    path: "/account",
+    path: "/browse/account",
     icon: <PersonOutlineIcon />,
     state: "account",
   },
   {
     display: "favorites",
-    path: "/favorites",
+    path: "/browse/favorites",
     icon: <FavoriteBorderOutlinedIcon />,
     state: "favorite",
   },
   {
     display: "reviews",
-    path: "/reviews",
+    path: "/browse/reviews",
     icon: <RateReviewOutlinedIcon />,
     state: "reviews",
   },
   {
     display: "password update",
-    path: "/password-update",
+    path: "/browse/password-update",
     icon: <LockResetOutlinedIcon />,
     state: "password.update",
   },

@@ -2,11 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { usePortal } from "../provider/PortalProvider";
 import VideoItemWithHoverPure from "./VideoItemWithHoverPure";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
-
-// Interfața poate fi omisă în JSX
-// interface VideoItemWithHoverProps {
-//   video: Movie;
-// }
+import { Link } from "react-router-dom";
+import { routesGen } from "../../routes/routes";
 
 export default function VideoItemWithHover({ media, mediaType }) {
   const setPortal = usePortal();
@@ -31,10 +28,12 @@ export default function VideoItemWithHover({ media, mediaType }) {
   }, [media, mediaType]);
 
   return (
-    <VideoItemWithHoverPure
-      ref={elementRef}
-      handleHover={setIsHovered}
-      src={tmdbConfigs.posterPath(poster)}
-    />
+    <Link to={routesGen.mediaDetail(mediaType, media.id)}>
+      <VideoItemWithHoverPure
+        ref={elementRef}
+        handleHover={setIsHovered}
+        src={tmdbConfigs.posterPath(poster)}
+      />
+    </Link>
   );
 }

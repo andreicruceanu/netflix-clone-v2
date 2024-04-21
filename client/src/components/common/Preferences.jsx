@@ -1,20 +1,22 @@
-import { LoadingButton } from "@mui/lab";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-import preferencesApi from "../../api/modules/preferences.api";
+import { LoadingButton } from "@mui/lab";
+import { PREFERENCES } from "../../utils/constants";
 import { toast } from "react-toastify";
 import {
   addPreference,
   removePreference,
 } from "../../redux/features/userSlice";
+
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import preferencesApi from "../../api/modules/preferences.api";
+
 import NetflixIconButton from "./NetflixIconButton";
 import TooltipNetflix from "./TooltipNetflix";
-import { PREFERENCES } from "../../utils/constants";
 
 const typePreferences = {
   like: "like",
@@ -153,7 +155,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
               minWidth: "100%",
               borderRadius: "50%",
               color: "white",
-              padding: 2,
+              padding: 1,
               span: {
                 marginRight: "0px",
                 marginLeft: "0px",
@@ -164,7 +166,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
                 background: "none",
               },
             }}
-            size="large"
+            size="small"
             loading={onRequestLike}
             startIcon={isLiked ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
             onClick={handleLiked}
@@ -181,7 +183,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
               minWidth: "100%",
               borderRadius: "50%",
               color: "white",
-              padding: 2,
+              padding: 1,
               span: {
                 marginRight: "0px",
                 marginLeft: "0px",
@@ -191,7 +193,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
                 background: "none",
               },
             }}
-            size="large"
+            size="small"
             startIcon={
               isDisliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />
             }

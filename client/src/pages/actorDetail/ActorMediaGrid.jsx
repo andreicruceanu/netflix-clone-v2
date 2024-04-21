@@ -41,6 +41,8 @@ const ActorMediaGrid = ({ actorId }) => {
     setPage(page + 1);
   };
 
+  console.log(filteredMedias);
+
   return (
     <>
       <Grid container spacing={1} sx={{ mr: "-8px !important" }}>

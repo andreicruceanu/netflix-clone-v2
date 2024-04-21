@@ -1,9 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, Stack } from "@mui/material";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { configsApp } from "../../configs/configsApp";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { getRandomNumber } from "../../utils/function";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
+import { setOpenModal } from "../../redux/features/infoModal";
+import { getRandomNumber, trailerPath } from "../../utils/function";
+import { Box, Stack } from "@mui/material";
+import { toast } from "react-toastify";
+
 import mediaApi from "../../api/modules/media.api";
 import NetflixIconButton from "./NetflixIconButton";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
@@ -13,7 +16,6 @@ import VideoJSPlayer from "./watch/VideoJSPlayer";
 import MaturityRate from "./MaturityRate";
 import PlayButton from "./PlayButton";
 import MoreInfoButton from "./MoreInfoButton";
-import { setOpenModal } from "../../redux/features/infoModal";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
   const dispatch = useDispatch();
@@ -78,10 +80,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
   useEffect(() => {
     const handleScroll = () => {
       if (playerRef.current) {
-        // Obțineți coordonatele de derulare
         const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-        // Setează video-ul pe pauză dacă utilizatorul a derulat în jos
         if (scrollY > 800 && !playerRef.current.paused()) {
           console.log("a");
           playerRef.current.pause();
@@ -90,11 +89,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
         }
       }
     };
-
-    // Adaugă event listener pentru evenimentul de scroll
     window.addEventListener("scroll", handleScroll);
-
-    // Dezabonează-te de la event listener când componenta se demontează
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -144,10 +139,8 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                         techOrder: ["youtube"],
                         sources: [
                           {
-                            type: "video/youtube",
-                            src: `https://www.youtube.com/watch?v=${
-                              movieHero.officialTrailer?.key || "L3oOldViIgY"
-                            }`,
+                            type: configsApp.trailerSource,
+                            src: trailerPath(movieHero.officialTrailer?.key),
                           },
                         ],
                       }}

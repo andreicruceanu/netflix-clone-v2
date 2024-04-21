@@ -10,7 +10,7 @@ import VideosSection from "./videosSection/VideosSection";
 import Reviews from "./reviews/Reviews";
 import Recommendation from "./recommendation/Recommendation";
 import Similar from "./similar/Similar";
-import { setCloseModal } from "../../redux/features/infoModal";
+import { useCloseInfoModal } from "../../hook/useCloseInfoModal";
 
 const MediaDetail = () => {
   const [media, setMedia] = useState();
@@ -19,7 +19,7 @@ const MediaDetail = () => {
   const { mediaType, mediaId } = useParams();
   const { isOpen } = useSelector((state) => state.infoModal);
 
-  const handleCloseModal = () => dispatch(setCloseModal());
+  useCloseInfoModal(isOpen);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,10 +57,6 @@ const MediaDetail = () => {
     };
     getTrailer();
   }, [mediaType, mediaId, dispatch]);
-
-  useEffect(() => {
-    if (isOpen) handleCloseModal();
-  }, [isOpen]);
 
   return media ? (
     <>

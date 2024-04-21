@@ -1,17 +1,14 @@
-import { LoadingButton } from "@mui/lab";
 import React, { useEffect, useState } from "react";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import AddIcon from "@mui/icons-material/Add";
-import { useDispatch, useSelector } from "react-redux";
-import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-import favoriteApi from "../../api/modules/favorite.api";
-import CheckIcon from "@mui/icons-material/Check";
-import { addFavorite, removeFavorite } from "../../redux/features/userSlice";
-import { toast } from "react-toastify";
-import TooltipNetflix from "./TooltipNetflix";
+import { LoadingButton } from "@mui/lab";
+import { useSelector } from "react-redux";
 import { PREFERENCES } from "../../utils/constants";
 import { useFavorites } from "../../hook/useFavorite";
-import { Button, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
+import TooltipNetflix from "./TooltipNetflix";
 
 const ButtonFavorite = ({ media, mediaType }) => {
   const { user, listFavorites } = useSelector((state) => state.user);
@@ -66,7 +63,7 @@ const ButtonFavorite = ({ media, mediaType }) => {
         variant="text"
         sx={{
           minWidth: "100%",
-          padding: 1.5,
+          padding: 1,
           borderRadius: "50%",
           color: "white",
           span: {
@@ -78,10 +75,10 @@ const ButtonFavorite = ({ media, mediaType }) => {
             background: "none",
           },
           "& .MuiSvgIcon-root": {
-            fontSize: 30,
+            fontSize: 25,
           },
         }}
-        size="large"
+        size="small"
         startIcon={isFavorite ? <FavoriteIcon /> : <AddIcon />}
         loading={onRequest}
         onClick={onFavoriteClick}

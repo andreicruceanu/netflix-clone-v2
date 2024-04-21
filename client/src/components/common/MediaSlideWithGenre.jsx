@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import mediaApi from "../../api/modules/media.api";
-
-import AutoSwiper from "./AutoSwiper";
-import MediaItem from "./MediaItem";
-
+import { useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import { useSelector } from "react-redux";
-import tmdbConfigs from "../../api/configs/tmdb.configs";
 import { toast } from "react-toastify";
+
+import mediaApi from "../../api/modules/media.api";
+import AutoSwiper from "./AutoSwiper";
+import MediaItem from "./MediaItem";
+import tmdbConfigs from "../../api/configs/tmdb.configs";
 
 const MediaSlideWithGenre = ({ mediaType, genreName }) => {
   const [medias, setMedias] = useState([]);

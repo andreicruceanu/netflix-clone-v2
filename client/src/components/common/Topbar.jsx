@@ -1,7 +1,10 @@
 import React, { cloneElement, useEffect, useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
+import { useDispatch, useSelector } from "react-redux";
+import { routesGen } from "../../routes/routes";
+import { useSearchGlobal } from "../context/SearchContext";
+import { themeModes } from "../../configs/theme.configs";
+import { setAuthModalOpen } from "../../redux/features/authModalSlice";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -11,17 +14,12 @@ import {
   Toolbar,
   useScrollTrigger,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { themeModes } from "../../configs/theme.configs";
-import Logo from "./Logo";
+
 import menuConfigs from "../../configs/menu.config";
-import { Link, useLocation } from "react-router-dom";
-import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-import { setThemeMode } from "../../redux/features/themeModeSlice";
 import UserMenu from "./UserMenu";
 import SearchBox from "./SearchBox";
-import { routesGen } from "../../routes/routes";
-import { useSearchGlobal } from "../context/SearchContext";
+import Logo from "./Logo";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const ScrollAppBar = ({ children, window }) => {
   const { themeMode } = useSelector((state) => state.themeMode);
@@ -48,18 +46,12 @@ const ScrollAppBar = ({ children, window }) => {
 
 const Topbar = () => {
   const [showButton, setShowButton] = useState(true);
-  const { themeMode } = useSelector((state) => state.themeMode);
   const { user } = useSelector((state) => state.user);
   const { appState } = useSelector((state) => state.appState);
   const dispatch = useDispatch();
 
   const { querySearch } = useSearchGlobal();
   const location = useLocation();
-  const onSwithTheme = () => {
-    const theme =
-      themeMode === themeModes.dark ? themeModes.light : themeModes.dark;
-    dispatch(setThemeMode(theme));
-  };
 
   const handleHideen = () => {
     setShowButton(false);
@@ -115,10 +107,6 @@ const Topbar = () => {
                   {item.display}
                 </Button>
               ))}
-              <IconButton sx={{ color: "inherit" }} onClick={onSwithTheme}>
-                {themeMode === themeModes.dark && <DarkModeOutlinedIcon />}
-                {themeMode === themeModes.light && <WbSunnyOutlinedIcon />}
-              </IconButton>
             </Box>
             {/* main menu */}
             <Stack

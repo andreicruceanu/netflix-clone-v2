@@ -1,32 +1,20 @@
-import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Card, CardContent, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
-import uiConfigs from "../../configs/ui.configs.js";
-import ButtonCard from "./ButtonCard";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
-//
-import MoreInfoModal from "./InfoModal.jsx";
-import mediaApi from "../../api/modules/media.api";
-import { toast } from "react-toastify";
-import {
-  formatMinuteToReadable,
-  getRandomNumber,
-  getRandomSeasons,
-  getReleaseYear,
-} from "../../utils/function";
 import MaxLineTypography from "./MaxLineTypography";
 import NetflixIconButton from "./NetflixIconButton";
-import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import ChipNetflix from "./ChipNetflix";
 import GenreBreadcrumbs from "./GenreBreadcrumbs";
 import Preferences from "./Preferences.jsx";
 import { usePortal } from "../provider/PortalProvider.jsx";
 import { setOpenModal } from "../../redux/features/infoModal.js";
+import { routesGen } from "../../routes/routes.jsx";
+import { useRandom } from "../../hook/useRandom.jsx";
 
 const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
   const [title, setTitle] = useState("");
@@ -39,10 +27,11 @@ const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
   const setPortal = usePortal();
   const dispatch = useDispatch();
 
+  console.log(media);
   const navigate = useNavigate();
   useEffect(() => {
     setMediaId(media.id);
-    setTitle(media.title || media.name || media.mediaTitle);
+    setTitle(media.title || media.name || media.original_name);
     setGenreId(media.genre_ids);
     setPosterPath(
       tmdbConfigs.posterPath(
@@ -53,6 +42,10 @@ const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
       )
     );
   }, [media, mediaType]);
+
+  const { randomMatch, randomAge, randomDuration } = useRandom(mediaType);
+
+  console.log(mediaId, mediaType);
 
   return (
     <>
@@ -100,24 +93,25 @@ const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
           >
             <MaxLineTypography
               maxLine={2}
-              sx={{ width: "80%", fontWeight: 700 }}
+              sx={{ width: "80%", fontWeight: 700, mb: 0.5 }}
               variant="h6"
             >
-              {media.title}
+              {title}
             </MaxLineTypography>
-            <div style={{ flexGrow: 1 }} />
-            <NetflixIconButton>
-              <VolumeUpIcon />
-            </NetflixIconButton>
           </div>
         </div>
         <CardContent>
           <Stack spacing={1}>
             <Stack direction="row" spacing={1}>
-              <NetflixIconButton sx={{ p: 0 }} onClick={() => navigate(`/`)}>
-                <PlayCircleIcon sx={{ width: 40, height: 40 }} />
+              <NetflixIconButton
+                sx={{ p: 0 }}
+                onClick={() =>
+                  navigate(routesGen.mediaDetail(mediaType, mediaId))
+                }
+              >
+                <PlayCircleIcon sx={{ width: 50, height: 50 }} />
               </NetflixIconButton>
-              <NetflixIconButton>
+              <NetflixIconButton sx={{ p: 0 }}>
                 <ButtonFavorite mediaType={mediaType} media={media} />
               </NetflixIconButton>
               <Preferences mediaType={mediaType} mediaId={media.id} />
@@ -128,17 +122,17 @@ const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
                 <ExpandMoreIcon />
               </NetflixIconButton>
             </Stack>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography
-                variant="subtitle1"
-                sx={{ color: "success.main" }}
-              >{`${getRandomNumber(50, 100)}% Match`}</Typography>
-              <ChipNetflix label={`${getRandomNumber(9, 17)}+`} />
-              <Typography variant="subtitle2">
-                {mediaType === tmdbConfigs.mediaType.movie
-                  ? `${formatMinuteToReadable(getRandomNumber(90, 160))}`
-                  : getRandomSeasons(6)}
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{ mt: "12px !important" }}
+            >
+              <Typography variant="subtitle1" sx={{ color: "success.main" }}>
+                {randomMatch}
               </Typography>
+              <ChipNetflix label={randomAge} />
+              <Typography variant="subtitle2">{randomDuration}</Typography>
             </Stack>
             <GenreBreadcrumbs
               genres={

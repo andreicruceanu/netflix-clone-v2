@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Box } from "@mui/system";
+import { setUser } from "../../redux/features/userSlice";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ListItemButton,
   ListItemIcon,
@@ -7,12 +10,10 @@ import {
   Menu,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+
 import menuConfigs from "../../configs/menu.config";
-import { Link, useNavigate } from "react-router-dom";
-import { setUser } from "../../redux/features/userSlice";
 import avatarDefault from "../../assets/images/default-blue.png";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const UserMenu = () => {
   const { user } = useSelector((state) => state.user);

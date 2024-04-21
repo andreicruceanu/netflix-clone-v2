@@ -14,6 +14,7 @@ const genresName = {
   actionTv: "Action & Adventure",
   kids: "Kids",
   horror: "Horror",
+  adventure: "Adventure",
 };
 const time = {
   day: "day",

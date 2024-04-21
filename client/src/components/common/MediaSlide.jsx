@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import mediaApi from "../../api/modules/media.api";
+import { useEffect, useState } from "react";
+import { SwiperSlide } from "swiper/react";
 
+import mediaApi from "../../api/modules/media.api";
 import AutoSwiper from "./AutoSwiper";
 import MediaItem from "./MediaItem";
-
-import { SwiperSlide } from "swiper/react";
 
 const MediaSlide = ({ mediaType, mediaCategory }) => {
   const [medias, setMedias] = useState([]);

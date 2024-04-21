@@ -7,6 +7,7 @@ import Account from "../pages/Account";
 import MediaDetail from "../pages/details/MediaDetail";
 import ActorDetail from "../pages/actorDetail/ActorDetail";
 import TVShows from "../pages/TV Shows/TVShows";
+import Movies from "../pages/Movies/Movies";
 
 export const routesGen = {
   home: "/browse",
@@ -60,8 +61,14 @@ const routes = [
     element: <MediaDetail />,
   },
   {
-    path: "/browse/genre/:id",
+    path: "/browse/tv",
     element: <TVShows />,
+    state: "tv",
+  },
+  {
+    path: "/browse/movies",
+    element: <Movies />,
+    state: "movies",
   },
 ];
 

@@ -1,11 +1,12 @@
+import { routesGen } from "../../routes/routes";
+import { InputBase, useMediaQuery } from "@mui/material";
+import { useSearchGlobal } from "../context/SearchContext";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
-import { InputBase, useMediaQuery } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useSearchGlobal } from "../context/SearchContext";
 import CloseIcon from "@mui/icons-material/Close";
-import { routesGen } from "../../routes/routes";
 
 let timer;
 const timeout = 1000;
@@ -88,7 +89,7 @@ const SearchBox = ({ handleHideen }) => {
   };
 
   const handleClose = (e) => {
-    e.stopPropagation(); // Oprește propagarea evenimentului către părinți
+    e.stopPropagation();
     console.log("text");
   };
 

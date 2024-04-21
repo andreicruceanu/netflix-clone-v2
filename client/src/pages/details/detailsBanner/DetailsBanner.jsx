@@ -156,7 +156,7 @@ const DetailsBanner = ({ media, mediaType, officialVideo }) => {
                       display: { xs: "none", md: "flex" },
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "20px",
+                      gap: "0px",
                       cursor: "pointer",
                     }}
                     className="playbtn"

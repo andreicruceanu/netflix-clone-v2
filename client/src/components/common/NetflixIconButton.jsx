@@ -9,6 +9,8 @@ const NetflixIconButton = ({ children, sx, ...others }) => {
         borderStyle: "solid",
         borderColor: "grey.700",
         padding: 0,
+        width: "50px",
+        height: "50px",
         "&:hover, &:focus": {
           borderColor: "grey.200",
         },

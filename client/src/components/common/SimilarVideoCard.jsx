@@ -1,18 +1,18 @@
 import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { getReleaseYear } from "../../utils/function";
+import { Link } from "react-router-dom";
+import { routesGen } from "../../routes/routes";
+import { useRandom } from "../../hook/useRandom";
+
 import tmdbConfigs from "../../api/configs/tmdb.configs";
-import {
-  formatMinuteToReadable,
-  getRandomNumber,
-  getReleaseYear,
-} from "../../utils/function";
 import MaxLineTypography from "./MaxLineTypography";
 import ChipNetflix from "./ChipNetflix";
 import NetflixIconButton from "./NetflixIconButton";
 import ButtonFavorite from "./ButtonFavorite";
-import { Link } from "react-router-dom";
-import { routesGen } from "../../routes/routes";
 
 const SimilarVideoCard = ({ movie, mediaType }) => {
+  const { randomMatch, randomAge, randomDuration } = useRandom(mediaType);
+
   return (
     <Card>
       <Link to={routesGen.mediaDetail(mediaType, movie.id)}>
@@ -45,9 +45,7 @@ const SimilarVideoCard = ({ movie, mediaType }) => {
               position: "absolute",
             }}
           >
-            <Typography variant="subtitle2">{`${formatMinuteToReadable(
-              getRandomNumber(80, 150)
-            )}`}</Typography>
+            <Typography variant="subtitle2">{randomDuration}</Typography>
           </div>
           <div
             style={{
@@ -74,12 +72,11 @@ const SimilarVideoCard = ({ movie, mediaType }) => {
         <Stack spacing={1}>
           <Stack direction="row" alignItems="center">
             <div>
-              <Typography
-                variant="subtitle2"
-                sx={{ color: "success.main" }}
-              >{`${getRandomNumber(50, 100)}% Match`}</Typography>
+              <Typography variant="subtitle2" sx={{ color: "success.main" }}>
+                {randomMatch}
+              </Typography>
               <Stack direction="row" spacing={1} alignItems="center">
-                <ChipNetflix label={`${getRandomNumber(9, 17)}+`} />
+                <ChipNetflix label={randomAge} />
                 <Typography variant="body2">
                   {getReleaseYear(
                     mediaType,

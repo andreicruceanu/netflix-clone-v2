@@ -1,8 +1,10 @@
-import { Box } from "@mui/material";
 import { Swiper } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import { Box } from "@mui/material";
+
 import "swiper/css/navigation";
 import "swiper/css";
-import { Navigation } from "swiper/modules";
+
 const SwiperDetailMedia = ({ children }) => {
   return (
     <Box

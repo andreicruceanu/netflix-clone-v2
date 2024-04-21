@@ -1,6 +1,5 @@
-import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
-import React from "react";
+import { useTheme } from "@emotion/react";
 import uiConfigs from "../../configs/ui.configs";
 
 const ImageHeader = ({ imgPath }) => {
