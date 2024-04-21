@@ -153,7 +153,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
               minWidth: "100%",
               borderRadius: "50%",
               color: "white",
-              padding: 2,
+              padding: 1,
               span: {
                 marginRight: "0px",
                 marginLeft: "0px",
@@ -164,7 +164,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
                 background: "none",
               },
             }}
-            size="large"
+            size="small"
             loading={onRequestLike}
             startIcon={isLiked ? <ThumbUpAltIcon /> : <ThumbUpOffAltIcon />}
             onClick={handleLiked}
@@ -181,7 +181,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
               minWidth: "100%",
               borderRadius: "50%",
               color: "white",
-              padding: 2,
+              padding: 1,
               span: {
                 marginRight: "0px",
                 marginLeft: "0px",
@@ -191,7 +191,7 @@ const Preferences = ({ mediaType, mediaId, sx }) => {
                 background: "none",
               },
             }}
-            size="large"
+            size="small"
             startIcon={
               isDisliked ? <ThumbDownAltIcon /> : <ThumbDownOffAltIcon />
             }

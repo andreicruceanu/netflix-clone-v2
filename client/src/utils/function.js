@@ -1,5 +1,6 @@
 import tmdbConfigs from "../api/configs/tmdb.configs";
 import dayjs from "dayjs";
+import { configsApp } from "../configs/configsApp";
 
 export const getRandomNumber = (minNumber, maxNumber) =>
   Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
@@ -57,4 +58,7 @@ export const formatReleaseDate = (mediaType, date) => {
   } else {
     return dayjs(date).format("MMM D, YYYY");
   }
+};
+export const trailerPath = (key = "L3oOldViIgY") => {
+  return `${configsApp.trailerPath}${key}`;
 };

@@ -55,11 +55,6 @@ const Topbar = () => {
 
   const { querySearch } = useSearchGlobal();
   const location = useLocation();
-  const onSwithTheme = () => {
-    const theme =
-      themeMode === themeModes.dark ? themeModes.light : themeModes.dark;
-    dispatch(setThemeMode(theme));
-  };
 
   const handleHideen = () => {
     setShowButton(false);
@@ -115,10 +110,6 @@ const Topbar = () => {
                   {item.display}
                 </Button>
               ))}
-              <IconButton sx={{ color: "inherit" }} onClick={onSwithTheme}>
-                {themeMode === themeModes.dark && <DarkModeOutlinedIcon />}
-                {themeMode === themeModes.light && <WbSunnyOutlinedIcon />}
-              </IconButton>
             </Box>
             {/* main menu */}
             <Stack
