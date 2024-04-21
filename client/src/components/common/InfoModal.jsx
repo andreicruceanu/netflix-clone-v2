@@ -1,4 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCloseModal } from "../../redux/features/infoModal";
+import { useRandom } from "../../hook/useRandom";
+import { configsApp } from "../../configs/configsApp";
+import { toast } from "react-toastify";
+import {
+  getFormatTime,
+  getReleaseYear,
+  trailerPath,
+} from "../../utils/function";
 import {
   Box,
   CircularProgress,
@@ -9,12 +19,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { toast } from "react-toastify";
-import {
-  getFormatTime,
-  getReleaseYear,
-  trailerPath,
-} from "../../utils/function";
+
 import mediaApi from "../../api/modules/media.api";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
@@ -30,10 +35,6 @@ import SimilarVideoCard from "./SimilarVideoCard";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-import { useDispatch, useSelector } from "react-redux";
-import { setCloseModal } from "../../redux/features/infoModal";
-import { useRandom } from "../../hook/useRandom";
-import { configsApp } from "../../configs/configsApp";
 
 const LoadingModal = () => {
   return (

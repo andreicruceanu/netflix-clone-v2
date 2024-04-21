@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { setAuthModalOpen } from "../../redux/features/authModalSlice";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Grid,
@@ -6,14 +9,13 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import SigninForm from "./SigninForm";
 import SignupForm from "./SignupForm";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import Logo from "./Logo";
 import CloseIcon from "@mui/icons-material/Close";
+
 const actionState = {
   signin: "signin",
   signup: "signup",

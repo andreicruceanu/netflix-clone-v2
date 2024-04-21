@@ -1,8 +1,8 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Link } from "react-router-dom";
 import { routesGen } from "../../routes/routes";
+
+import Button from "@mui/material/Button";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const PlayButton = ({ mediaId, mediaType, sx, ...others }) => {
   return (

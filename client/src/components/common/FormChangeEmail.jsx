@@ -1,11 +1,12 @@
-import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Stack, TextField } from "@mui/material";
-import { useFormik } from "formik";
 import { useState } from "react";
+import { Alert, Box, Stack, TextField } from "@mui/material";
 import { inputStyledBlack } from "../../utils/InputStyle";
-import { validationForm } from "../../utils/ValidationForm";
-import userApi from "../../api/modules/user.api";
 import { toast } from "react-toastify";
+import { LoadingButton } from "@mui/lab";
+import { useFormik } from "formik";
+import { validationForm } from "../../utils/ValidationForm";
+
+import userApi from "../../api/modules/user.api";
 
 const FormChangeEmail = ({ email }) => {
   const [isLoginRequest, setIsLoginRequest] = useState(false);

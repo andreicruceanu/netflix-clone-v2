@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useFormik } from "formik";
 import {
   Alert,
   Box,
@@ -13,14 +15,13 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import React, { useState } from "react";
-import { useFormik } from "formik";
 import { validationForm } from "../../utils/ValidationForm";
-import userApi from "../../api/modules/user.api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/userSlice";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { inputStyledBlack } from "../../utils/InputStyle";
+
+import userApi from "../../api/modules/user.api";
 
 const SigninForm = ({ switchAuthState }) => {
   const theme = useTheme();

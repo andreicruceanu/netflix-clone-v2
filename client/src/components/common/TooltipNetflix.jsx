@@ -1,8 +1,7 @@
 import { styled } from "@mui/material/styles";
-import React from "react";
-import { useSelector } from "react-redux";
-import Fade from "@mui/material/Fade";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+
+import Fade from "@mui/material/Fade";
 
 const CustomTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />

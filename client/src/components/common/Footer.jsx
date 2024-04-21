@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import {
   Box,
   Container,
@@ -8,8 +8,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
 import menuConfigs from "../../configs/menu.config";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (

@@ -1,5 +1,4 @@
 import { Chip } from "@mui/material";
-import React from "react";
 
 const Genres = ({ data }) => {
   return [...data].map((genre, index) => (

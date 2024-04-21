@@ -1,20 +1,22 @@
-import { LoadingButton } from "@mui/lab";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
-import preferencesApi from "../../api/modules/preferences.api";
+import { LoadingButton } from "@mui/lab";
+import { PREFERENCES } from "../../utils/constants";
 import { toast } from "react-toastify";
 import {
   addPreference,
   removePreference,
 } from "../../redux/features/userSlice";
+
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import ThumbDownOffAltIcon from "@mui/icons-material/ThumbDownOffAlt";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import preferencesApi from "../../api/modules/preferences.api";
+
 import NetflixIconButton from "./NetflixIconButton";
 import TooltipNetflix from "./TooltipNetflix";
-import { PREFERENCES } from "../../utils/constants";
 
 const typePreferences = {
   like: "like",

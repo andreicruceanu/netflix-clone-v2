@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { useTheme } from "@emotion/react";
+import { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import {
   Alert,
   Box,
   Button,
-  IconButton,
   InputAdornment,
   Stack,
   TextField,
@@ -13,15 +11,13 @@ import {
 import { useFormik } from "formik";
 import { validationForm } from "../../utils/ValidationForm";
 import { inputStyledBlack } from "../../utils/InputStyle";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import userApi from "../../api/modules/user.api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/userSlice";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 
+import userApi from "../../api/modules/user.api";
+
 const SignupForm = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(true);
   const [isLoginRequest, setIsLoginRequest] = useState(false);

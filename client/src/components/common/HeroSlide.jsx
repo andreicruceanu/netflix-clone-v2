@@ -1,9 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Box, Stack } from "@mui/material";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { configsApp } from "../../configs/configsApp";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { getRandomNumber, trailerPath } from "../../utils/function";
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
+import { setOpenModal } from "../../redux/features/infoModal";
+import { getRandomNumber, trailerPath } from "../../utils/function";
+import { Box, Stack } from "@mui/material";
+import { toast } from "react-toastify";
+
 import mediaApi from "../../api/modules/media.api";
 import NetflixIconButton from "./NetflixIconButton";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
@@ -13,8 +16,6 @@ import VideoJSPlayer from "./watch/VideoJSPlayer";
 import MaturityRate from "./MaturityRate";
 import PlayButton from "./PlayButton";
 import MoreInfoButton from "./MoreInfoButton";
-import { setOpenModal } from "../../redux/features/infoModal";
-import { configsApp } from "../../configs/configsApp";
 
 const HeroSlide = ({ mediaType, mediaCategory }) => {
   const dispatch = useDispatch();

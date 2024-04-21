@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+import { routesGen } from "../../routes/routes.jsx";
+import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
+
 import RankSvg from "./RankSvg";
 import tmdbConfig from "../../api/configs/tmdb.configs.js";
-import { Link } from "react-router-dom";
-import { routesGen } from "../../routes/routes.jsx";
 
 const MediaItemTop = ({ index, media }) => {
   const [posterPath, setPosterPath] = useState("");

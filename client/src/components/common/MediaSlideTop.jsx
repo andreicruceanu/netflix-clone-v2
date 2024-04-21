@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
+import { useDispatch } from "react-redux";
 import { SwiperSlide } from "swiper/react";
+import { useMediaQuery } from "@mui/material";
+import { toast } from "react-toastify";
+
 import AutoSwiper from "./AutoSwiper";
 import mediaApi from "../../api/modules/media.api";
-import { toast } from "react-toastify";
 import MediaItemTop from "./MediaItemTop";
-import { useDispatch } from "react-redux";
-import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
-import { useMediaQuery } from "@mui/material";
 
 const MediaSlideTop = ({ mediaType, time }) => {
   const [medias, setMedias] = useState([]);

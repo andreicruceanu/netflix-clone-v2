@@ -1,5 +1,5 @@
 import { Stack, Toolbar } from "@mui/material";
-import React from "react";
+
 import Logo from "./Logo";
 
 const Sidebar = () => {

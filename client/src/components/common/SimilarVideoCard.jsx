@@ -1,13 +1,14 @@
 import { Card, CardContent, Stack, Typography } from "@mui/material";
-import tmdbConfigs from "../../api/configs/tmdb.configs";
 import { getReleaseYear } from "../../utils/function";
+import { Link } from "react-router-dom";
+import { routesGen } from "../../routes/routes";
+import { useRandom } from "../../hook/useRandom";
+
+import tmdbConfigs from "../../api/configs/tmdb.configs";
 import MaxLineTypography from "./MaxLineTypography";
 import ChipNetflix from "./ChipNetflix";
 import NetflixIconButton from "./NetflixIconButton";
 import ButtonFavorite from "./ButtonFavorite";
-import { Link } from "react-router-dom";
-import { routesGen } from "../../routes/routes";
-import { useRandom } from "../../hook/useRandom";
 
 const SimilarVideoCard = ({ movie, mediaType }) => {
   const { randomMatch, randomAge, randomDuration } = useRandom(mediaType);

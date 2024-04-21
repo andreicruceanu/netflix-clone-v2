@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -16,7 +15,6 @@ const Separator = (
 );
 
 const GenreBreadcrumbs = ({ genres, ...others }) => {
-  console.log(genres);
   return (
     <Breadcrumbs separator={Separator} {...others}>
       {genres.map((genre, idx) => (
