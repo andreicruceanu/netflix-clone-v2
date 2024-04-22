@@ -22,17 +22,21 @@
 
 ![Fullstack Responsive Movie App 2024](https://github.com/andreicruceanu/netflix-clone-v2/blob/d38f53d0bb313d2fb3a2dca2b3943a047d5dc1e5/client/src/assets/preview/HomePage.png)
 
-!["Fullstack Responsive Movie Website 2022"]((https://github.com/andreicruceanu/netflix-clone-v2/blob/main/assets/82814224/117e7f6e-3649-4ba6-aa98-1a91c17d847b.png "Fullstack Responsive Movie Website 2022")
 
 
-!["Fullstack Responsive Movie App 2024"][React-App1](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/8709d1f7-1d6f-4199-bb05-434bdb3169c2)
-
-!["Fullstack Responsive Movie App 2024"][React-App3](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/b34b6795-785c-4ca9-85ce-52e92fc2b582)
+!["Fullstack Responsive Movie Website 2022"](https://github.com/andreicruceanu/netflix-clone-v2/blob/7b6c88a11c37be521a58027e2fa9dafd49ba5a14/client/src/assets/preview/Modal.png)
 
 
-!["Fullstack Responsive Movie App 2024"][React-App 4](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/945286d8-0cb1-4fd4-97b4-5cb620fec4ae)
+!["Fullstack Responsive Movie App 2024"](https://github.com/andreicruceanu/netflix-clone-v2/blob/7b6c88a11c37be521a58027e2fa9dafd49ba5a14/client/src/assets/preview/MoviePage.png)
 
-!["Fullstack Responsive Movie App 2024"][Captură de ecran 2024-04-22 140436](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/a5afa454-027b-45e2-adee-50998140fe9a)
+
+
+!["Fullstack Responsive Movie App 2024"](https://github.com/andreicruceanu/netflix-clone-v2/blob/7b6c88a11c37be521a58027e2fa9dafd49ba5a14/client/src/assets/preview/ActorDetails.png)
+
+
+!["Fullstack Responsive Movie App 2024"](https://github.com/andreicruceanu/netflix-clone-v2/blob/7b6c88a11c37be521a58027e2fa9dafd49ba5a14/client/src/assets/preview/FirstPage.png)
+
+
 
 
 
