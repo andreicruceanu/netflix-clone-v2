@@ -1,19 +1,20 @@
+import { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { PlayIcon } from "../Playbtn";
+import {
+  formatReleaseDate,
+  getFormatTime,
+  getReleaseYear,
+} from "../../../utils/function";
+
 import Img from "../../../components/common/Img";
 import ImageHeader from "../../../components/common/ImageHeader";
 import tmdbConfigs from "../../../api/configs/tmdb.configs";
 import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import PosterFallback from "../../../assets/images/no-poster.png";
 import MaxLineTypography from "../../../components/common/MaxLineTypography";
-import {
-  formatReleaseDate,
-  getFormatTime,
-  getReleaseYear,
-} from "../../../utils/function";
 import Genres from "../../../components/common/Genres";
 import CircularRate from "../../../components/common/CircularRate";
-import { PlayIcon } from "../Playbtn";
 import ButtonFavorite from "../../../components/common/ButtonFavorite";
 import NetflixIconButton from "../../../components/common/NetflixIconButton";
 import Preferences from "../../../components/common/Preferences";

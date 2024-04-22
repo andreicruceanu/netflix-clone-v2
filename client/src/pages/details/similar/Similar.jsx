@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import { Box, Typography } from "@mui/material";
 import { SwiperSlide } from "swiper/react";
+
+import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import MediaItem from "../../../components/common/MediaItem";
 import SwiperDetailMedia from "../../../components/common/SwiperDetailMedia";
 import mediaApi from "../../../api/modules/media.api";

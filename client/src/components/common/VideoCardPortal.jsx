@@ -1,9 +1,14 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { usePortal } from "../provider/PortalProvider.jsx";
+import { useRandom } from "../../hook/useRandom.jsx";
+import { routesGen } from "../../routes/routes.jsx";
+import { setOpenModal } from "../../redux/features/infoModal.js";
+
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useDispatch, useSelector } from "react-redux";
 import ButtonFavorite from "./ButtonFavorite";
 import MaxLineTypography from "./MaxLineTypography";
 import NetflixIconButton from "./NetflixIconButton";
@@ -11,10 +16,6 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import ChipNetflix from "./ChipNetflix";
 import GenreBreadcrumbs from "./GenreBreadcrumbs";
 import Preferences from "./Preferences.jsx";
-import { usePortal } from "../provider/PortalProvider.jsx";
-import { setOpenModal } from "../../redux/features/infoModal.js";
-import { routesGen } from "../../routes/routes.jsx";
-import { useRandom } from "../../hook/useRandom.jsx";
 
 const VideoCardPortal = ({ media, mediaType, anchorElement }) => {
   const [title, setTitle] = useState("");

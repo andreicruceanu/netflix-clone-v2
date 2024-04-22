@@ -1,8 +1,7 @@
 import { Avatar, Box, Rating, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import ImgAvatar from "../../../assets/images/default-blue.png";
 import { formatDate, formatFullName } from "../../../utils/function";
+
+import ImgAvatar from "../../../assets/images/default-blue.png";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);

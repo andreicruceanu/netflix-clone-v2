@@ -1,6 +1,7 @@
+import { configsApp } from "../configs/configsApp";
+
 import tmdbConfigs from "../api/configs/tmdb.configs";
 import dayjs from "dayjs";
-import { configsApp } from "../configs/configsApp";
 
 export const getRandomNumber = (minNumber, maxNumber) =>
   Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;

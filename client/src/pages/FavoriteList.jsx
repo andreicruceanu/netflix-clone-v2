@@ -1,11 +1,12 @@
 import { Box, Button, Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import uiConfigs from "../configs/ui.configs";
-import Container from "../components/common/Container";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
-import favoriteApi from "../api/modules/favorite.api";
 import { toast } from "react-toastify";
+
+import uiConfigs from "../configs/ui.configs";
+import Container from "../components/common/Container";
+import favoriteApi from "../api/modules/favorite.api";
 import MediaItem from "../components/common/MediaItem";
 
 const FavoriteList = () => {

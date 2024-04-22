@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import actorApi from "../../api/modules/actor.api";
-import { toast } from "react-toastify";
 import { Box, Stack, Toolbar, Typography } from "@mui/material";
+import { setCloseModal } from "../../redux/features/infoModal";
+import { toast } from "react-toastify";
+
+import actorApi from "../../api/modules/actor.api";
 import uiConfigs from "../../configs/ui.configs";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
-import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import ActorMediaGrid from "./ActorMediaGrid";
 import Container from "../../components/common/Container";
-import { setCloseModal } from "../../redux/features/infoModal";
 
 const ActorDetail = () => {
   const { actorId } = useParams();

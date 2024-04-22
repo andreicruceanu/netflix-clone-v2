@@ -1,5 +1,7 @@
-import React from "react";
-import AppBar from "@mui/material/AppBar";
+import { setAuthModalOpen } from "../../redux/features/authModalSlice";
+import { useDispatch } from "react-redux";
+import { ReactComponent as Logo } from "../../assets/images/netflix.svg";
+import { Link } from "react-router-dom";
 import {
   Box,
   Button,
@@ -11,14 +13,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+
 import AuthModal from "../../components/common/AuthModal";
-import { useDispatch } from "react-redux";
-import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import ImgBackdrop from "../../assets/images/backdrop.jpg";
 import BorderedBottomBox from "./BorderedBottomBox";
-import { Link } from "react-router-dom";
-import { ReactComponent as Logo } from "../../assets/images/netflix.svg";
-import Footer from "../../components/common/Footer";
+import AppBar from "@mui/material/AppBar";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -1,12 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { routesGen } from "../../../routes/routes";
 
+import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import Img from "../../../components/common/Img";
 import Avatar from "../../../assets/images/avatar.png";
 import tmdbConfigs from "../../../api/configs/tmdb.configs";
+
 const Cast = ({ casts }) => {
   return (
     <Box sx={{ marginTop: "50px" }}>
