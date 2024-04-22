@@ -22,7 +22,7 @@
 
 ![Fullstack Responsive Movie App 2024](https://github.com/andreicruceanu/netflix-clone-v2/blob/main/assets/82814224/117e7f6e-3649-4ba6-aa98-1a91c17d847b.png)
 
-!["Fullstack Responsive Movie Website 2022"](https://user-images.githubusercontent.com/67447840/207323021-0b5657d2-8913-4b81-8c1b-d4ceef065ee6.png "Fullstack Responsive Movie Website 2022")
+!["Fullstack Responsive Movie Website 2022"]((https://github.com/andreicruceanu/netflix-clone-v2/blob/main/assets/82814224/117e7f6e-3649-4ba6-aa98-1a91c17d847b.png "Fullstack Responsive Movie Website 2022")
 
 
 !["Fullstack Responsive Movie App 2024"][React-App1](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/8709d1f7-1d6f-4199-bb05-434bdb3169c2)
