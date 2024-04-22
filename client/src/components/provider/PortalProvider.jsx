@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import createSafeContext from "../../lib/createSafeContext";
 
 export const [usePortal, Provider] = createSafeContext();

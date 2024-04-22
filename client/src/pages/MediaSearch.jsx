@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Box, Stack, Typography } from "@mui/material";
+import { useSearchGlobal } from "../components/context/SearchContext";
+
 import Container from "../components/common/Container";
-import mediaApi from "../api/modules/media.api";
-import {
-  useSearch,
-  useSearchGlobal,
-} from "../components/context/SearchContext";
-import MediaItem from "../components/common/MediaItem";
-import AutoSwiper from "../components/common/AutoSwiper";
-import { SwiperSlide } from "swiper/react";
 import tmdbConfigs from "../api/configs/tmdb.configs";
 import Loading from "../components/common/Loading";
-import { Box, Stack, Typography } from "@mui/material";
 import uiConfigs from "../configs/ui.configs";
 import MediaGrid from "../components/common/MediaGrid";
 

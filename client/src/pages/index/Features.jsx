@@ -1,5 +1,6 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import React from "react";
+import { blue, grey } from "@mui/material/colors";
+
 import BorderedBottomBox from "./BorderedBottomBox";
 import ImgTv from "../../assets/images/tv.png";
 import VideoTv from "../../assets/videos/tv.m4v";
@@ -9,7 +10,6 @@ import Imgkid from "../../assets/images/kids.png";
 import ImgBoxshot from "../../assets/images/boxshot.png";
 import ImgDownload from "../../assets/images/download.gif";
 import ImgDivices from "../../assets/images/devices.png";
-import { blue, grey } from "@mui/material/colors";
 
 const Title = ({ text }) => (
   <Typography

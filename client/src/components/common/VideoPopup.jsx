@@ -1,7 +1,8 @@
-import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import ReactPlayer from "react-player/youtube";
+import { Typography } from "@mui/material";
 import { trailerPath } from "../../utils/function";
+
+import ReactPlayer from "react-player/youtube";
 
 const VideoPopup = ({ show, setShow, videoId, setVideoId }) => {
   const hidePopup = () => {

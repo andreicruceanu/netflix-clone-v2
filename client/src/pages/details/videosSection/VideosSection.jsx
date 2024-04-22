@@ -1,17 +1,16 @@
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Box, Typography } from "@mui/material";
+import { PlayIcon } from "../Playbtn";
+
 import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
 import Img from "../../../components/common/Img";
-import { PlayIcon } from "../Playbtn";
 import tmdbConfigs from "../../../api/configs/tmdb.configs";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useState } from "react";
 import VideoPopup from "../../../components/common/VideoPopup";
 
 const VideosSection = ({ videos }) => {
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);
-
-  console.log(videos.results);
 
   return (
     videos.results.length > 0 && (

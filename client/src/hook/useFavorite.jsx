@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { setAuthModalOpen } from "../redux/features/authModalSlice";
-import favoriteApi from "../api/modules/favorite.api";
 import { addFavorite, removeFavorite } from "../redux/features/userSlice";
 import { toast } from "react-toastify";
+
+import favoriteApi from "../api/modules/favorite.api";
 
 export const useFavorites = () => {
   const dispatch = useDispatch();

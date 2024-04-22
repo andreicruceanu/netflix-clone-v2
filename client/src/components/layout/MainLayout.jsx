@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GlobalLoading from "../common/GlobalLoading";
+import { SearchProvider } from "../context/SearchContext";
 import { Box } from "@mui/material";
-import Topbar from "../common/Topbar";
 import { Outlet } from "react-router-dom";
-import AuthModal from "../common/AuthModal";
-import userApi from "../../api/modules/user.api";
+import { toast } from "react-toastify";
 import {
   setListFavorite,
   setListPreferences,
   setUser,
 } from "../../redux/features/userSlice";
+
+import GlobalLoading from "../common/GlobalLoading";
+import Topbar from "../common/Topbar";
+import AuthModal from "../common/AuthModal";
+import userApi from "../../api/modules/user.api";
 import preferencesApi from "../../api/modules/preferences.api";
-import { toast } from "react-toastify";
 import favoriteApi from "../../api/modules/favorite.api";
 import Footer from "../common/Footer";
-import { SearchProvider } from "../context/SearchContext";
 import PortalProvider from "../provider/PortalProvider";
 import VideoPortalContainer from "../common/VideoPortalContainer";
 import InfoModal from "../common/InfoModal";

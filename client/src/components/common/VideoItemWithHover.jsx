@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { usePortal } from "../provider/PortalProvider";
-import VideoItemWithHoverPure from "./VideoItemWithHoverPure";
-import tmdbConfigs from "../../api/configs/tmdb.configs";
 import { Link } from "react-router-dom";
 import { routesGen } from "../../routes/routes";
+
+import VideoItemWithHoverPure from "./VideoItemWithHoverPure";
+import tmdbConfigs from "../../api/configs/tmdb.configs";
 
 export default function VideoItemWithHover({ media, mediaType }) {
   const setPortal = usePortal();

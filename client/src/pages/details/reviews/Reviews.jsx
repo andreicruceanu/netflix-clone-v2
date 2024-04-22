@@ -1,17 +1,18 @@
-import { Box, Button, Divider, Rating, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Box, Button, Divider, Rating, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthModalOpen } from "../../../redux/features/authModalSlice";
 import { styled } from "@mui/material/styles";
+import { calculateProgress, totalReview } from "../../../utils/function";
+import { starItem } from "../../../utils/constants";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+
 import ContainerMediaDetails from "../ContentWrapper/ContainerMediaDetails";
-import { starItem } from "../../../utils/constants";
-import { calculateProgress, totalReview } from "../../../utils/function";
 import tmdbConfigs from "../../../api/configs/tmdb.configs";
 import ReviewItem from "./ReviewItem";
 import CreateReview from "./CreateReview";
-import { useDispatch, useSelector } from "react-redux";
-import { setAuthModalOpen } from "../../../redux/features/authModalSlice";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,

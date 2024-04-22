@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
-import mediaApi from "../../api/modules/media.api";
 import { useParams } from "react-router-dom";
+import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
+import { useCloseInfoModal } from "../../hook/useCloseInfoModal";
 import { toast } from "react-toastify";
+
+import mediaApi from "../../api/modules/media.api";
 import DetailsBanner from "./detailsBanner/DetailsBanner";
 import Cast from "./cast/Cast";
 import VideosSection from "./videosSection/VideosSection";
 import Reviews from "./reviews/Reviews";
 import Recommendation from "./recommendation/Recommendation";
 import Similar from "./similar/Similar";
-import { useCloseInfoModal } from "../../hook/useCloseInfoModal";
 
 const MediaDetail = () => {
   const [media, setMedia] = useState();

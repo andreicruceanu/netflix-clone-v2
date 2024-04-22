@@ -1,14 +1,15 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import Portal from "@mui/material/Portal";
-import VideoCardPortal from "./VideoCardPortal";
-import MotionContainer from "../animate/MotionContainer";
+import { usePortalData } from "../provider/PortalProvider";
 import {
   varZoomIn,
   varZoomInLeft,
   varZoomInRight,
 } from "../animate/variants/zoom/ZoomIn";
-import { usePortalData } from "../provider/PortalProvider";
+
+import VideoCardPortal from "./VideoCardPortal";
+import MotionContainer from "../animate/MotionContainer";
+import Portal from "@mui/material/Portal";
 
 export default function VideoPortalContainer() {
   const { miniModalMediaData, anchorElement, mediaTypeData } = usePortalData();

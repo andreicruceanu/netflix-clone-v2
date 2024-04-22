@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import actorApi from "../../api/modules/actor.api";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { Button, Grid } from "@mui/material";
+import { toast } from "react-toastify";
+
+import actorApi from "../../api/modules/actor.api";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
 import MediaItem from "../../components/common/MediaItem";
+
 const ActorMediaGrid = ({ actorId }) => {
   const [medias, setMedias] = useState([]);
   const [filteredMedias, setFilteredMedias] = useState([]);

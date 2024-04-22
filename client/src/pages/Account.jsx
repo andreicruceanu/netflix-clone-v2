@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import uiConfigs from "../configs/ui.configs";
-import { Box, Stack } from "@mui/system";
-import Container from "../components/common/Container";
-import { useDispatch, useSelector } from "react-redux";
-import userApi from "../api/modules/user.api";
+import { useEffect, useRef, useState } from "react";
 import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
+import { useDispatch } from "react-redux";
+import { Box, Stack } from "@mui/system";
 import { Alert, TextField, Typography } from "@mui/material";
-import DefaultAvatar from "../assets/images/default-blue.png";
+import { inputStyledBlack } from "../utils/InputStyle";
+import { useFormik } from "formik";
+import { LoadingButton } from "@mui/lab";
+import { validationForm } from "../utils/ValidationForm";
+import { setUser } from "../redux/features/userSlice";
+import { app } from "../firebase";
+import { toast } from "react-toastify";
 import { styled } from "@mui/material/styles";
 import {
   getStorage,
@@ -14,17 +17,16 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { app } from "../firebase";
-import { inputStyledBlack } from "../utils/InputStyle";
-import { useFormik } from "formik";
-import { LoadingButton } from "@mui/lab";
-import { validationForm } from "../utils/ValidationForm";
-import { toast } from "react-toastify";
-import { setUser } from "../redux/features/userSlice";
+
+import uiConfigs from "../configs/ui.configs";
+import Container from "../components/common/Container";
+import userApi from "../api/modules/user.api";
+import DefaultAvatar from "../assets/images/default-blue.png";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalDefault from "../components/common/ModalDefaut";
 import FormChangePassword from "../components/common/FormChangePassword";
 import FormChangeEmail from "../components/common/FormChangeEmail";
+
 const actionModal = {
   changePassword: "password",
   changeEmail: "email",

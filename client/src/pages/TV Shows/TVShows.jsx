@@ -1,7 +1,7 @@
-import React from "react";
+import { Box, useMediaQuery } from "@mui/material";
+
 import HeroSlide from "../../components/common/HeroSlide";
 import tmdbConfigs from "../../api/configs/tmdb.configs";
-import { Box, useMediaQuery } from "@mui/material";
 import Container from "../../components/common/Container";
 import uiConfigs from "../../configs/ui.configs";
 import MediaSlide from "../../components/common/MediaSlide";

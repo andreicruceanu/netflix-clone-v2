@@ -1,12 +1,13 @@
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
-import mediaApi from "../../api/modules/media.api";
 import { toast } from "react-toastify";
+
+import mediaApi from "../../api/modules/media.api";
 
 const SearchContext = createContext();
 
