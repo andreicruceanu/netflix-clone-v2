@@ -20,7 +20,7 @@
 
 # Preview
 
-!["Fullstack Responsive Movie App 2024"][React-App](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/117e7f6e-3649-4ba6-aa98-1a91c17d847b)
+https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/117e7f6e-3649-4ba6-aa98-1a91c17d847b
 
 !["Fullstack Responsive Movie App 2024"][React-App1](https://github.com/andreicruceanu/netflix-clone-v2/assets/82814224/8709d1f7-1d6f-4199-bb05-434bdb3169c2)
 
