@@ -1,19 +1,31 @@
 # ✨Fullstack Responsive Movie App 2024
 
+My React.js implementation of Netflix. Movie data was pulled from TMDB and trailer videos from Youtube.
 
-# Dependinces
+# Dependencies
 
-Frontend
+**Frontend**
 
 - [React.js](https://reactjs.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
-- [tailwindcss](https://tailwindcss.com/)
-- [next-UI](https://nextui.org/)
+- [Material UI](https://mui.com/)
 - [react-router-dom](https://reactrouter.com/web/guides/quick-start)
 - [react-toastify](https://fkhadra.github.io/react-toastify/introduction)
-- [styled-components](https://styled-components.com/)
 - [swiper](https://swiperjs.com/)
+- [axios](https://www.npmjs.com/package/axios)
 - [react-icons](https://react-icons.github.io/react-icons/)
+- [formik](https://formik.org/)
+- [react-player](https://www.npmjs.com/package/react-player)
+
+**Backend**
+
+- [ExpressJs](https://expressjs.com/)
+- [NodeJs](https://nodejs.org/)
+- [Mongoose](https://mongoosejs.com/)
+- [express-validator](https://express-validator.github.io/docs/)
+- [joi](https://joi.dev)
+- [cloudinary](https://cloudinary.com/documentation/node_quickstart)
+
 
 # Preview
 
