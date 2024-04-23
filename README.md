@@ -2,7 +2,7 @@
 
 My React.js implementation of Netflix. Movie data was pulled from TMDB and trailer videos from Youtube.
 
-#📌 Live Demo
+## 📌 Live Demo
 
 [Click Here](https://netflix-clone-ui-seven.vercel.app)
 
