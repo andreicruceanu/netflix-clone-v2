@@ -1,6 +1,4 @@
-# Movie App
-
-    Fullstack Responsive Movie App 2024
+# Fullstack Responsive Movie App 2024
 
 
 # Resource
