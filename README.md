@@ -1,20 +1,19 @@
 # ✨Fullstack Responsive Movie App 2024
 
 
-# Resource
+# Dependinces
 
-[Create React App](https://create-react-app.dev/)<br>
-[Material UI](https://create-react-app.dev/)<br>
-[Mongoose](https://mongoosejs.com/)<br>
-[ExpressJS](https://expressjs.com/)<br>
-[Express Validator](https://express-validator.github.io/docs/)<br>
-[React Router](https://reactrouter.com/)<br>
-[Formik](https://formik.org/)<br>
-[Yup](https://github.com/jquense/yup/)<br>
-[Axios](https://axios-http.com/)<br>
-[ThemovieDB](https://www.themoviedb.org/)<br>
-[Swiper](https://swiperjs.com/)<br>
-[JWT](https://github.com/auth0/node-jsonwebtoken)<br>
+Frontend
+
+- [React.js](https://reactjs.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [tailwindcss](https://tailwindcss.com/)
+- [next-UI](https://nextui.org/)
+- [react-router-dom](https://reactrouter.com/web/guides/quick-start)
+- [react-toastify](https://fkhadra.github.io/react-toastify/introduction)
+- [styled-components](https://styled-components.com/)
+- [swiper](https://swiperjs.com/)
+- [react-icons](https://react-icons.github.io/react-icons/)
 
 # Preview
 
