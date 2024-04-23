@@ -26,6 +26,8 @@ My React.js implementation of Netflix. Movie data was pulled from TMDB and trail
 - [joi](https://joi.dev)
 - [cloudinary](https://cloudinary.com/documentation/node_quickstart)
 
+  
+
 
 # Preview
 
